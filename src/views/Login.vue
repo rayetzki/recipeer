@@ -4,7 +4,7 @@
         <form>
             <Input 
                 class="form__input" 
-                autocomplete="email" 
+                autocomplete="email"
                 clearable 
                 required 
                 autofocus 
@@ -49,6 +49,9 @@ export default {
             password: ''
         }
     },
+    updated() {
+        console.log(this.loading)
+    },
     computed: {
         ...mapGetters({
             user: 'user/user',
@@ -56,7 +59,7 @@ export default {
             error: 'user/error'
         }),
         disabled() {
-            return (!this.email || !this.password); 
+            return this.loading || (!this.email || !this.password); 
         },
     },
     methods: {

@@ -12,6 +12,7 @@
 <script>
 import store from './store'
 import axios from 'axios'
+import { BASE_URL } from './config/API'
 
 export default {
   name: 'app',
@@ -22,12 +23,13 @@ export default {
     }
   },
   created: function () {
+    axios.defaults.baseURL = BASE_URL;
     axios.interceptors.request.use(function (config) {
         // eslint-disable-next-line no-unused-vars
         return new Promise(function (resolve, reject) {
-          const token = localStorage.getItem('token') || null
+          const token = JSON.parse(localStorage.getItem('token')) || null
           if (token !== null) {
-            config.headers['Authorization'] = `Bearer ${token}`
+            config.headers['Authorization'] = `Bearer ${token.jwt}`
           }
           resolve(config)
         })

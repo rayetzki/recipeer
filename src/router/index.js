@@ -29,8 +29,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(route => route.meta.requiresAuth)) {
-    const isLoggedIn = store.getters['user/isLoggedIn'];
-    console.log(isLoggedIn)
+    const isLoggedIn = store.getters['auth/isLoggedIn'];
+
     if (isLoggedIn === false) {
       next('/login')
     } else {
