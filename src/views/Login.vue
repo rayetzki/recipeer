@@ -28,7 +28,6 @@
             </Button>
         </form>
         <Alert v-if="error" title="Sorry, there is an error occured" show-icon type="error">{{ error }}</Alert>
-        <Alert v-if="user" title="Successfully logged in" show-icon type="success" />
         <router-link class="form__signup" to="/signup">Cоздать новый аккаунт</router-link>
     </div>
 </template>

@@ -8,7 +8,8 @@ export const user = {
         user: null,
         token: null,
         loading: false,
-        error: null
+        error: '',
+        isLoggedIn: !!localStorage.getItem('token')
     },
     mutations: {
         setUser(state, payload) {
@@ -22,13 +23,15 @@ export const user = {
         },
         setError(state, message) {
             state.error = message
+        },
+        setLoggedIn(state, status) {
+            state.loggedIn = status;
         }
     },
     actions: {
-        async login ({ commit }, { email, password }) {
+        async login({ commit }, { email, password }) {
             try {
                 const tokenResponse = await axios.post(`${API_URL}/users/login`, { email, password })
-                
                 if (tokenResponse.status === 201) {
                     const tokenData = { 
                         token: tokenResponse.data.jwt, 
@@ -42,6 +45,8 @@ export const user = {
 
                     if (userResponse.status === 200) {
                         commit('setUser', userResponse.data)
+                        commit('setError', '')
+                        commit('setLoggedIn', true)
                         router.push('/')
                     }
                 }
@@ -54,12 +59,15 @@ export const user = {
         },
         async logout({ commit }) {
             commit('setUser', null)
+            commit('setLoggedIn', false)
             localStorage.removeItem('token')
+            router.push('/login')
         }
     },
     getters: {
         user: state => state.user,
         loading: state => state.loading,
-        error: state => state.error
+        error: state => state.error,
+        isLoggedIn: state => state.isLoggedIn
     }
 }

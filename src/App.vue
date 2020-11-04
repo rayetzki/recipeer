@@ -2,8 +2,8 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link>
-      <router-link to="/login">Login</router-link>
-      <span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
+      <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
+      <router-link to="" v-if="isLoggedIn" @click="logout">Logout</router-link>
     </nav>
     <router-view></router-view>
   </div>
@@ -27,7 +27,6 @@ export default {
         return new Promise(function (resolve, reject) {
           const token = localStorage.getItem('token') || null
           if (token !== null) {
-            console.log(token)
             config.headers['Authorization'] = `Bearer ${token}`
           }
           resolve(config)
@@ -48,9 +47,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('logout')
-        .then(() => this.$router.push('/login'))
-        .catch(error => console.error(error))
+      return this.$store.dispatch('user/logout')
     }
   }
 }
