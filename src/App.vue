@@ -1,26 +1,27 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
-      <router-link to="" v-if="isLoggedIn" @click="logout">Logout</router-link>
-    </nav>
+    <Header />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import store from './store'
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 import { BASE_URL } from './config/API'
+import Header from './components/Header'
+import store from './store'
 
 export default {
   name: 'app',
   store,
-  data() {
-    return {
-      isLoggedIn: !!localStorage.getItem('token') || false
-    }
+  components: {
+    Header
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: 'auth/isLoggedIn'
+    })
   },
   created: function () {
     axios.defaults.baseURL = BASE_URL;
@@ -46,11 +47,6 @@ export default {
         reject(error);
       });
     });
-  },
-  methods: {
-    logout() {
-      return this.$store.dispatch('user/logout')
-    }
   }
 }
 </script>

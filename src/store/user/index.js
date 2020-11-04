@@ -55,7 +55,6 @@ export const user = {
     getters: {
         user: state => state.user,
         loading: state => state.loading,
-        error: state => state.error,
-        isLoggedIn: state => state.isLoggedIn
+        error: state => state.error
     }
 }

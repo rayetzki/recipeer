@@ -49,9 +49,6 @@ export default {
             password: ''
         }
     },
-    updated() {
-        console.log(this.loading)
-    },
     computed: {
         ...mapGetters({
             user: 'user/user',
