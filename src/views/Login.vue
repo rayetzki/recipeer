@@ -8,7 +8,8 @@
                 clearable 
                 required 
                 autofocus 
-                label="email" 
+                label="email"
+                name="email"
                 placeholder="Введите email" 
                 v-model="email" 
             />
@@ -17,29 +18,31 @@
                 clearable 
                 required 
                 label="password" 
+                name="password"
                 placeholder="Введите пароль" 
                 v-model="password" 
                 type="password" 
             />
-            <Button class="form__submit el-fade-in-linear" type="submit" :disabled="disabled">
+            <Button @click.prevent="login" class="form__submit el-fade-in-linear" type="submit" :disabled="disabled">
                 Залогиниться
             </Button>
         </form>
+        <Alert v-if="error" title="Sorry, there is an error occured" show-icon type="error">{{ error }}</Alert>
+        <Alert v-if="user" title="Successfully logged in" show-icon type="success" />
         <router-link class="form__signup" to="/signup">Cоздать новый аккаунт</router-link>
     </div>
 </template>
 
 <script>
-import { Input, Button } from 'element-ui';
+import { Input, Button, Alert } from 'element-ui';
+import { mapGetters } from 'vuex';
 
 export default {
     name: "Login",
     components: {
         Input,
-        Button
-    },
-    updated() {
-        console.log(this.$data);
+        Button,
+        Alert
     },
     data() {
         return {
@@ -48,10 +51,20 @@ export default {
         }
     },
     computed: {
+        ...mapGetters({
+            user: 'user/user',
+            loading: 'user/loading',
+            error: 'user/error'
+        }),
         disabled() {
             return (!this.email || !this.password); 
+        },
+    },
+    methods: {
+        login() {
+           return this.$store.dispatch('user/login', { email: this.email, password: this.password })
         }
-    }   
+    }
 }
 </script>
 

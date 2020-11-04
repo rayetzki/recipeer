@@ -1,0 +1,1 @@
+export const API_URL = 'https://recipeeers.herokuapp.com/api';
