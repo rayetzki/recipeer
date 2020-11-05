@@ -88,7 +88,9 @@ export default {
   margin-top: 24px;
   display: grid;
   grid-gap: 24px;
-  margin-top: 64px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   padding: 0 16px;
 
   .form__header {

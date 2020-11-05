@@ -1,37 +1,21 @@
 <template>
   <div id="app">
-    <app-header
-      :avatar="user && user.avatar"
-      :isLoggedIn="isLoggedIn"
-    ></app-header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
-import { BASE_URL } from "./config/API";
-import Header from "./components/Header";
 import store from "./store";
+import { BASE_URL } from "./config/API";
 import { checkToken } from "./utils/checkToken";
 
 export default {
   name: "app",
   store,
-  components: {
-    "app-header": Header
-  },
-  computed: {
-    ...mapGetters({
-      isLoggedIn: "auth/isLoggedIn",
-      user: "user/user"
-    })
-  },
   created() {
     const token = JSON.parse(localStorage.getItem("token")) || null;
-
-    if (token !== null && !checkToken(token)) {
+    if (token && !checkToken(token)) {
       this.$store.dispatch("auth/logout");
     }
 
@@ -53,7 +37,7 @@ export default {
     axios.interceptors.response.use(undefined, error => {
       return new Promise((resolve, reject) => {
         if (
-          error.status === 401 &&
+          error.status >= 401 &&
           error.config &&
           !error.config.__isRetryRequest
         ) {

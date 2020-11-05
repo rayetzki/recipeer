@@ -7,7 +7,6 @@
       alt="User avatar"
     />
     <img class="header__avatar" v-if="avatar" :src="avatar" />
-    <router-link to="/">Home</router-link>
     <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
     <router-link to="" v-if="isLoggedIn">
       <span @click="logout">Logout</span>
