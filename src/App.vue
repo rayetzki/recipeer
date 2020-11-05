@@ -14,25 +14,24 @@ export default {
   name: "app",
   store,
   created() {
-    const token = JSON.parse(localStorage.getItem("token")) || null;
+    const token = store.getters["auth/token"];
+
     if (token && !checkToken(token)) {
-      this.$store.dispatch("auth/logout");
+      store.dispatch("auth/logout");
     }
 
     axios.defaults.baseURL = BASE_URL;
-    axios.interceptors.request.use(
-      config => {
-        const token = JSON.parse(localStorage.getItem("token")) || null;
-        // eslint-disable-next-line no-unused-vars
-        return new Promise((resolve, reject) => {
-          if (token !== null && checkToken(token)) {
-            config.headers["Authorization"] = `Bearer ${token.jwt}`;
-          }
-          resolve(config);
-        });
-      },
-      error => Promise.reject(error)
-    );
+
+    axios.interceptors.request.use(config => {
+      // eslint-disable-next-line no-unused-vars
+      return new Promise((resolve, reject) => {
+        const token = store.getters["auth/token"];
+        if (token !== null) {
+          config.headers["Authorization"] = `Bearer ${token.jwt}`;
+        }
+        resolve(config);
+      });
+    });
 
     axios.interceptors.response.use(undefined, error => {
       return new Promise((resolve, reject) => {
@@ -41,7 +40,7 @@ export default {
           error.config &&
           !error.config.__isRetryRequest
         ) {
-          resolve(this.$store.dispatch("auth/logout"));
+          resolve(store.dispatch("auth/logout"));
         }
         reject(error);
       });

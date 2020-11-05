@@ -31,6 +31,7 @@ export const user = {
           const { jwt, expiresIn, userId } = tokenResponse.data;
           const token = { jwt, expiresIn };
           localStorage.setItem("token", JSON.stringify(token));
+          dispatch("auth/saveToken", token, { root: true });
 
           const userResponse = await axios.get(`${API_URL}/users/${userId}`);
 
@@ -41,6 +42,7 @@ export const user = {
           }
         }
       } catch (error) {
+        console.error(error);
         commit(
           "setError",
           error.response ? error.response.data.message : error.message
