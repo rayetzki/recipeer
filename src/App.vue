@@ -1,61 +1,76 @@
 <template>
   <div id="app">
-    <Header />
+    <app-header
+      :avatar="user && user.avatar"
+      :isLoggedIn="isLoggedIn"
+    ></app-header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import { mapGetters } from 'vuex'
-import { BASE_URL } from './config/API'
-import Header from './components/Header'
-import store from './store'
+import axios from "axios";
+import { mapGetters } from "vuex";
+import { BASE_URL } from "./config/API";
+import Header from "./components/Header";
+import store from "./store";
+import { checkToken } from "./utils/checkToken";
 
 export default {
-  name: 'app',
+  name: "app",
   store,
   components: {
-    Header
+    "app-header": Header
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'auth/isLoggedIn'
+      isLoggedIn: "auth/isLoggedIn",
+      user: "user/user"
     })
   },
-  created: function () {
+  created() {
+    const token = JSON.parse(localStorage.getItem("token")) || null;
+
+    if (token !== null && !checkToken(token)) {
+      this.$store.dispatch("auth/logout");
+    }
+
     axios.defaults.baseURL = BASE_URL;
-    axios.interceptors.request.use(function (config) {
+    axios.interceptors.request.use(
+      config => {
+        const token = JSON.parse(localStorage.getItem("token")) || null;
         // eslint-disable-next-line no-unused-vars
-        return new Promise(function (resolve, reject) {
-          const token = JSON.parse(localStorage.getItem('token')) || null
-          if (token !== null) {
-            config.headers['Authorization'] = `Bearer ${token.jwt}`
+        return new Promise((resolve, reject) => {
+          if (token !== null && checkToken(token)) {
+            config.headers["Authorization"] = `Bearer ${token.jwt}`;
           }
-          resolve(config)
-        })
-    }, function(error) {
-        return Promise.reject(error)
-      }
-    )
-    
-    axios.interceptors.response.use(undefined, function (error) {
-      return new Promise(function (resolve, reject) {
-        if (error.status === 401 && error.config && !error.config.__isRetryRequest) {
-          resolve(this.$store.dispatch("logout"))
+          resolve(config);
+        });
+      },
+      error => Promise.reject(error)
+    );
+
+    axios.interceptors.response.use(undefined, error => {
+      return new Promise((resolve, reject) => {
+        if (
+          error.status === 401 &&
+          error.config &&
+          !error.config.__isRetryRequest
+        ) {
+          resolve(this.$store.dispatch("auth/logout"));
         }
         reject(error);
       });
     });
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import 'reset-css';
+@import "reset-css";
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
