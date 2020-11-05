@@ -85,24 +85,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/forms.scss";
+
 #login {
-  display: grid;
-  grid-gap: 24px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: calc(100% - 32px);
-  padding: 0 16px;
+  @include centered-form;
 
   .form__header {
-    font-size: 24px;
-    color: currentColor;
-    font-weight: bold;
+    @include form-header;
   }
 
   .form__input {
-    margin-bottom: 10px;
+    @include form-input;
   }
 
   .form__signup {

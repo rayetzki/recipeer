@@ -1,0 +1,21 @@
+@mixin form-header {
+  font-size: 24px;
+  color: currentColor;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+@mixin form-input {
+  margin-bottom: 10px;
+}
+
+@mixin centered-form {
+  display: grid;
+  grid-gap: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 32px);
+  padding: 0 16px;
+}
