@@ -23,14 +23,11 @@ export default {
     axios.defaults.baseURL = BASE_URL;
 
     axios.interceptors.request.use(config => {
-      // eslint-disable-next-line no-unused-vars
-      return new Promise((resolve, reject) => {
-        const token = store.getters["auth/token"];
-        if (token !== null) {
-          config.headers["Authorization"] = `Bearer ${token.jwt}`;
-        }
-        resolve(config);
-      });
+      const token = store.getters["auth/token"];
+      if (token !== null) {
+        config.headers["Authorization"] = `Bearer ${token.jwt}`;
+      }
+      return Promise.resolve(config);
     });
 
     axios.interceptors.response.use(undefined, error => {

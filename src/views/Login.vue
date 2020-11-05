@@ -37,11 +37,12 @@
       title="Sorry, there is an error occured"
       show-icon
       type="error"
-      >{{ error }}</Alert
     >
-    <router-link class="form__signup" to="/signup"
-      >Cоздать новый аккаунт</router-link
-    >
+      {{ error }}
+    </Alert>
+    <router-link class="form__signup" to="/signup">
+      Cоздать новый аккаунт
+    </router-link>
   </div>
 </template>
 
@@ -85,12 +86,13 @@ export default {
 
 <style lang="scss" scoped>
 #login {
-  margin-top: 24px;
   display: grid;
   grid-gap: 24px;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 32px);
   padding: 0 16px;
 
   .form__header {
