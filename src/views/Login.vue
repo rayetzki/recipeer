@@ -1,32 +1,28 @@
 <template>
   <div id="login">
-    <h3 class="form__header">Введите email или пароль</h3>
     <form>
-      <Input
-        class="form__input"
-        autocomplete="email"
-        clearable
-        required
-        autofocus
-        label="email"
+      <h3 class="form__header">Введите email или пароль</h3>
+      <FormInput
+        label="Email"
         name="email"
+        type="email"
+        @validate="validate('email')"
         placeholder="Введите email"
-        v-model="email"
+        v-model="values.email"
+        :error="errors.email"
       />
-      <Input
-        class="form__input"
-        clearable
-        required
-        label="password"
+      <FormInput
+        label="Пароль"
         name="password"
         placeholder="Введите пароль"
-        v-model="password"
+        v-model="values.password"
         type="password"
+        @validate="validate('password')"
+        :error="errors.password"
       />
       <Button
         @click.prevent="login"
-        class="form__submit el-fade-in-linear"
-        type="submit"
+        class="el-fade-in-linear"
         :disabled="disabled"
       >
         Залогиниться
@@ -47,20 +43,31 @@
 </template>
 
 <script>
-import { Input, Button, Alert } from "element-ui";
+import { Button, Alert } from "element-ui";
 import { mapGetters } from "vuex";
+import FormInput from "../components/FormInput";
+import { LoginValidationSchema } from "../validation-schemas/Login.schema";
+import { validateField } from "../utils/runValidation";
+import store from "../store";
 
 export default {
   name: "Login",
+  store,
   components: {
-    Input,
+    FormInput,
     Button,
     Alert
   },
   data() {
     return {
-      email: "",
-      password: ""
+      values: {
+        email: "",
+        password: ""
+      },
+      errors: {
+        email: "",
+        password: ""
+      }
     };
   },
   computed: {
@@ -70,18 +77,21 @@ export default {
       error: "user/error"
     }),
     disabled() {
-      return this.loading || !this.email || !this.password;
+      return (
+        this.loading ||
+        Object.values(this.values).some(value => value.length === 0)
+      );
     }
   },
   methods: {
     login() {
       return this.$store
-        .dispatch("user/login", {
-          email: this.email,
-          password: this.password
-        })
+        .dispatch("user/login", this.values)
         .then(() => this.$router.push("/"))
         .catch(error => console.error(error));
+    },
+    validate: function(field) {
+      validateField(LoginValidationSchema, field, this.values, this.errors);
     }
   }
 };
@@ -95,10 +105,6 @@ export default {
 
   .form__header {
     @include form-header;
-  }
-
-  .form__input {
-    @include form-input;
   }
 
   .form__signup {

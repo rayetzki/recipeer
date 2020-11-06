@@ -14,7 +14,7 @@ export default {
   name: "app",
   store,
   created() {
-    const token = store.getters["auth/token"];
+    const token = this.$store.getters["auth/token"];
 
     if (token && !checkToken(token)) {
       store.dispatch("auth/logout");
@@ -23,7 +23,7 @@ export default {
     axios.defaults.baseURL = BASE_URL;
 
     axios.interceptors.request.use(config => {
-      const token = store.getters["auth/token"];
+      const token = this.$store.getters["auth/token"];
       if (token !== null) {
         config.headers["Authorization"] = `Bearer ${token.jwt}`;
       }

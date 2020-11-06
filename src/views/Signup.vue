@@ -7,8 +7,8 @@
       <Select
         size="large"
         name="nutrition"
-        class="signup__input"
-        v-model="nutrition"
+        class="form__input"
+        v-model="values.nutrition"
         placeholder="Тип питания"
       >
         <Option
@@ -18,78 +18,120 @@
           :value="item.value"
         />
       </Select>
-      <Input
+      <Select
+        size="large"
+        name="role"
+        class="form__input"
+        v-model="values.role"
+        placeholder="Тип питания"
+      >
+        <Option
+          v-for="role in roles"
+          :key="role.value"
+          :label="role.label"
+          :value="role.value"
+        />
+      </Select>
+      <FormInput
         type="text"
         name="name"
-        label="name"
-        class="signup__input"
-        v-model="name"
-        placeholder="Имя"
+        :error="errors.name"
+        v-model="values.name"
+        placeholder="Укажи своё имя"
+        @validate="validate('name')"
       />
-      <Input
+      <FormInput
         type="number"
         name="age"
-        label="age"
-        class="signup__input"
         inputmode="decimal"
-        v-model="age"
+        v-model="values.age"
         placeholder="Возраст"
+        :error="errors.age"
+        @validate="validate('age')"
       />
-      <Input
+      <FormInput
         type="email"
         name="email"
-        class="signup__input"
-        label="email"
-        v-model="email"
+        v-model="values.email"
         placeholder="Почтовый адрес"
+        :error="errors.email"
+        @validate="validate('email')"
       />
-      <Input
+      <FormInput
         type="password"
         name="password"
-        class="signup__input"
-        label="password"
-        v-model="password"
+        v-model="values.password"
         placeholder="Придумай пароль"
+        :error="errors.password"
+        inputMode="decimal"
+        @validate="validate('password')"
       />
+      <Button
+        @click.prevent="register"
+        class="el-fade-in-linear"
+        type="submit"
+        :disabled="disabled"
+      >
+        Дальше
+      </Button>
     </form>
   </div>
 </template>
 
 <script>
-import { Input, Select, Option } from "element-ui";
-import { required, numeric, email } from "vuelidate/lib/validators";
+import { Select, Option, Button } from "element-ui";
+import FormInput from "../components/FormInput";
 import { nutritionTypes } from "../data/nutritionTypes";
+import { validateField } from "../utils/runValidation";
+import { SignupValidationSchema } from "../validation-schemas/Singup.schema";
+import store from "../store";
 
 export default {
+  store,
   name: "Signup",
   components: {
-    Input,
+    FormInput,
     Select,
-    Option
+    Option,
+    Button
   },
   data() {
     return {
-      name: "",
-      age: "",
-      email: "",
-      nutrition: "any",
-      password: "",
-      nutritionTypes
+      values: {
+        name: "",
+        age: "",
+        email: "",
+        nutrition: "any",
+        password: "",
+        role: "user"
+      },
+      nutritionTypes,
+      roles: [
+        { value: "editor", label: "Редактор" },
+        { value: "user", label: "Пользователь" }
+      ],
+      errors: {
+        name: "",
+        age: "",
+        email: "",
+        password: ""
+      }
     };
   },
-  validations: {
-    name: {
-      required
+  computed: {
+    disabled() {
+      return (
+        this.loading ||
+        Object.values(this.values).some(value => value.length === 0)
+      );
+    }
+  },
+  methods: {
+    validate(field) {
+      validateField(SignupValidationSchema, field, this.values, this.errors);
     },
-    age: {
-      required,
-      numeric
-    },
-    password: {
-      required
-    },
-    email: {
-      email
+    register() {
+      return this.$store.dispatch("user/register", this.values, { root: true });
     }
   }
 };
@@ -100,10 +142,6 @@ export default {
 
 #signup {
   @include centered-form;
-
-  .signup__input {
-    @include form-input;
-  }
 
   .el-select {
     min-width: 100%;

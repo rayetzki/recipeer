@@ -8,10 +8,11 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { mapGetters } from "vuex";
 import Header from "../components/Header";
 
-export default {
+const Home = new Vue({
   name: "Home",
   components: {
     "app-header": Header
@@ -22,5 +23,7 @@ export default {
       user: "user/user"
     })
   }
-};
+});
+
+export default Home;
 </script>

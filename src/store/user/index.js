@@ -1,6 +1,5 @@
-import getters from "./user.getters";
 import { setUser, setLoading, setError } from "./user.mutations";
-import { login, logout } from "./user.actions";
+import { login, logout, register } from "./user.actions";
 
 export const user = {
   namespaced: true,
@@ -16,7 +15,12 @@ export const user = {
   },
   actions: {
     login,
-    logout
+    logout,
+    register
   },
-  getters
+  getters: {
+    user: state => state.user,
+    loading: state => state.loading,
+    error: state => state.error
+  }
 };

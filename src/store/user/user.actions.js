@@ -1,6 +1,36 @@
 import { API_URL } from "../../config/API";
 import axios from "axios";
 
+export const register = async (
+  { commit, dispatch },
+  { name, email, password, nutrition, age, role }
+) => {
+  commit("setLoading", true);
+
+  try {
+    const registerResponse = await axios.post(`${API_URL}/users`, {
+      name,
+      email,
+      password,
+      nutrition,
+      age: Number(age),
+      role
+    });
+
+    if (registerResponse.status === 200) {
+      dispatch("user/login", { email, password }, { root: true });
+      commit("setError", "");
+    }
+  } catch (error) {
+    commit(
+      "setError",
+      error.response ? error.response.data.message : error.message
+    );
+  } finally {
+    commit("setLoading", false);
+  }
+};
+
 export const login = async ({ commit, dispatch }, { email, password }) => {
   try {
     const tokenResponse = await axios.post(`${API_URL}/users/login`, {
