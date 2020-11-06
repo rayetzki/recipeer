@@ -1,4 +1,6 @@
-import router from "../../router";
+import getters from "./auth.getters";
+import { saveToken, login, logout } from "./auth.actions";
+import { setLoggedIn, setToken } from "./auth.mutations";
 
 export const auth = {
   namespaced: true,
@@ -9,28 +11,13 @@ export const auth = {
       : null
   },
   mutations: {
-    setLoggedIn(state, status) {
-      state.isLoggedIn = status;
-    },
-    setToken(state, token) {
-      state.token = token;
-    }
+    setLoggedIn,
+    setToken
   },
   actions: {
-    saveToken({ commit }, token) {
-      commit("setToken", token);
-    },
-    login({ commit }) {
-      commit("setLoggedIn", true);
-      router.push("/");
-    },
-    logout({ commit }) {
-      commit("setLoggedIn", false);
-      localStorage.removeItem("token");
-    }
+    saveToken,
+    login,
+    logout
   },
-  getters: {
-    isLoggedIn: state => state.isLoggedIn,
-    token: state => state.token
-  }
+  getters
 };

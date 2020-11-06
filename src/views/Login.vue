@@ -75,10 +75,13 @@ export default {
   },
   methods: {
     login() {
-      return this.$store.dispatch("user/login", {
-        email: this.email,
-        password: this.password
-      });
+      return this.$store
+        .dispatch("user/login", {
+          email: this.email,
+          password: this.password
+        })
+        .then(() => this.$router.push("/"))
+        .catch(error => console.error(error));
     }
   }
 };
