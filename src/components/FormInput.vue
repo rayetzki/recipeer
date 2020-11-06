@@ -10,8 +10,8 @@
       clearable
       :placeholder="placeholder"
       class="form__input"
+      @keydown="$emit('validate')"
       @input="$emit('input', $event)"
-      @keypress="$emit('validate')"
     />
     <span v-if="!!error" class="form__input--error">{{ error }}</span>
   </div>
@@ -22,7 +22,6 @@ import { Input } from "element-ui";
 
 export default {
   name: "FormInput",
-  inheritAttrs: false,
   components: {
     Input
   },

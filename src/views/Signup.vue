@@ -84,10 +84,8 @@ import FormInput from "../components/FormInput";
 import { nutritionTypes } from "../data/nutritionTypes";
 import { validateField } from "../utils/runValidation";
 import { SignupValidationSchema } from "../validation-schemas/Singup.schema";
-import store from "../store";
 
 export default {
-  store,
   name: "Signup",
   components: {
     FormInput,
@@ -128,7 +126,12 @@ export default {
   },
   methods: {
     validate(field) {
-      validateField(SignupValidationSchema, field, this.values, this.errors);
+      return validateField(
+        SignupValidationSchema,
+        field,
+        this.values,
+        this.errors
+      );
     },
     register() {
       return this.$store.dispatch("user/register", this.values, { root: true });

@@ -1,8 +1,8 @@
-export const validateField = (schema, field, values, errors) => {
+export const validateField = (schema, values, errors) => {
   schema
-    .validateAt(field, values)
+    .validate(values)
     .then(() => {
-      errors[field] = "";
+      errors = null;
     })
     .catch(e => {
       e.inner.forEach(error => {

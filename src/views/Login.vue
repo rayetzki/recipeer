@@ -5,7 +5,6 @@
       <FormInput
         name="email"
         type="email"
-        @validate="validate('email')"
         placeholder="Введите email"
         v-model="values.email"
         :error="errors.email"
@@ -15,7 +14,6 @@
         placeholder="Введите пароль"
         v-model="values.password"
         type="password"
-        @validate="validate('password')"
         :error="errors.password"
       />
       <Button
@@ -46,15 +44,16 @@ import { mapGetters } from "vuex";
 import FormInput from "../components/FormInput";
 import { LoginValidationSchema } from "../validation-schemas/Login.schema";
 import { validateField } from "../utils/runValidation";
-import store from "../store";
 
 export default {
   name: "Login",
-  store,
   components: {
     FormInput,
     Button,
     Alert
+  },
+  updated() {
+    return validateField(LoginValidationSchema, this.values, this.errors);
   },
   data() {
     return {
@@ -77,16 +76,14 @@ export default {
     disabled() {
       return (
         this.loading ||
-        Object.values(this.values).some(value => value.length === 0)
+        Object.values(this.values).some(value => value.length === 0) ||
+        Object.values(this.errors).some(error => error.length > 0)
       );
     }
   },
   methods: {
     login() {
       return this.$store.dispatch("user/login", this.values);
-    },
-    validate: function(field) {
-      validateField(LoginValidationSchema, field, this.values, this.errors);
     }
   }
 };
