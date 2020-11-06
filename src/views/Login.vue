@@ -3,7 +3,6 @@
     <form>
       <h3 class="form__header">Введите email или пароль</h3>
       <FormInput
-        label="Email"
         name="email"
         type="email"
         @validate="validate('email')"
@@ -12,7 +11,6 @@
         :error="errors.email"
       />
       <FormInput
-        label="Пароль"
         name="password"
         placeholder="Введите пароль"
         v-model="values.password"
@@ -85,10 +83,7 @@ export default {
   },
   methods: {
     login() {
-      return this.$store
-        .dispatch("user/login", this.values)
-        .then(() => this.$router.push("/"))
-        .catch(error => console.error(error));
+      return this.$store.dispatch("user/login", this.values);
     },
     validate: function(field) {
       validateField(LoginValidationSchema, field, this.values, this.errors);

@@ -17,7 +17,7 @@ export const register = async (
       role
     });
 
-    if (registerResponse.status === 200) {
+    if (registerResponse.status === 201) {
       dispatch("user/login", { email, password }, { root: true });
       commit("setError", "");
     }
