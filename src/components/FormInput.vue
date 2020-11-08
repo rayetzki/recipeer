@@ -1,6 +1,6 @@
 <template>
-  <div :class="['form__group', !!error && 'form__error']">
-    <label class="form__label" v-if="label" :for="name">{{ label }}</label>
+  <div :class="['input__container', !!error && 'input__container--with-error']">
+    <label class="input__label" v-if="label" :for="name">{{ label }}</label>
     <Input
       :id="name"
       :name="name"
@@ -9,11 +9,12 @@
       :value="value"
       clearable
       :placeholder="placeholder"
-      class="form__input"
+      :class="['input', !!error && 'input__error']"
+      @blur="$emit('validate')"
       @keydown="$emit('validate')"
       @input="$emit('input', $event)"
     />
-    <span v-if="!!error" class="form__input--error">{{ error }}</span>
+    <span v-if="!!error" class="input__error--message">{{ error }}</span>
   </div>
 </template>
 
@@ -39,8 +40,28 @@ export default {
 
 <style lang="scss">
 @import "../styles/forms.scss";
+.input__container {
+  position: relative;
+}
 
-.form__input {
+.input__container--with-error {
+  margin-bottom: 10px;
+}
+
+.input {
   @include form-input;
+}
+
+.input__error--message {
+  @include input-error-message;
+}
+
+.input__error {
+  @include input-error;
+
+  & .el-input__inner {
+    border: none;
+    border-radius: 50%;
+  }
 }
 </style>

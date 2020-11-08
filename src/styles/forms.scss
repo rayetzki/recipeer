@@ -19,3 +19,18 @@
   width: calc(100% - 32px);
   padding: 0 16px;
 }
+
+@mixin input-error {
+  border: 1px solid red;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+@mixin input-error-message {
+  font-size: 12px;
+  color: red;
+}
+
+@mixin form-select {
+  margin-bottom: 10px;
+}

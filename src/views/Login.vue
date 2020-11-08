@@ -8,6 +8,7 @@
         placeholder="Введите email"
         v-model="values.email"
         :error="errors.email"
+        @validate="validate('email')"
       />
       <FormInput
         name="password"
@@ -15,6 +16,7 @@
         v-model="values.password"
         type="password"
         :error="errors.password"
+        @validate="validate('password')"
       />
       <Button
         @click.prevent="login"
@@ -52,9 +54,6 @@ export default {
     Button,
     Alert
   },
-  updated() {
-    return validateField(LoginValidationSchema, this.values, this.errors);
-  },
   data() {
     return {
       values: {
@@ -84,6 +83,14 @@ export default {
   methods: {
     login() {
       return this.$store.dispatch("user/login", this.values);
+    },
+    validate(field) {
+      return validateField(
+        LoginValidationSchema,
+        field,
+        this.values,
+        this.errors
+      );
     }
   }
 };

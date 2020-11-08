@@ -7,7 +7,7 @@
       <Select
         size="large"
         name="nutrition"
-        class="form__input"
+        class="form__select"
         v-model="values.nutrition"
         placeholder="Тип питания"
       >
@@ -21,7 +21,7 @@
       <Select
         size="large"
         name="role"
-        class="form__input"
+        class="form__select"
         v-model="values.role"
         placeholder="Тип питания"
       >
@@ -148,6 +148,10 @@ export default {
 
   .el-select {
     min-width: 100%;
+  }
+
+  .form__select {
+    @include form-select;
   }
 
   .form__header {

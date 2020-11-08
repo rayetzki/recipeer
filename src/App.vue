@@ -48,6 +48,20 @@ export default {
 
 <style lang="scss">
 @import "reset-css";
+@import "./styles/fonts.scss";
+
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+time {
+  font-family: $primary-font;
+}
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
