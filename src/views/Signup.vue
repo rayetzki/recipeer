@@ -120,7 +120,8 @@ export default {
     disabled() {
       return (
         this.loading ||
-        Object.values(this.values).some(value => value.length === 0)
+        Object.values(this.values).some(value => value.length === 0) ||
+        Object.values(this.errors).some(error => error.length > 0)
       );
     }
   },
