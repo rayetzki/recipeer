@@ -1,12 +1,17 @@
 <template>
   <header>
-    <img
-      class="header__avatar"
-      v-if="!avatar"
-      src="https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Cat-512.png"
-      alt="User avatar"
-    />
-    <img class="header__avatar" v-if="avatar" :src="avatar" />
+    <div @click="$emit('toggle-drawer')">
+      <i class="fas fa-bars"></i>
+    </div>
+    <section class="info">
+      <img
+        class="avatar"
+        v-if="!avatar"
+        src="https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Cat-512.png"
+        alt="User avatar"
+      />
+      <img class="avatar" v-if="avatar" :src="avatar" />
+    </section>
     <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
     <router-link to="" v-if="isLoggedIn">
       <span @click="logout">Logout</span>
@@ -15,6 +20,7 @@
 </template>
 
 <script>
+import {} from "@fortawesome/fontawesome-free";
 export default {
   name: "app-header",
   props: {
@@ -37,11 +43,27 @@ header {
   justify-content: space-around;
   padding: 16px;
 
-  .header__avatar {
-    border-radius: 50%;
-    max-width: 48px;
-    max-height: 48px;
-    object-fit: cover;
+  .fa-bars {
+    cursor: pointer;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    .avatar {
+      border-radius: 50%;
+      max-width: 48px;
+      max-height: 48px;
+      object-fit: cover;
+    }
+
+    .name {
+      font-size: 14px;
+      margin-top: 8px;
+    }
   }
 }
 </style>
