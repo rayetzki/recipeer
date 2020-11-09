@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss">
 @import "reset-css";
-@import "./styles/fonts.scss";
+@import "./styles/theme.scss";
 
 span,
 p,
@@ -64,11 +64,11 @@ time {
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: $primary-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $textPrimary;
 }
 
 #app nav {

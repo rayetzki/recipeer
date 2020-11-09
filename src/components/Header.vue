@@ -13,14 +13,10 @@
       <img class="avatar" v-if="avatar" :src="avatar" />
     </section>
     <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
-    <router-link to="" v-if="isLoggedIn">
-      <span @click="logout">Logout</span>
-    </router-link>
   </header>
 </template>
 
 <script>
-import {} from "@fortawesome/fontawesome-free";
 export default {
   name: "app-header",
   props: {

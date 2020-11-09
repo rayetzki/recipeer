@@ -1,9 +1,17 @@
 <template>
   <div id="recipes">
     <h5 v-if="recipes && recipes.length === 0">No recipes, please add one</h5>
-    <ul v-if="recipes && recipes.length >= 0">
-      <li :key="recipe.id" v-for="recipe in recipes">
-        <h5>{{ recipe.title }}</h5>
+    <ul class="recipes__grid" v-if="recipes && recipes.length >= 0">
+      <li
+        class="recipes__preview"
+        @click="showRecipesDetails(recipe.id)"
+        :key="recipe.id"
+        v-for="recipe in recipes"
+      >
+        <div class="recipes__info">
+          <h5 class="recipes__info--header">{{ recipe.title }}</h5>
+          <p class="recipes__info--description">{{ recipe.description }}</p>
+        </div>
       </li>
     </ul>
   </div>
@@ -39,9 +47,17 @@ export default {
     },
     getRecipes(page) {
       return getRecipes(page);
+    },
+    showRecipesDetails(id) {
+      this.$router.push({
+        name: "Recipe",
+        query: { id }
+      });
     }
   }
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import "../styles/recipes.scss";
+</style>

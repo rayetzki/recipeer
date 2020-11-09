@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../../config/API";
 
-export const getRecipes = async (page, userId = null) => {
+export const getRecipes = (page, userId = null) => {
   return axios
     .get(`${API_URL}/recipes`, {
       params: {
@@ -15,4 +15,15 @@ export const getRecipes = async (page, userId = null) => {
       }
     })
     .catch(error => Promise.reject(error));
+};
+
+export const getRecipeById = id => {
+  return axios
+    .get(`${API_URL}/recipes?id=${id}`)
+    .then(recipeResponse => {
+      if (recipeResponse.status === 200) {
+        return recipeResponse.data;
+      }
+    })
+    .catch(error => console.error(error));
 };

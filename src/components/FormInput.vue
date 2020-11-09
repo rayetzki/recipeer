@@ -40,17 +40,19 @@ export default {
 
 <style lang="scss">
 @import "../styles/forms.scss";
+@import "../styles/theme.scss";
+
 .input__container {
   position: relative;
 }
 
 .input__error--message {
   font-size: 12px;
-  color: red;
+  color: $textError;
 }
 
 .input__error {
-  border: 1px solid red;
+  border: 1px solid $borderError;
   border-radius: 10px;
   margin-bottom: 8px;
 
