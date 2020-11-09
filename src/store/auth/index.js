@@ -20,6 +20,8 @@ export const auth = {
   },
   getters: {
     isLoggedIn: state => state.isLoggedIn,
-    token: state => state.token
+    token: state => state.token,
+    loading: state => state.loading,
+    error: state => state.error
   }
 };

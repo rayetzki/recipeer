@@ -20,17 +20,17 @@
   padding: 0 16px;
 }
 
-@mixin input-error {
-  border: 1px solid red;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
 @mixin input-error-message {
   font-size: 12px;
   color: red;
 }
 
+@mixin input-error {
+  border: 1px solid red;
+  border-radius: 10px;
+  @include form-input();
+}
+
 @mixin form-select {
-  margin-bottom: 10px;
+  @include form-input();
 }
