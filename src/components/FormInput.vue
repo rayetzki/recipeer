@@ -44,10 +44,6 @@ export default {
   position: relative;
 }
 
-.input__container--with-error {
-  margin-bottom: 10px;
-}
-
 .input__error--message {
   font-size: 12px;
   color: red;
@@ -56,6 +52,7 @@ export default {
 .input__error {
   border: 1px solid red;
   border-radius: 10px;
+  margin-bottom: 8px;
 
   & .el-input__inner {
     border: none;
