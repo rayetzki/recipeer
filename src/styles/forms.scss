@@ -1,15 +1,15 @@
-@mixin form-header {
+.form__header {
   font-size: 24px;
   color: currentColor;
   font-weight: bold;
   margin-bottom: 16px;
 }
 
-@mixin form-input {
+.form__input {
   margin-bottom: 10px;
 }
 
-@mixin centered-form {
+.form__centered {
   display: grid;
   grid-gap: 24px;
   position: absolute;
@@ -20,17 +20,6 @@
   padding: 0 16px;
 }
 
-@mixin input-error-message {
-  font-size: 12px;
-  color: red;
-}
-
-@mixin input-error {
-  border: 1px solid red;
-  border-radius: 10px;
-  @include form-input();
-}
-
-@mixin form-select {
-  @include form-input();
+.form__select {
+  @extend .form__input;
 }

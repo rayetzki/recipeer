@@ -48,16 +48,14 @@ export default {
   margin-bottom: 10px;
 }
 
-.input {
-  @include form-input;
-}
-
 .input__error--message {
-  @include input-error-message;
+  font-size: 12px;
+  color: red;
 }
 
 .input__error {
-  @include input-error;
+  border: 1px solid red;
+  border-radius: 10px;
 
   & .el-input__inner {
     border: none;

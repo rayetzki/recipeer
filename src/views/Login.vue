@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <form>
+    <form class="form__centered">
       <h3 class="form__header">Введите email или пароль</h3>
       <FormInput
         name="email"
@@ -25,6 +25,9 @@
       >
         Залогиниться
       </Button>
+      <router-link class="form__signup" to="/signup">
+        Cоздать новый аккаунт
+      </router-link>
     </form>
     <Alert
       v-if="error"
@@ -34,9 +37,6 @@
     >
       {{ error }}
     </Alert>
-    <router-link class="form__signup" to="/signup">
-      Cоздать новый аккаунт
-    </router-link>
   </div>
 </template>
 
@@ -100,12 +100,6 @@ export default {
 @import "../styles/forms.scss";
 
 #login {
-  @include centered-form;
-
-  .form__header {
-    @include form-header;
-  }
-
   .form__signup {
     text-decoration: underline;
   }

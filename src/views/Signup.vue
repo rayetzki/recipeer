@@ -1,6 +1,6 @@
 <template>
   <div id="signup">
-    <form>
+    <form class="form__centered">
       <h3 class="form__header">
         Регистрация в книге рецептов
       </h3>
@@ -145,18 +145,8 @@ export default {
 @import "../styles/forms.scss";
 
 #signup {
-  @include centered-form;
-
   .el-select {
     min-width: 100%;
-  }
-
-  .form__select {
-    @include form-select;
-  }
-
-  .form__header {
-    @include form-header;
   }
 }
 </style>
