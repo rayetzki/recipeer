@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <app-navigation v-if="isLoggedIn"></app-navigation>
   </div>
 </template>
 
@@ -9,10 +10,20 @@ import axios from "axios";
 import store from "./store";
 import { BASE_URL } from "./config/API";
 import { checkToken } from "./utils/checkToken";
+import Navigation from "./views/Navigation.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "app",
   store,
+  components: {
+    "app-navigation": Navigation
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "auth/isLoggedIn"
+    })
+  },
   created() {
     const token = this.$store.getters["auth/token"];
 
