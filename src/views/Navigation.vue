@@ -11,7 +11,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="far fa-building"></i>
+        <i class="fas fa-building"></i>
       </a>
       <a
         :href="href"
@@ -19,7 +19,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="fas fa-building"></i>
+        <i class="far fa-building"></i>
       </a>
     </router-link>
     <router-link v-slot="{ isExactActive, navigate, href }" to="/recipes">
@@ -29,7 +29,7 @@
         @click="navigate"
         v-show="isExactActive"
       >
-        <i class="fas fa-book-reader"></i>
+        <i class="fas fa-book-open"></i>
       </a>
       <a
         :href="href"
@@ -47,7 +47,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="far fa-bookmark"></i>
+        <i class="fas fa-bookmark"></i>
       </a>
       <a
         :href="href"
@@ -55,7 +55,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="fas fa-bookmark"></i>
+        <i class="far fa-bookmark"></i>
       </a>
     </router-link>
   </nav>
