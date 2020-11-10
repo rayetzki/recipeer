@@ -13,4 +13,5 @@ export const logout = ({ commit }) => {
   commit("setLoggedIn", false);
   localStorage.removeItem("token");
   commit("setToken", null);
+  router.push("/login");
 };

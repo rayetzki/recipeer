@@ -28,7 +28,10 @@ const routes = [
     path: "/recipes",
     name: "Recipes",
     component: () => import("../views/Recipes.vue"),
-    props: true
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 

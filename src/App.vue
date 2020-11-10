@@ -43,12 +43,9 @@ export default {
 
     axios.interceptors.response.use(undefined, error => {
       return new Promise((resolve, reject) => {
-        if (
-          error.status >= 401 &&
-          error.config &&
-          !error.config.__isRetryRequest
-        ) {
-          resolve(store.dispatch("auth/logout"));
+        if (error.status >= 401) {
+          store.dispatch("auth/logout", null, { root: true });
+          resolve();
         }
         reject(error);
       });
