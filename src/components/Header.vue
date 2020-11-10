@@ -3,6 +3,7 @@
     <div @click="$emit('toggle-drawer')">
       <i class="fas fa-bars"></i>
     </div>
+    <h1>Книга рецептов</h1>
     <section class="info">
       <img
         class="avatar"
@@ -38,6 +39,11 @@ header {
   align-items: center;
   justify-content: space-around;
   padding: 16px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
 
   .fa-bars {
     cursor: pointer;

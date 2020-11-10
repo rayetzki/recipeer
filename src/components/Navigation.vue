@@ -12,6 +12,7 @@
         @click="navigate"
       >
         <i class="fas fa-building"></i>
+        Домой
       </a>
       <a
         :href="href"
@@ -20,6 +21,7 @@
         @click="navigate"
       >
         <i class="far fa-building"></i>
+        Домой
       </a>
     </router-link>
     <router-link v-slot="{ isExactActive, navigate, href }" to="/recipes">
@@ -30,6 +32,7 @@
         v-show="isExactActive"
       >
         <i class="fas fa-book-open"></i>
+        Рецепты
       </a>
       <a
         :href="href"
@@ -38,6 +41,7 @@
         @click="navigate"
       >
         <i class="fas fa-book"></i>
+        Рецепты
       </a>
     </router-link>
     <router-link v-slot="{ isExactActive, navigate, href }" to="/favourites">
@@ -48,6 +52,7 @@
         @click="navigate"
       >
         <i class="fas fa-bookmark"></i>
+        Избранное
       </a>
       <a
         :href="href"
@@ -56,6 +61,7 @@
         @click="navigate"
       >
         <i class="far fa-bookmark"></i>
+        Избранное
       </a>
     </router-link>
   </nav>
@@ -68,6 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/theme.scss";
+
 #navigation {
   width: 100%;
   display: flex;
@@ -75,11 +83,18 @@ export default {
   justify-content: space-around;
   align-items: center;
   position: fixed;
-  bottom: 16px;
+  bottom: 0;
+  box-shadow: $borderBoxShadow;
 
   .navigation__link {
-    i {
-      font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+
+    svg {
+      margin-bottom: 4px;
+      font-size: 1.5em;
     }
   }
 }

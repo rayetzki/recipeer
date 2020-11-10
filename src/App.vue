@@ -10,7 +10,7 @@ import axios from "axios";
 import store from "./store";
 import { BASE_URL } from "./config/API";
 import { checkToken } from "./utils/checkToken";
-import Navigation from "./views/Navigation.vue";
+import Navigation from "./components/Navigation.vue";
 import { mapGetters } from "vuex";
 
 export default {
