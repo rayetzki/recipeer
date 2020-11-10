@@ -12,4 +12,5 @@ export const login = ({ commit }) => {
 export const logout = ({ commit }) => {
   commit("setLoggedIn", false);
   localStorage.removeItem("token");
+  commit("setToken", null);
 };
