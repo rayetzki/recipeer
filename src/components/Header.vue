@@ -59,8 +59,8 @@ header {
 
     .avatar {
       border-radius: 50%;
-      max-width: 48px;
-      max-height: 48px;
+      width: 64px;
+      height: 64px;
       object-fit: cover;
     }
 
