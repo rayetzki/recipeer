@@ -5,6 +5,7 @@
       <FormInput
         name="email"
         type="email"
+        inputmode="email"
         placeholder="Введите email"
         v-model="values.email"
         :error="errors.email"
@@ -12,6 +13,7 @@
       />
       <FormInput
         name="password"
+        inputmode="password"
         placeholder="Введите пароль"
         v-model="values.password"
         type="password"

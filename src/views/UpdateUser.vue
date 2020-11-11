@@ -124,15 +124,10 @@ export default {
       );
     },
     uploadAvatar(event) {
-      this.$store
-        .dispatch("user/uploadAvatar", event.target.files[0])
-        .then(avatar => {
-          this.$set(this.user, "avatar", avatar);
-        })
-        .catch(error => {
-          console.error(error);
-          this.error = "Could'nt set an avatar";
-        });
+      this.$store.dispatch("user/uploadAvatar", {
+        id: this.user.id,
+        avatar: event.target.files[0]
+      });
     },
     load() {
       this.$store.dispatch("user/update", this.user);

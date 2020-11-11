@@ -91,20 +91,22 @@ export const update = async (
   }
 };
 
-export const uploadAvatar = async ({ commit }, avatar) => {
+export const uploadAvatar = async ({ commit }, { id, avatar }) => {
   const formData = new FormData();
   formData.append("avatar", avatar);
 
   try {
     const uploadResponse = await axios.post(
-      `${API_URL}/users/avatar`,
+      `${API_URL}/users/avatar?id=${id}`,
       formData,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
 
-    if (uploadResponse.status === 200) {
-      commit("user/setAvatar", uploadResponse.data.avatar);
-      return uploadResponse.data;
+    if (uploadResponse.status === 201) {
+      const avatar = uploadResponse.data.avatar;
+
+      commit("setAvatar", avatar);
+      return avatar;
     }
   } catch (error) {
     console.error(error);
