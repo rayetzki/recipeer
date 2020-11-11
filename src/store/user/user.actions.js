@@ -104,7 +104,6 @@ export const uploadAvatar = async ({ commit }, { id, avatar }) => {
 
     if (uploadResponse.status === 201) {
       const avatar = uploadResponse.data.avatar;
-
       commit("setAvatar", avatar);
       return avatar;
     }
