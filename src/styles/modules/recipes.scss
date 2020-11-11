@@ -1,6 +1,21 @@
 @import "../theme.scss";
 @import "../breakpoints.scss";
 
+@mixin action($top, $right, $bottom, $left) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: $whiteBg;
+  border-radius: 50%;
+}
+
 header {
   display: flex;
   flex-direction: row;
@@ -43,11 +58,25 @@ header {
   grid-gap: 16px;
 }
 
-.recipes__preview--banner {
-  object-fit: cover;
-  width: 100%;
-  max-height: 200px;
-  border-radius: $borderRadius;
+.recipes__preview {
+  &--view {
+    position: relative;
+  }
+
+  &--banner {
+    object-fit: cover;
+    width: 100%;
+    max-height: 200px;
+    border-radius: $borderRadius;
+  }
+
+  &--remove {
+    @include action(16px, 16px, null, null);
+  }
+
+  &--saved {
+    @include action(null, 16px, 16px, null);
+  }
 }
 
 .recipes__info {

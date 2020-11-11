@@ -8,20 +8,42 @@
       </div>
     </header>
     <h5 v-if="recipes && recipes.length === 0" class="recipes__empty-list">
-      No recipes, please add one
+      Не найдено рецептов
     </h5>
     <ul class="recipes__grid" v-if="recipes && recipes.length >= 0">
       <li
         class="recipes__preview"
-        @click="showRecipesDetails(recipe.id)"
         :key="recipe.id"
-        v-for="recipe in recipes"
+        v-for="(recipe, index) in recipes"
       >
-        <img
-          src="https://keyassets-p2.timeincuk.net/wp/prod/wp-content/uploads/sites/53/2018/07/Cheap-family-meals-Recipes-under-%C2%A31-per-head-scaled.jpg"
-          alt="Recipe banner"
-          class="recipes__preview--banner"
-        />
+        <div class="recipes__preview--view">
+          <img
+            src="https://keyassets-p2.timeincuk.net/wp/prod/wp-content/uploads/sites/53/2018/07/Cheap-family-meals-Recipes-under-%C2%A31-per-head-scaled.jpg"
+            alt="Изображение рецепта"
+            class="recipes__preview--banner"
+          />
+          <span
+            @click="removeRecipe(index)"
+            v-if="recipe.author.id === user.id"
+            class="recipes__preview--remove"
+          >
+            <i class="fas fa-trash"></i>
+          </span>
+          <span
+            @click="toggleSaved(index)"
+            v-show="recipe.selected"
+            class="recipes__preview--saved"
+          >
+            <i class="far fa-bookmark"></i>
+          </span>
+          <span
+            @click="toggleSaved(index)"
+            v-show="!recipe.selected"
+            class="recipes__preview--saved"
+          >
+            <i class="fas fa-bookmark"></i>
+          </span>
+        </div>
         <div class="recipes__info">
           <h5 class="recipes__info--header">{{ recipe.title }}</h5>
           <div class="recipes__info--secondary">
@@ -40,6 +62,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { getRecipes } from "../store/recipes/recipes.actions";
 import { parseBalance } from "../utils/parseBalance";
 
@@ -56,6 +79,11 @@ export default {
       return this.getRecipes(this.page);
     }
   },
+  computed: {
+    ...mapGetters({
+      user: "user/user"
+    })
+  },
   mounted() {
     getRecipes().then(recipesData => {
       this.setRecipes(recipesData.recipes);
@@ -71,14 +99,18 @@ export default {
     getRecipes(page) {
       return getRecipes(page);
     },
-    showRecipesDetails(id) {
-      this.$router.push({
-        name: "Recipe",
-        query: { id }
-      });
-    },
     convertPrice(balance) {
       return parseBalance(balance);
+    },
+    toggleSaved(index) {
+      const recipe = this.recipes[index];
+      this.$set(this.recipes, index, {
+        ...recipe,
+        selected: !recipe.selected
+      });
+    },
+    removeRecipe(index) {
+      this.recipes.splice(index, 1);
     }
   }
 };
