@@ -75,6 +75,14 @@
         Дальше
       </Button>
     </form>
+    <Alert
+      v-if="error"
+      title="Sorry, there is an error occured"
+      show-icon
+      type="error"
+    >
+      {{ error }}
+    </Alert>
   </div>
 </template>
 

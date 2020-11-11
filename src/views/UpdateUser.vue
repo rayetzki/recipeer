@@ -45,21 +45,44 @@
         :error="errors.age"
         @validate="validate('age')"
       />
+      <Select
+        size="large"
+        name="nutrition"
+        class="form__select"
+        v-model="user.nutrition"
+        placeholder="Изменил тип питания?"
+      >
+        <Option
+          v-for="item in nutritionTypes"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </Select>
       <Button
-        @click.prevent="login"
+        @click.prevent="load"
         class="el-fade-in-linear"
         :disabled="disabled"
       >
         Обновить
       </Button>
     </form>
+    <Alert
+      v-if="error"
+      title="Sorry, there is an error occured"
+      show-icon
+      type="error"
+    >
+      {{ error }}
+    </Alert>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import FormInput from "../components/FormInput.vue";
-import { Button } from "element-ui";
+import { Button, Alert, Select, Option } from "element-ui";
+import { nutritionTypes } from "../data/nutritionTypes";
 import { validateField } from "../utils/runValidation";
 import { UpdateUserValidationSchema } from "../validation-schemas/UpdateUser.schema";
 
@@ -67,7 +90,10 @@ export default {
   name: "UpdateUser",
   components: {
     FormInput,
-    Button
+    Button,
+    Alert,
+    Select,
+    Option
   },
   computed: {
     ...mapGetters({
@@ -79,6 +105,7 @@ export default {
   },
   data() {
     return {
+      nutritionTypes,
       error: "",
       errors: {
         email: "",
@@ -99,13 +126,13 @@ export default {
     },
     previewImage(event) {
       const reader = new FileReader();
-      const file = event.target.files[0];
-
       reader.addEventListener("load", event => {
         this.$set(this.user, "avatar", event.target.result);
       });
-
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(event.target.files[0]);
+    },
+    load() {
+      return this.$store.dispatch("user/update", this.user);
     }
   }
 };

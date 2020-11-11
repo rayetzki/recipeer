@@ -1,5 +1,5 @@
 import { setUser, setLoading, setError } from "./user.mutations";
-import { login, logout, register } from "./user.actions";
+import { login, logout, register, update } from "./user.actions";
 
 export const user = {
   namespaced: true,
@@ -16,7 +16,8 @@ export const user = {
   actions: {
     login,
     logout,
-    register
+    register,
+    update
   },
   getters: {
     user: state => state.user,

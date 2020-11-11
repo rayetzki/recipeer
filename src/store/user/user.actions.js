@@ -1,5 +1,6 @@
 import { API_URL } from "../../config/API";
 import axios from "axios";
+import store from "../../store";
 
 export const register = async (
   { commit, dispatch },
@@ -59,6 +60,36 @@ export const login = async ({ commit, dispatch }, { email, password }) => {
       error.response ? error.response.data.message : error.message
     );
     localStorage.removeItem("token");
+  } finally {
+    commit("setLoading", false);
+  }
+};
+
+export const update = async (
+  { commit },
+  { id, name, avatar, age, email, nutrition }
+) => {
+  const user = store.getters["user/user"];
+
+  try {
+    const updateResult = await axios.put(`${API_URL}/users/${id}`, {
+      name,
+      avatar,
+      age,
+      email,
+      nutrition
+    });
+
+    if (updateResult.status === 200) {
+      commit("setError", "");
+      commit("setUser", { ...user, name, avatar, age, email, nutrition });
+    }
+  } catch (error) {
+    console.error(error);
+    commit(
+      "setError",
+      error.response ? error.response.data.message : error.message
+    );
   } finally {
     commit("setLoading", false);
   }

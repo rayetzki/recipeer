@@ -12,7 +12,6 @@
       :title="title"
       :placeholder="placeholder"
       :class="['input', !!error && 'input__error']"
-      @change="$emit('onchange', $event)"
       @blur="$emit('validate')"
       @keydown="$emit('validate')"
       @input="$emit('input', $event)"
