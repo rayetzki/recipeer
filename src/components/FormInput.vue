@@ -7,9 +7,12 @@
       :type="type"
       :inputmode="inputmode"
       :value="value"
-      clearable
+      :clearable="clearable"
+      :accept="accept"
+      :title="title"
       :placeholder="placeholder"
       :class="['input', !!error && 'input__error']"
+      @change="$emit('onchange', $event)"
       @blur="$emit('validate')"
       @keydown="$emit('validate')"
       @input="$emit('input', $event)"
@@ -33,7 +36,10 @@ export default {
     value: { required: true },
     error: { required: true },
     inputmode: { required: false },
-    placeholder: { required: true }
+    placeholder: { required: true },
+    title: { required: false },
+    clearable: { required: false, default: true },
+    accept: { required: false }
   }
 };
 </script>

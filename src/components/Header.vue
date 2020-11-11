@@ -5,13 +5,15 @@
     </div>
     <h1>Книга рецептов</h1>
     <section class="info">
-      <img
-        class="avatar"
-        v-if="!avatar"
-        src="https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Cat-512.png"
-        alt="User avatar"
-      />
-      <img class="avatar" v-if="avatar" :src="avatar" />
+      <router-link to="/update-user">
+        <img
+          class="avatar"
+          v-if="!avatar"
+          src="https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Cat-512.png"
+          alt="User avatar"
+        />
+        <img class="avatar" v-if="avatar" :src="avatar" />
+      </router-link>
     </section>
     <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
   </header>

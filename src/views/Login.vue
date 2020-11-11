@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <form class="form__centered">
-      <h3 class="form__header">Введите email или пароль</h3>
+      <h3 class="form__header">Задай email и пароль</h3>
       <FormInput
         name="email"
         type="email"
