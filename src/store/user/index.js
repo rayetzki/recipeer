@@ -1,5 +1,11 @@
-import { setUser, setLoading, setError } from "./user.mutations";
-import { login, logout, register, update } from "./user.actions";
+import {
+  setUser,
+  setLoading,
+  setError,
+  updateUser,
+  setAvatar
+} from "./user.mutations";
+import { login, logout, register, update, uploadAvatar } from "./user.actions";
 
 export const user = {
   namespaced: true,
@@ -11,13 +17,16 @@ export const user = {
   mutations: {
     setUser,
     setLoading,
-    setError
+    setError,
+    updateUser,
+    setAvatar
   },
   actions: {
     login,
     logout,
     register,
-    update
+    update,
+    uploadAvatar
   },
   getters: {
     user: state => state.user,

@@ -1,6 +1,5 @@
 import { API_URL } from "../../config/API";
 import axios from "axios";
-import store from "../../store";
 
 export const register = async (
   { commit, dispatch },
@@ -67,14 +66,11 @@ export const login = async ({ commit, dispatch }, { email, password }) => {
 
 export const update = async (
   { commit },
-  { id, name, avatar, age, email, nutrition }
+  { id, name, age, email, nutrition }
 ) => {
-  const user = store.getters["user/user"];
-
   try {
     const updateResult = await axios.put(`${API_URL}/users/${id}`, {
       name,
-      avatar,
       age,
       email,
       nutrition
@@ -82,7 +78,7 @@ export const update = async (
 
     if (updateResult.status === 200) {
       commit("setError", "");
-      commit("setUser", { ...user, name, avatar, age, email, nutrition });
+      commit("updateUser", { name, age, email, nutrition });
     }
   } catch (error) {
     console.error(error);
@@ -92,6 +88,26 @@ export const update = async (
     );
   } finally {
     commit("setLoading", false);
+  }
+};
+
+export const uploadAvatar = async ({ commit }, avatar) => {
+  const formData = new FormData();
+  formData.append("avatar", avatar);
+
+  try {
+    const uploadResponse = await axios.post(
+      `${API_URL}/users/avatar`,
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
+
+    if (uploadResponse.status === 200) {
+      commit("user/setAvatar", uploadResponse.data.avatar);
+      return uploadResponse.data;
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 

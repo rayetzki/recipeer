@@ -16,7 +16,7 @@
             name="avatar"
             title=" "
             accept="image/jpeg, image/png"
-            @change="previewImage"
+            @change="uploadAvatar"
             type="file"
           />
         </label>
@@ -110,8 +110,7 @@ export default {
       errors: {
         email: "",
         name: "",
-        age: "",
-        avatar: ""
+        age: ""
       }
     };
   },
@@ -124,15 +123,19 @@ export default {
         this.errors
       );
     },
-    previewImage(event) {
-      const reader = new FileReader();
-      reader.addEventListener("load", event => {
-        this.$set(this.user, "avatar", event.target.result);
-      });
-      reader.readAsDataURL(event.target.files[0]);
+    uploadAvatar(event) {
+      this.$store
+        .dispatch("user/uploadAvatar", event.target.files[0])
+        .then(avatar => {
+          this.$set(this.user, "avatar", avatar);
+        })
+        .catch(error => {
+          console.error(error);
+          this.error = "Could'nt set an avatar";
+        });
     },
     load() {
-      return this.$store.dispatch("user/update", this.user);
+      this.$store.dispatch("user/update", this.user);
     }
   }
 };
