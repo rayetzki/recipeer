@@ -1,4 +1,4 @@
-import { saveToken, login, logout } from "./auth.actions";
+import { saveToken, login, logout, refresh } from "./auth.actions";
 import { setLoggedIn, setToken } from "./auth.mutations";
 
 export const auth = {
@@ -16,7 +16,8 @@ export const auth = {
   actions: {
     saveToken,
     login,
-    logout
+    logout,
+    refresh
   },
   getters: {
     isLoggedIn: state => state.isLoggedIn,

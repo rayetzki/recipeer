@@ -8,10 +8,10 @@
 <script>
 import axios from "axios";
 import store from "./store";
+import { mapGetters } from "vuex";
 import { BASE_URL } from "./config/API";
 import { checkToken } from "./utils/checkToken";
 import Navigation from "./components/Navigation.vue";
-import { mapGetters } from "vuex";
 
 export default {
   name: "app",
@@ -26,9 +26,16 @@ export default {
   },
   created() {
     const token = this.$store.getters["auth/token"];
+    const refreshIn = token
+      ? new Date(token.expiresIn).getTime() - new Date().getTime()
+      : 0;
 
-    if (token && !checkToken(token)) {
-      store.dispatch("auth/logout");
+    if (token && !checkToken(token)) store.dispatch("auth/logout");
+
+    if (refreshIn > 0) {
+      setTimeout(() => {
+        store.dispatch("auth/refresh", null, { root: true });
+      }, refreshIn);
     }
 
     axios.defaults.baseURL = BASE_URL;
@@ -36,7 +43,7 @@ export default {
     axios.interceptors.request.use(config => {
       const token = this.$store.getters["auth/token"];
       if (token !== null) {
-        config.headers["Authorization"] = `Bearer ${token.jwt}`;
+        config.headers["Authorization"] = `Bearer ${token.accessToken}`;
       }
       return Promise.resolve(config);
     });

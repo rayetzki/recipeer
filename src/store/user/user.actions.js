@@ -33,15 +33,23 @@ export const register = async (
 
 export const login = async ({ commit, dispatch }, { email, password }) => {
   try {
-    const tokenResponse = await axios.post(`${API_URL}/users/login`, {
+    const tokenResponse = await axios.post(`${API_URL}/auth/login`, {
       email,
       password
     });
 
     if (tokenResponse.status === 201) {
-      const { jwt, expiresIn, userId } = tokenResponse.data;
-      const token = { jwt, expiresIn };
+      const {
+        accessToken,
+        expiresIn,
+        refreshToken,
+        refreshExpiresIn,
+        userId
+      } = tokenResponse.data;
+      const token = { accessToken, expiresIn };
+      const refresh = { refreshToken, refreshExpiresIn };
       localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("refreshToken", JSON.stringify(refresh));
       dispatch("auth/saveToken", token, { root: true });
 
       const userResponse = await axios.get(`${API_URL}/users/${userId}`);

@@ -3,13 +3,7 @@
     <form class="form__centered">
       <h3 class="form__header">Здесь можно обновить данные о себе</h3>
       <section class="form__avatar">
-        <img
-          :src="
-            user.avatar ||
-              'https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Cat-512.png'
-          "
-          alt="Твоя аватарка"
-        />
+        <img :src="user.avatar" alt="Твоя аватарка" />
         <label class="form__file-label">
           Выбери аватарку
           <input
