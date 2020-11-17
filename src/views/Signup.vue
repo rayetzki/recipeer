@@ -116,6 +116,7 @@ export default {
         { value: "editor", label: "Редактор" },
         { value: "user", label: "Пользователь" }
       ],
+      error: "",
       errors: {
         name: "",
         age: "",
