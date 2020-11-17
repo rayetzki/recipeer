@@ -26,16 +26,28 @@ export default {
   },
   created() {
     const token = this.$store.getters["auth/token"];
-    const refreshIn = token
+    const refreshToken = this.$store.getters["auth/refreshToken"];
+
+    const expiration = token
       ? new Date(token.expiresIn).getTime() - new Date().getTime()
       : 0;
 
-    if (token && !checkToken(token)) store.dispatch("auth/logout");
+    const refreshExpiration = refreshToken
+      ? new Date(refreshToken.refreshExpiresIn).getTime() - new Date().getTime()
+      : 0;
 
-    if (refreshIn > 0) {
+    console.log({ expiration, refreshExpiration });
+
+    if (token && !checkToken(token)) {
+      store.dispatch("auth/logout", null, { root: true });
+    }
+
+    if (expiration > 0 && refreshExpiration > 0) {
       setTimeout(() => {
         store.dispatch("auth/refresh", null, { root: true });
-      }, refreshIn);
+      }, expiration);
+    } else if (expiration < 0 && refreshExpiration > 0) {
+      store.dispatch("auth/refresh", null, { root: true }, refreshToken);
     }
 
     axios.defaults.baseURL = BASE_URL;

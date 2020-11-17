@@ -71,8 +71,8 @@ export default {
   computed: {
     ...mapGetters({
       user: "user/user",
-      loading: "user/loading",
-      error: "user/error"
+      loading: "auth/loading",
+      error: "auth/error"
     }),
     disabled() {
       return (
@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     login() {
-      return this.$store.dispatch("user/login", this.values);
+      return this.$store.dispatch("auth/login", this.values, { root: true });
     },
     validate(field) {
       return validateField(

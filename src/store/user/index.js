@@ -5,7 +5,7 @@ import {
   updateUser,
   setAvatar
 } from "./user.mutations";
-import { login, logout, register, update, uploadAvatar } from "./user.actions";
+import { register, update, uploadAvatar, saveUserData } from "./user.actions";
 
 export const user = {
   namespaced: true,
@@ -22,11 +22,10 @@ export const user = {
     setAvatar
   },
   actions: {
-    login,
-    logout,
     register,
     update,
-    uploadAvatar
+    uploadAvatar,
+    saveUserData
   },
   getters: {
     user: state => state.user,

@@ -1,5 +1,6 @@
 import { API_URL } from "../../config/API";
 import axios from "axios";
+import router from "../../router";
 
 export const register = async (
   { commit, dispatch },
@@ -20,53 +21,13 @@ export const register = async (
     if (registerResponse.status === 201) {
       dispatch("user/login", { email, password }, { root: true });
       commit("setError", "");
+      router.push("/");
     }
   } catch (error) {
     commit(
       "setError",
       error.response ? error.response.data.message : error.message
     );
-  } finally {
-    commit("setLoading", false);
-  }
-};
-
-export const login = async ({ commit, dispatch }, { email, password }) => {
-  try {
-    const tokenResponse = await axios.post(`${API_URL}/auth/login`, {
-      email,
-      password
-    });
-
-    if (tokenResponse.status === 201) {
-      const {
-        accessToken,
-        expiresIn,
-        refreshToken,
-        refreshExpiresIn,
-        userId
-      } = tokenResponse.data;
-      const token = { accessToken, expiresIn };
-      const refresh = { refreshToken, refreshExpiresIn };
-      localStorage.setItem("token", JSON.stringify(token));
-      localStorage.setItem("refreshToken", JSON.stringify(refresh));
-      dispatch("auth/saveToken", token, { root: true });
-
-      const userResponse = await axios.get(`${API_URL}/users/${userId}`);
-
-      if (userResponse.status === 200) {
-        commit("setUser", userResponse.data);
-        commit("setError", "");
-        dispatch("auth/login", null, { root: true });
-      }
-    }
-  } catch (error) {
-    console.error(error);
-    commit(
-      "setError",
-      error.response ? error.response.data.message : error.message
-    );
-    localStorage.removeItem("token");
   } finally {
     commit("setLoading", false);
   }
@@ -120,7 +81,6 @@ export const uploadAvatar = async ({ commit }, { id, avatar }) => {
   }
 };
 
-export const logout = ({ commit, dispatch }) => {
-  commit("setUser", null);
-  dispatch("auth/logout", null, { root: true });
+export const saveUserData = ({ commit }, userData) => {
+  commit("setUser", userData);
 };
