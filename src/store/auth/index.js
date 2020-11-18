@@ -7,7 +7,7 @@ import {
   setLoading
 } from "./auth.mutations";
 
-export const auth = {
+export default {
   namespaced: true,
   state: {
     loading: false,

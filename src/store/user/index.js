@@ -7,7 +7,7 @@ import {
 } from "./user.mutations";
 import { register, update, uploadAvatar, saveUserData } from "./user.actions";
 
-export const user = {
+export default {
   namespaced: true,
   state: {
     user: null,

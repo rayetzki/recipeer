@@ -46,7 +46,6 @@ export const login = async ({ commit, dispatch }, { email, password }) => {
       }
     }
   } catch (error) {
-    console.error(error);
     commit(
       "setError",
       error.response ? error.response.data.message : error.message

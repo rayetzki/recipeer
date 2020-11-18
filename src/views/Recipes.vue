@@ -4,7 +4,7 @@
       <h1 class="recipes__title">Рецепты</h1>
       <div class="recipes__options">
         <span id="search"><i class="fas fa-search"></i></span>
-        <span id="settings"><i class="fas fa-cog"></i></span>
+        <span id="settings"><i class="fas fa-plus-circle"></i></span>
       </div>
     </header>
     <h5 v-if="recipes && recipes.length === 0" class="recipes__empty-list">
@@ -74,30 +74,25 @@ export default {
       page: 1
     };
   },
-  watch: {
-    page() {
-      return this.getRecipes(this.page);
-    }
-  },
   computed: {
     ...mapGetters({
       user: "user/user"
     })
   },
   mounted() {
-    getRecipes().then(recipesData => {
-      this.setRecipes(recipesData.recipes);
+    this.getRecipes(this.page).then(data => {
+      this.recipes = data.recipes;
     });
   },
   methods: {
+    getRecipes(page) {
+      return getRecipes(page);
+    },
     setRecipes(recipesData) {
       this.recipes = recipesData;
     },
     setPage(page) {
       this.page = page;
-    },
-    getRecipes(page) {
-      return getRecipes(page);
     },
     convertPrice(balance) {
       return parseBalance(balance);
