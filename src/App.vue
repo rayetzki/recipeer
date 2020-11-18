@@ -31,16 +31,11 @@ export default {
 
     if (expiration > 0 && refreshExpiration > 0) {
       setTimeout(() => {
-        store.dispatch("auth/refresh", null, { root: true });
+        store.dispatch("auth/refresh", refresh.refreshToken, { root: true });
       }, expiration);
     } else if (expiration < 0 && refreshExpiration > 0) {
-      store.dispatch(
-        "auth/refresh",
-        null,
-        { root: true },
-        refresh.refreshToken
-      );
-    } else {
+      store.dispatch("auth/refresh", refresh.refreshToken, { root: true });
+    } else if (expiration < 0 && refreshExpiration < 0) {
       store.dispatch("auth/logout", null, { root: true });
     }
   },

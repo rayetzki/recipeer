@@ -20,9 +20,20 @@ export const getRecipes = (page, userId = null) => {
 export const getRecipeById = id => {
   return axios
     .get(`${API_URL}/recipes?id=${id}`)
-    .then(recipeResponse => {
-      if (recipeResponse.status === 200) {
-        return recipeResponse.data;
+    .then(response => {
+      if (response.status === 200) {
+        return response.data;
+      }
+    })
+    .catch(error => console.error(error));
+};
+
+export const getRandomRecipe = () => {
+  return axios
+    .get(`${API_URL}/recipes/recommendation`)
+    .then(response => {
+      if (response.status === 200) {
+        return response.data;
       }
     })
     .catch(error => console.error(error));

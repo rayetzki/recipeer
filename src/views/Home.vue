@@ -7,7 +7,7 @@
       :size="'300px'"
     >
       <router-link to="" v-if="isLoggedIn">
-        <span class="logout" @click="logout">Logout</span>
+        <span class="logout" @click="logout">Выйти</span>
       </router-link>
     </el-drawer>
     <app-header
