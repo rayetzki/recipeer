@@ -11,6 +11,7 @@ export const logout = ({ commit }) => {
   commit("setToken", null);
   commit("setRefreshToken", null);
   localStorage.clear();
+  window.location.reload();
   router.push("/login");
 };
 
@@ -65,21 +66,21 @@ export const refresh = async ({ commit }, { userId, refreshToken }) => {
     { refreshToken }
   );
 
-  if (refreshResponse.status === 200) {
+  if (refreshResponse.status === 201) {
     const {
-      token,
+      accessToken,
       expiresIn,
       refreshToken,
       refreshExpiresIn
     } = refreshResponse.data;
 
-    const accessToken = { token, expiresIn };
+    const access = { accessToken, expiresIn };
     const refresh = { refreshToken, refreshExpiresIn };
 
-    localStorage.setItem("token", JSON.stringify(accessToken));
+    localStorage.setItem("token", JSON.stringify(access));
     localStorage.setItem("refreshToken", JSON.stringify(refresh));
 
-    commit("setToken", accessToken);
+    commit("setToken", access);
     commit("setRefreshToken", refresh);
   }
 };

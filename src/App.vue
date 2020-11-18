@@ -32,7 +32,11 @@ export default {
 
     if (expiration > 0 && refreshExpiration > 0) {
       setTimeout(() => {
-        store.dispatch("auth/refresh", refresh.refreshToken, { root: true });
+        store.dispatch(
+          "auth/refresh",
+          { userId: user.id, refreshToken: refresh.refreshToken },
+          { root: true }
+        );
       }, expiration);
     }
 

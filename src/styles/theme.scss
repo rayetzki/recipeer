@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
 /* typography */
 $primary-font: "Avenir", Helvetica, Arial, sans-serif;
+$secondary-font: "Comfortaa", cursive;
 $monospace-font: "monospace";
 $textPrimary: #141b22;
 $textSecondary: #a09e9e;
@@ -16,6 +18,7 @@ $borderBoxShadow: 2px 3px 5px 0px $black;
 
 /* backgrounds */
 $whiteBg: $textWhite;
+$boxShadow: 3px 3px 5px 6px #ccc;
 
 /* info colors */
 $infoBlock: #ffffffd5;
