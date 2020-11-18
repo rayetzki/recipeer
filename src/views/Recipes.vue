@@ -30,14 +30,14 @@
             <i class="fas fa-trash"></i>
           </span>
           <span
-            @click="toggleSaved(index)"
+            @click="toggleSaved(recipe.id)"
             v-show="!recipe.favourite"
             class="recipes__preview--saved"
           >
             <i class="far fa-bookmark"></i>
           </span>
           <span
-            @click="toggleSaved(index)"
+            @click="toggleSaved(recipe.id)"
             v-show="recipe.favourite"
             class="recipes__preview--saved"
           >
@@ -63,8 +63,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getRecipes } from "../store/recipes/recipes.actions";
+import { getRecipes, deleteRecipe } from "../store/recipes/recipes.actions";
 import { parseBalance } from "../utils/parseBalance";
+import {
+  removeFavourite,
+  addFavourite
+} from "../store/favourites/favourites.actions";
 
 export default {
   name: "recipes-list",
@@ -97,15 +101,30 @@ export default {
     convertPrice(balance) {
       return parseBalance(balance);
     },
-    toggleSaved(index) {
+    toggleSaved(id) {
+      const index = this.recipes.findIndex(recipe => recipe.id === id);
       const recipe = this.recipes[index];
-      this.$set(this.recipes, index, {
-        ...recipe,
-        favourite: Boolean(!recipe.favourite)
-      });
+      if (!recipe.favourite) {
+        addFavourite(this.user.id, id).then(() => {
+          this.$set(this.recipes, index, {
+            ...recipe,
+            favourite: Boolean(!recipe.favourite)
+          });
+        });
+      } else {
+        removeFavourite(this.user.id, id).then(() => {
+          this.$set(this.recipes, index, {
+            ...recipe,
+            favourite: Boolean(!recipe.favourite)
+          });
+        });
+      }
     },
-    removeRecipe(index) {
-      this.recipes.splice(index, 1);
+    removeRecipe(id) {
+      const index = this.recipes.findIndex(recipe => recipe.id === id);
+      deleteRecipe(id).then(() => {
+        this.recipes.splice(index, 1);
+      });
     }
   }
 };

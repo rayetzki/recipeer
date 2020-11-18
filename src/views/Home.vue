@@ -147,7 +147,7 @@ export default {
 
   &__header {
     text-align: center;
-    margin: 64px 16px 0;
+    margin: 6vh 16px 0;
     font-size: 14px;
     letter-spacing: 0.3px;
     font-family: $secondary-font;

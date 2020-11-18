@@ -38,3 +38,14 @@ export const getRandomRecipe = () => {
     })
     .catch(error => console.error(error));
 };
+
+export const deleteRecipe = id => {
+  return axios
+    .delete(`${API_URL}/recipes/${id}`)
+    .then(response => {
+      if (response.status === 200) {
+        return response.data;
+      }
+    })
+    .catch(error => console.error(error));
+};
