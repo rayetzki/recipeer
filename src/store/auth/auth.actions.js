@@ -56,13 +56,14 @@ export const login = async ({ commit, dispatch }, { email, password }) => {
   }
 };
 
-export const refresh = async ({ commit }, refreshToken) => {
+export const refresh = async ({ commit }, { userId, refreshToken }) => {
   localStorage.removeItem("token");
   commit("setToken", null);
 
-  const refreshResponse = await axios.post(`${API_URL}/auth/refresh`, {
-    refreshToken
-  });
+  const refreshResponse = await axios.post(
+    `${API_URL}/auth/refresh?id=${userId}`,
+    { refreshToken }
+  );
 
   if (refreshResponse.status === 200) {
     const {

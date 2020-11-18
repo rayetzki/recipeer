@@ -31,14 +31,14 @@
           </span>
           <span
             @click="toggleSaved(index)"
-            v-show="recipe.selected"
+            v-show="!recipe.favourite"
             class="recipes__preview--saved"
           >
             <i class="far fa-bookmark"></i>
           </span>
           <span
             @click="toggleSaved(index)"
-            v-show="!recipe.selected"
+            v-show="recipe.favourite"
             class="recipes__preview--saved"
           >
             <i class="fas fa-bookmark"></i>
@@ -101,7 +101,7 @@ export default {
       const recipe = this.recipes[index];
       this.$set(this.recipes, index, {
         ...recipe,
-        selected: !recipe.selected
+        favourite: Boolean(!recipe.favourite)
       });
     },
     removeRecipe(index) {

@@ -24,6 +24,7 @@ export default {
     })
   },
   updated() {
+    const user = this.$store.getters["user/user"];
     const token = this.$store.getters["auth/token"];
     const refresh = this.$store.getters["auth/refreshToken"];
     const expiration = token && token.expiresIn - Date.now();
@@ -36,7 +37,11 @@ export default {
     }
 
     if (expiration < 0 && refreshExpiration > 0) {
-      store.dispatch("auth/refresh", refresh.refreshToken, { root: true });
+      store.dispatch(
+        "auth/refresh",
+        { userId: user.id, refreshToken: refresh.refreshToken },
+        { root: true }
+      );
     }
 
     if (expiration < 0 && refreshExpiration < 0) {
