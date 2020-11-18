@@ -18,7 +18,7 @@
       >
         <div class="recipes__preview--view">
           <img
-            src="https://keyassets-p2.timeincuk.net/wp/prod/wp-content/uploads/sites/53/2018/07/Cheap-family-meals-Recipes-under-%C2%A31-per-head-scaled.jpg"
+            :src="recipe.banner"
             alt="Изображение рецепта"
             class="recipes__preview--banner"
           />

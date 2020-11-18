@@ -12,7 +12,6 @@
     </el-drawer>
     <app-header
       :avatar="user && user.avatar"
-      :isLoggedIn="isLoggedIn"
       @toggle-drawer="openDrawer = !openDrawer"
     ></app-header>
   </div>

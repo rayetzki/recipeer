@@ -9,8 +9,9 @@ export const saveToken = ({ commit }, token) => {
 export const logout = ({ commit }) => {
   commit("setLoggedIn", false);
   commit("setToken", null);
+  commit("setRefreshToken", null);
   localStorage.clear();
-  router.push("/");
+  router.push("/login");
 };
 
 export const login = async ({ commit, dispatch }, { email, password }) => {

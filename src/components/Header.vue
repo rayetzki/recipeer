@@ -9,7 +9,6 @@
         <img class="avatar" v-if="avatar" :src="avatar" />
       </router-link>
     </section>
-    <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
   </header>
 </template>
 
@@ -17,13 +16,7 @@
 export default {
   name: "app-header",
   props: {
-    avatar: String || null,
-    isLoggedIn: Boolean
-  },
-  methods: {
-    logout() {
-      return this.$store.dispatch("auth/logout", null, { root: true });
-    }
+    avatar: String || null
   }
 };
 </script>
@@ -53,8 +46,8 @@ header {
 
     .avatar {
       border-radius: 50%;
-      width: 64px;
-      height: 64px;
+      width: 36px;
+      height: 36px;
       object-fit: cover;
     }
 

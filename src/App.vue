@@ -10,7 +10,6 @@ import axios from "axios";
 import store from "./store";
 import { mapGetters } from "vuex";
 import { BASE_URL } from "./config/API";
-import { checkToken } from "./utils/checkToken";
 import Navigation from "./components/Navigation.vue";
 
 export default {
@@ -24,32 +23,28 @@ export default {
       isLoggedIn: "auth/isLoggedIn"
     })
   },
-  created() {
+  updated() {
     const token = this.$store.getters["auth/token"];
-    const refreshToken = this.$store.getters["auth/refreshToken"];
-
-    const expiration = token
-      ? new Date(token.expiresIn).getTime() - new Date().getTime()
-      : 0;
-
-    const refreshExpiration = refreshToken
-      ? new Date(refreshToken.refreshExpiresIn).getTime() - new Date().getTime()
-      : 0;
-
-    console.log({ expiration, refreshExpiration });
-
-    if (token && !checkToken(token)) {
-      store.dispatch("auth/logout", null, { root: true });
-    }
+    const refresh = this.$store.getters["auth/refreshToken"];
+    const expiration = token && token.expiresIn - Date.now();
+    const refreshExpiration = refresh && refresh.refreshExpiresIn - Date.now();
 
     if (expiration > 0 && refreshExpiration > 0) {
       setTimeout(() => {
         store.dispatch("auth/refresh", null, { root: true });
       }, expiration);
     } else if (expiration < 0 && refreshExpiration > 0) {
-      store.dispatch("auth/refresh", null, { root: true }, refreshToken);
+      store.dispatch(
+        "auth/refresh",
+        null,
+        { root: true },
+        refresh.refreshToken
+      );
+    } else {
+      store.dispatch("auth/logout", null, { root: true });
     }
-
+  },
+  created() {
     axios.defaults.baseURL = BASE_URL;
 
     axios.interceptors.request.use(config => {
