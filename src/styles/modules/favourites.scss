@@ -8,25 +8,14 @@ header {
   align-items: center;
   justify-content: space-between;
 
-  .recipes__title {
+  .favourites__title {
     font-size: 24px;
     font-weight: bold;
     text-align: left;
   }
-
-  .recipes__options {
-    & > * {
-      cursor: pointer;
-      font-size: 1.2em;
-    }
-
-    #search {
-      margin: 0 24px;
-    }
-  }
 }
 
-.recipes__empty-list {
+.favourites__empty-list {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -36,7 +25,7 @@ header {
   font-size: 16px;
 }
 
-.recipes__grid {
+.favourites__grid {
   top: 16px;
   margin: 1.5em auto;
   display: grid;
@@ -44,7 +33,7 @@ header {
   grid-gap: 16px;
 }
 
-.recipes__preview {
+.favourite__preview {
   &--view {
     position: relative;
   }
@@ -56,16 +45,12 @@ header {
     border-radius: $borderRadius;
   }
 
-  &--remove {
-    @include action(16px, 16px, null, null);
-  }
-
   &--saved {
     @include action(null, 16px, 16px, null);
   }
 }
 
-.recipes__info {
+.favourite__info {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -105,7 +90,7 @@ header {
 }
 
 @media screen and (min-width: $mobileS) and (max-width: $mobileL) {
-  .recipes__grid {
+  .favourites__grid {
     grid-template-columns: 1fr;
   }
 }

@@ -11,7 +11,6 @@ export const logout = ({ commit }) => {
   commit("setToken", null);
   commit("setRefreshToken", null);
   localStorage.clear();
-  window.location.reload();
   router.push("/login");
 };
 
