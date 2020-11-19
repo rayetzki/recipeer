@@ -23,7 +23,7 @@ export default {
       isLoggedIn: "auth/isLoggedIn"
     })
   },
-  mounted() {
+  created() {
     const user = this.$store.getters["user/user"];
     const token = this.$store.getters["auth/token"];
     const refresh = this.$store.getters["auth/refreshToken"];

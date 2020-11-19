@@ -33,62 +33,6 @@ header {
   grid-gap: 16px;
 }
 
-.favourite__preview {
-  &--view {
-    position: relative;
-  }
-
-  &--banner {
-    object-fit: cover;
-    width: 100%;
-    max-height: 200px;
-    border-radius: $borderRadius;
-  }
-
-  &--saved {
-    @include action(null, 16px, 16px, null);
-  }
-}
-
-.favourite__info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
-  margin: 12px 0 8px 0;
-  $this: &;
-
-  &--header {
-    width: fit-content;
-    font-size: 16px;
-    font-weight: 400;
-    color: $textPrimary;
-  }
-
-  &--secondary {
-    display: flex;
-    flex-direction: row;
-    opacity: 0.6;
-    align-items: flex-end;
-    justify-content: space-between;
-
-    #{$this}--time {
-      display: flex;
-      flex-direction: row;
-      font-size: 12px;
-      margin-top: 8px;
-
-      svg {
-        margin-right: 4px;
-      }
-    }
-
-    #{$this}--cost {
-      font-size: 12px;
-    }
-  }
-}
-
 @media screen and (min-width: $mobileS) and (max-width: $mobileL) {
   .favourites__grid {
     grid-template-columns: 1fr;
