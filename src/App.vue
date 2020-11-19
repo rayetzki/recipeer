@@ -23,7 +23,7 @@ export default {
       isLoggedIn: "auth/isLoggedIn"
     })
   },
-  updated() {
+  mounted() {
     const user = this.$store.getters["user/user"];
     const token = this.$store.getters["auth/token"];
     const refresh = this.$store.getters["auth/refreshToken"];
@@ -51,8 +51,7 @@ export default {
     if (expiration < 0 && refreshExpiration < 0) {
       store.dispatch("auth/logout", null, { root: true });
     }
-  },
-  created() {
+
     axios.defaults.baseURL = BASE_URL;
 
     axios.interceptors.request.use(config => {

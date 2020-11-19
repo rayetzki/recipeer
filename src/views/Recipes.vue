@@ -11,11 +11,7 @@
       Не найдено рецептов
     </h5>
     <ul class="recipes__grid" v-if="recipes && recipes.length >= 0">
-      <li
-        class="recipes__preview"
-        :key="recipe.id"
-        v-for="(recipe, index) in recipes"
-      >
+      <li class="recipes__preview" :key="recipe.id" v-for="recipe in recipes">
         <div class="recipes__preview--view">
           <img
             :src="recipe.banner"
@@ -23,7 +19,7 @@
             class="recipes__preview--banner"
           />
           <span
-            @click="removeRecipe(index)"
+            @click="removeRecipe(recipe.id)"
             v-if="recipe.author.id === user.id"
             class="recipes__preview--remove"
           >
@@ -75,7 +71,7 @@ export default {
   data() {
     return {
       recipes: [],
-      page: 1
+      page: 0
     };
   },
   computed: {
