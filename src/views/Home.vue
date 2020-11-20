@@ -203,7 +203,7 @@ export default {
       font-family: $secondary-font;
       display: flex;
       flex-direction: row;
-      font-size: 10px;
+      font-size: 12px;
 
       > p {
         font-family: $secondary-font;
@@ -216,7 +216,7 @@ export default {
 
     .secondary__info--cost {
       font-family: $secondary-font;
-      font-size: 10px;
+      font-size: 12px;
     }
   }
 
