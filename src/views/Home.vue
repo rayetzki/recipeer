@@ -18,10 +18,29 @@
       <h3 class="recipe-recommendation__header" v-if="randomRecipe">
         Рекомендуем если проголодался:
       </h3>
-      <h3 class="recipe-recommendation__header" v-else>
+      <h3 class="recipe-recommendation__night-header" v-else>
         Мы не рекомендуем кушать на ночь, потому что это очень вредно для
         здоровья.
       </h3>
+      <h5 class="recipe-recommendation__title" v-if="randomRecipe">
+        {{ randomRecipe && randomRecipe.title }}
+      </h5>
+      <img
+        class="recipe-recommendation__preview-image"
+        v-if="randomRecipe"
+        alt="Картинка рецепта"
+        :src="randomRecipe && randomRecipe.banner"
+      />
+      <div class="recipe-recommendation__secondary-info" v-if="randomRecipe">
+        <div class="secondary__info--time">
+          <i class="far fa-clock"></i>
+          <p>{{ randomRecipe && randomRecipe.cookingTime }}</p>
+        </div>
+        <span class="secondary__info--cost">
+          Cтоимость:
+          {{ convertPrice(randomRecipe && randomRecipe.cost) }}
+        </span>
+      </div>
       <img
         class="recipe-recommendation__night-banner"
         v-if="!randomRecipe"
@@ -70,6 +89,7 @@ import { Drawer } from "element-ui";
 import Header from "../components/Header";
 import { mapGetters } from "vuex";
 import { getRandomRecipe } from "../store/recipes/recipes.actions";
+import { parseBalance } from "../utils/parseBalance";
 
 export default {
   name: "Home",
@@ -108,6 +128,9 @@ export default {
   methods: {
     logout() {
       return this.$store.dispatch("auth/logout", null, { root: true });
+    },
+    convertPrice(balance) {
+      return parseBalance(balance);
     }
   }
 };
@@ -126,7 +149,7 @@ export default {
   border: 1px dashed cadetblue;
 
   &.morning {
-    background-color: yellow;
+    background-color: cornsilk;
     color: peru;
   }
 
@@ -146,11 +169,60 @@ export default {
   }
 
   &__header {
+    font-family: $secondary-font;
+    font-size: 16px;
+    font-weight: bold;
     text-align: center;
     margin: 6vh 16px 0;
-    font-size: 14px;
     letter-spacing: 0.3px;
+  }
+
+  &__title {
     font-family: $secondary-font;
+    font-size: 14px;
+    margin-top: 16px;
+    text-decoration: underline;
+  }
+
+  &__preview-image {
+    width: calc(100% - 32px);
+    object-fit: cover;
+    height: 200px;
+    margin-top: 16px;
+    border-radius: $borderRadius;
+  }
+
+  &__secondary-info {
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+
+    .secondary__info--time {
+      font-family: $secondary-font;
+      display: flex;
+      flex-direction: row;
+      font-size: 10px;
+
+      > p {
+        font-family: $secondary-font;
+      }
+
+      svg {
+        margin-right: 4px;
+      }
+    }
+
+    .secondary__info--cost {
+      font-family: $secondary-font;
+      font-size: 10px;
+    }
+  }
+
+  &__night-header {
+    @extend .recipe-recommendation__header;
+    font-weight: 100;
   }
 
   &__night-banner {
