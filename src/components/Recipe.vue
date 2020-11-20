@@ -102,7 +102,7 @@ export default {
   justify-content: space-between;
   text-align: left;
   margin: 8px 0;
-  padding: 4px 8px 16px;
+  padding: 4px 12px 16px;
   $this: &;
 
   &--header {

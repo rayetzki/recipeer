@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      favourites: []
+      favourites: undefined
     };
   },
   computed: {
@@ -69,5 +69,6 @@ export default {
 @import "../styles/modules/favourites.scss";
 #favourites {
   padding: 24px;
+  position: relative;
 }
 </style>

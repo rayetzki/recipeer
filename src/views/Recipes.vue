@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      recipes: [],
+      recipes: undefined,
       page: 0,
       items: [
         { type: "", label: "Завтрак" },

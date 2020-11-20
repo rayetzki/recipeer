@@ -39,6 +39,10 @@ header {
     display: none;
   }
 
+  & > * {
+    cursor: pointer;
+  }
+
   & > *:not(:last-of-type) {
     font-family: $secondary-font;
     margin-right: 8px;

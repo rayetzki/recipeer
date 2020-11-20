@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <transition name="bounce" mode="out-in">
+      <router-view :key="$route.path"></router-view>
+    </transition>
     <app-navigation v-if="isLoggedIn"></app-navigation>
   </div>
 </template>
@@ -113,5 +115,25 @@ a {
   color: currentColor;
   font-size: 16px;
   margin: 8px 0;
+}
+
+.bounce-enter-active {
+  position: relative;
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  position: relative;
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
