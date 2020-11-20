@@ -16,12 +16,13 @@
       <span
         @click="$emit('favourite', recipe.id)"
         class="recipe__preview--saved"
+        v-show="!showFavourite"
       >
         <i class="far fa-bookmark"></i>
       </span>
       <span
         @click="$emit('favourite', recipe.id)"
-        v-show="recipe.favourite"
+        v-show="showFavourite"
         class="recipe__preview--saved"
       >
         <i class="fas fa-bookmark"></i>
@@ -46,10 +47,11 @@
 import { parseBalance } from "../utils/parseBalance";
 export default {
   name: "Recipe",
-  props: ["recipe", "delete"],
+  props: ["recipe", "delete", "favourite"],
   data() {
     return {
-      showDelete: this.delete
+      showDelete: this.delete,
+      showFavourite: this.favourite
     };
   },
   methods: {

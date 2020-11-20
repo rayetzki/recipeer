@@ -15,6 +15,7 @@
         <recipe
           @remove="removeRecipe"
           @favourite="toggleSaved"
+          :favourite="recipe.favourite"
           :recipe="recipe"
           :delete="recipe.author.id === user.id"
           :userId="user.id"

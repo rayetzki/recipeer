@@ -16,8 +16,9 @@
         v-for="favourite in favourites"
       >
         <recipe
-          @favourite="toggleSaved"
+          @favourite="removeSaved"
           :recipe="favourite.recipe"
+          :favourite="true"
           :delete="false"
         ></recipe>
       </li>
