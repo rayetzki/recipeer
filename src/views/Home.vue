@@ -31,6 +31,9 @@
         alt="Картинка рецепта"
         :src="randomRecipe && randomRecipe.banner"
       />
+      <p class="recipe-recommendation__description">
+        {{ randomRecipe.description }}
+      </p>
       <div class="recipe-recommendation__secondary-info" v-if="randomRecipe">
         <div class="secondary__info--time">
           <i class="far fa-clock"></i>
@@ -173,15 +176,18 @@ export default {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    margin: 6vh 16px 0;
+    margin: 4vh 16px 16px;
     letter-spacing: 0.3px;
   }
 
   &__title {
     font-family: $secondary-font;
     font-size: 14px;
-    margin-top: 16px;
-    text-decoration: underline;
+    padding: 4px;
+    border: 1px solid rosybrown;
+    border-radius: 13px;
+    width: calc(100% - 108px);
+    margin: 8px auto;
   }
 
   &__preview-image {
@@ -190,6 +196,23 @@ export default {
     height: 200px;
     margin-top: 16px;
     border-radius: $borderRadius;
+  }
+
+  &__description {
+    margin: 8px 16px;
+    text-align: left;
+    font-size: 14px;
+    max-height: 28px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+
+    &::before {
+      content: "...";
+      position: absolute;
+      right: 8px;
+      bottom: 0;
+    }
   }
 
   &__secondary-info {

@@ -16,13 +16,13 @@
       <span
         @click="$emit('favourite', recipe.id)"
         class="recipe__preview--saved"
-        v-show="!showFavourite"
+        v-show="!this.favourite"
       >
         <i class="far fa-bookmark"></i>
       </span>
       <span
         @click="$emit('favourite', recipe.id)"
-        v-show="showFavourite"
+        v-show="this.favourite"
         class="recipe__preview--saved"
       >
         <i class="fas fa-bookmark"></i>
@@ -50,8 +50,7 @@ export default {
   props: ["recipe", "delete", "favourite"],
   data() {
     return {
-      showDelete: this.delete,
-      showFavourite: this.favourite
+      showDelete: this.delete
     };
   },
   methods: {
@@ -96,6 +95,7 @@ export default {
   $this: &;
 
   &--header {
+    font-family: $primary-font;
     width: fit-content;
     font-size: 16px;
     font-weight: 400;
@@ -103,6 +103,7 @@ export default {
   }
 
   &--secondary {
+    font-family: $primary-font;
     display: flex;
     flex-direction: row;
     opacity: 0.6;
@@ -110,6 +111,7 @@ export default {
     justify-content: space-between;
 
     #{$this}--time {
+      font-family: $primary-font;
       display: flex;
       flex-direction: row;
       font-size: 12px;
@@ -121,6 +123,7 @@ export default {
     }
 
     #{$this}--cost {
+      font-family: $primary-font;
       font-size: 12px;
     }
   }

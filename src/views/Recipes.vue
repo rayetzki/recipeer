@@ -72,14 +72,14 @@ export default {
         addFavourite(this.user.id, id).then(() => {
           this.$set(this.recipes, index, {
             ...recipe,
-            favourite: Boolean(!recipe.favourite)
+            favourite: !recipe.favourite
           });
         });
       } else {
         removeFavourite(this.user.id, id).then(() => {
           this.$set(this.recipes, index, {
             ...recipe,
-            favourite: Boolean(!recipe.favourite)
+            favourite: !recipe.favourite
           });
         });
       }
