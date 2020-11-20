@@ -7,6 +7,11 @@
         <span id="settings"><i class="fas fa-plus-circle"></i></span>
       </div>
     </header>
+    <section class="recipes__categories">
+      <el-tag v-for="item in items" :key="item.label" :type="item.type">
+        {{ item.label }}
+      </el-tag>
+    </section>
     <h5 v-if="recipes && recipes.length === 0" class="recipes__empty-list">
       Не найдено рецептов
     </h5>
@@ -28,6 +33,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Recipe from "../components/Recipe";
+import { Tag } from "element-ui";
 import { getRecipes, deleteRecipe } from "../store/recipes/recipes.actions";
 import {
   removeFavourite,
@@ -37,12 +43,20 @@ import {
 export default {
   name: "recipes-list",
   components: {
+    "el-tag": Tag,
     recipe: Recipe
   },
   data() {
     return {
       recipes: [],
-      page: 0
+      page: 0,
+      items: [
+        { type: "", label: "Завтрак" },
+        { type: "success", label: "Обед" },
+        { type: "info", label: "Полудник" },
+        { type: "danger", label: "Перекус" },
+        { type: "warning", label: "Ужин" }
+      ]
     };
   },
   computed: {

@@ -1,5 +1,5 @@
 <template>
-  <div id="#recipe">
+  <div id="#recipe" class="recipe__preview">
     <div class="recipe__preview--view">
       <img
         :src="recipe.banner"
@@ -66,6 +66,8 @@ export default {
 @import "../styles/mixins.scss";
 
 .recipe__preview {
+  cursor: pointer;
+
   &--view {
     position: relative;
   }
@@ -75,6 +77,8 @@ export default {
     width: 100%;
     max-height: 200px;
     border-radius: $borderRadius;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
   }
 
   &--remove {
@@ -84,6 +88,12 @@ export default {
   &--saved {
     @include action(null, 16px, 16px, null);
   }
+
+  &:hover {
+    transform: scale(1.05);
+    border-radius: $borderRadius;
+    box-shadow: $boxShadow;
+  }
 }
 
 .recipe__info {
@@ -91,7 +101,8 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   text-align: left;
-  margin: 12px 0 8px 0;
+  margin: 8px 0;
+  padding: 4px 8px 16px;
   $this: &;
 
   &--header {

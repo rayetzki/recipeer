@@ -32,7 +32,7 @@
         :src="randomRecipe && randomRecipe.banner"
       />
       <p class="recipe-recommendation__description">
-        {{ randomRecipe.description }}
+        {{ randomRecipe && randomRecipe.description }}
       </p>
       <div class="recipe-recommendation__secondary-info" v-if="randomRecipe">
         <div class="secondary__info--time">

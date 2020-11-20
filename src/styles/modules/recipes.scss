@@ -26,6 +26,25 @@ header {
   }
 }
 
+.recipes__categories {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  overflow: scroll;
+  scroll-behavior: smooth;
+  margin: 24px 0 16px 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > *:not(:last-of-type) {
+    font-family: $secondary-font;
+    margin-right: 8px;
+  }
+}
+
 .recipes__empty-list {
   position: absolute;
   top: 50%;
