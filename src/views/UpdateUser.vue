@@ -2,19 +2,11 @@
   <div id="update-user">
     <form class="form__centered">
       <h3 class="form__header">Здесь можно обновить данные о себе</h3>
-      <section class="form__avatar">
-        <img :src="user.avatar" alt="Твоя аватарка" />
-        <label class="form__file-label">
-          Выбери аватарку
-          <input
-            name="avatar"
-            title=" "
-            accept="image/jpeg, image/png"
-            @change="uploadAvatar"
-            type="file"
-          />
-        </label>
-      </section>
+      <ImageUpload
+        @upload="uploadAvatar"
+        title="Выбери аватарку"
+        :avatar="user.avatar"
+      />
       <FormInput
         name="email"
         type="email"
@@ -75,6 +67,7 @@
 <script>
 import { mapGetters } from "vuex";
 import FormInput from "../components/FormInput.vue";
+import ImageUpload from "../components/ImageUpload.vue";
 import { Button, Alert, Select, Option } from "element-ui";
 import { nutritionTypes } from "../data/nutritionTypes";
 import { validateField } from "../utils/runValidation";
@@ -87,7 +80,8 @@ export default {
     Button,
     Alert,
     Select,
-    Option
+    Option,
+    ImageUpload
   },
   computed: {
     ...mapGetters({
