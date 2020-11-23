@@ -13,7 +13,9 @@ export default {
     };
   },
   mounted() {
-    getRecipeById(this.id).then(recipe => (this.recipe = recipe));
+    getRecipeById(this.id).then(recipe => {
+      this.recipe = recipe;
+    });
   }
 };
 </script>

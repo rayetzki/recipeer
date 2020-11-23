@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <transition name="bounce" mode="out-in">
+    <transition name="fade" mode="out-in">
       <router-view :key="$route.path"></router-view>
     </transition>
     <app-navigation v-if="isLoggedIn"></app-navigation>
@@ -117,23 +117,13 @@ a {
   margin: 8px 0;
 }
 
-.bounce-enter-active {
-  position: relative;
-  animation: bounce-in 0.5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.bounce-leave-active {
-  position: relative;
-  animation: bounce-in 0.5s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0.9);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -101,30 +101,28 @@ export default {
     Option,
     Button
   },
-  data() {
-    return {
-      values: {
-        name: "",
-        age: "",
-        email: "",
-        nutrition: "any",
-        password: "",
-        role: "user"
-      },
-      nutritionTypes,
-      roles: [
-        { value: "editor", label: "Редактор" },
-        { value: "user", label: "Пользователь" }
-      ],
-      error: "",
-      errors: {
-        name: "",
-        age: "",
-        email: "",
-        password: ""
-      }
-    };
-  },
+  data: () => ({
+    values: {
+      name: "",
+      age: "",
+      email: "",
+      nutrition: "any",
+      password: "",
+      role: "user"
+    },
+    nutritionTypes,
+    roles: [
+      { value: "editor", label: "Редактор" },
+      { value: "user", label: "Пользователь" }
+    ],
+    error: "",
+    errors: {
+      name: "",
+      age: "",
+      email: "",
+      password: ""
+    }
+  }),
   computed: {
     disabled() {
       return (

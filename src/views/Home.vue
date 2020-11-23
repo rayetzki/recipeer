@@ -199,6 +199,7 @@ export default {
   }
 
   &__description {
+    font-family: $secondary-font;
     margin: 8px 16px;
     text-align: left;
     font-size: 14px;
@@ -210,7 +211,7 @@ export default {
     &::before {
       content: "...";
       position: absolute;
-      right: 8px;
+      right: 24px;
       bottom: 0;
     }
   }

@@ -56,18 +56,16 @@ export default {
     Button,
     Alert
   },
-  data() {
-    return {
-      values: {
-        email: "",
-        password: ""
-      },
-      errors: {
-        email: "",
-        password: ""
-      }
-    };
-  },
+  data: () => ({
+    values: {
+      email: "",
+      password: ""
+    },
+    errors: {
+      email: "",
+      password: ""
+    }
+  }),
   computed: {
     ...mapGetters({
       user: "user/user",

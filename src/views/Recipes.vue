@@ -17,14 +17,16 @@
     </h5>
     <ul class="recipes__grid" v-if="recipes && recipes.length >= 0">
       <li class="recipes__preview" :key="recipe.id" v-for="recipe in recipes">
-        <recipe
-          @remove="removeRecipe"
-          @favourite="toggleSaved"
-          :favourite="recipe.favourite"
-          :recipe="recipe"
-          :delete="recipe.author.id === user.id"
-          :userId="user.id"
-        ></recipe>
+        <router-link :to="{ path: 'recipe', query: { id: recipe.id } }">
+          <recipe
+            @remove="removeRecipe"
+            @favourite="toggleSaved"
+            :favourite="recipe.favourite"
+            :recipe="recipe"
+            :delete="recipe.author.id === user.id"
+            :userId="user.id"
+          ></recipe>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -46,19 +48,17 @@ export default {
     "el-tag": Tag,
     recipe: Recipe
   },
-  data() {
-    return {
-      recipes: undefined,
-      page: 0,
-      items: [
-        { type: "", label: "Завтрак" },
-        { type: "success", label: "Обед" },
-        { type: "info", label: "Полудник" },
-        { type: "danger", label: "Перекус" },
-        { type: "warning", label: "Ужин" }
-      ]
-    };
-  },
+  data: () => ({
+    recipes: undefined,
+    page: 0,
+    items: [
+      { type: "", label: "Завтрак" },
+      { type: "success", label: "Обед" },
+      { type: "info", label: "Полудник" },
+      { type: "danger", label: "Перекус" },
+      { type: "warning", label: "Ужин" }
+    ]
+  }),
   computed: {
     ...mapGetters({
       user: "user/user"

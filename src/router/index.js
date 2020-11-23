@@ -17,17 +17,32 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/Login.vue")
+    component: () => import("../views/Login.vue"),
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/signup",
     name: "Signup",
-    component: () => import("../views/Signup.vue")
+    component: () => import("../views/Signup.vue"),
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/recipes",
     name: "Recipes",
     component: () => import("../views/Recipes.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/recipe",
+    name: "Recipe",
+    exact: true,
+    component: () => import("../views/Recipe.vue"),
     meta: {
       requiresAuth: true
     }

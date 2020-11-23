@@ -91,17 +91,15 @@ export default {
       return Object.values(this.errors).some(error => error.length > 0);
     }
   },
-  data() {
-    return {
-      nutritionTypes,
-      error: "",
-      errors: {
-        email: "",
-        name: "",
-        age: ""
-      }
-    };
-  },
+  data: () => ({
+    nutritionTypes,
+    error: "",
+    errors: {
+      email: "",
+      name: "",
+      age: ""
+    }
+  }),
   methods: {
     validate(field) {
       return validateField(

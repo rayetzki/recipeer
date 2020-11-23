@@ -39,11 +39,9 @@ export default {
   components: {
     recipe: Recipe
   },
-  data() {
-    return {
-      favourites: undefined
-    };
-  },
+  data: () => ({
+    favourites: undefined
+  }),
   computed: {
     ...mapGetters({
       user: "user/user"
