@@ -56,8 +56,6 @@ export const login = async ({ commit, dispatch }, { email, password }) => {
 };
 
 export const refresh = async ({ commit }, { userId, refreshToken }) => {
-  commit("setToken", null);
-
   const refreshResponse = await axios.post(
     `${API_URL}/auth/refresh?id=${userId}`,
     { refreshToken }

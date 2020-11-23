@@ -95,7 +95,7 @@ export default {
       this.recipes = recipes;
     },
     async filterCondition() {
-      const dayTime = this.filterCondition.toLoweCase().trim();
+      const dayTime = this.filterCondition.toLowerCase().trim();
 
       if (dayTime.length === 0) {
         this.filterCondition = "";
