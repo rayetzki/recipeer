@@ -1,12 +1,13 @@
 import axios from "axios";
 import { API_URL } from "../../config/API";
 
-export const getRecipes = (page, userId = null) => {
+export const getRecipes = (page, userId = null, dayTime) => {
   return axios
     .get(`${API_URL}/recipes`, {
       params: {
         userId: userId || null,
-        page: page || null
+        page,
+        dayTime: dayTime || null
       }
     })
     .then(response => response.data)

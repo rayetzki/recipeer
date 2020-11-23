@@ -28,7 +28,12 @@
       </div>
     </header>
     <section class="recipes__categories">
-      <el-tag v-for="item in items" :key="item.label" :type="item.type">
+      <el-tag
+        @click="toggleLabel(item.label)"
+        v-for="item in items"
+        :key="item.label"
+        :type="item.type"
+      >
         {{ item.label }}
       </el-tag>
     </section>
@@ -84,16 +89,35 @@ export default {
     async searchCondition() {
       if (this.searchCondition.trim().length === 0) {
         this.searchCondition = "";
+        return;
       }
       const recipes = await findRecipe(this.searchCondition);
       this.recipes = recipes;
+    },
+    async filterCondition() {
+      const dayTime = this.filterCondition.toLoweCase().trim();
+
+      if (dayTime.length === 0) {
+        this.filterCondition = "";
+        return;
+      }
+
+      const response = await getRecipes(
+        this.page,
+        null,
+        dayTime === "все" ? null : dayTime
+      );
+
+      this.recipes = response.recipes;
     }
   },
   data: () => ({
     recipes: undefined,
     page: 0,
     searchCondition: "",
+    filterCondition: "",
     items: [
+      { type: "warning", label: "Все" },
       { type: "", label: "Завтрак" },
       { type: "success", label: "Обед" },
       { type: "info", label: "Полудник" },
@@ -113,6 +137,9 @@ export default {
     });
   },
   methods: {
+    toggleLabel(label) {
+      this.filterCondition = label;
+    },
     getRecipes(page) {
       return getRecipes(page);
     },
