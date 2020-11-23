@@ -17,18 +17,12 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/Login.vue"),
-    meta: {
-      requiresAuth: false
-    }
+    component: () => import("../views/Login.vue")
   },
   {
     path: "/signup",
     name: "Signup",
-    component: () => import("../views/Signup.vue"),
-    meta: {
-      requiresAuth: false
-    }
+    component: () => import("../views/Signup.vue")
   },
   {
     path: "/recipes",

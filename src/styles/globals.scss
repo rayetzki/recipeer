@@ -1,0 +1,47 @@
+@import "reset-css";
+@import "./theme.scss";
+
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+time {
+  font-family: $primary-font;
+}
+
+#app {
+  font-family: $primary-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: $textPrimary;
+}
+
+#app nav {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  justify-content: space-around;
+}
+
+a {
+  text-decoration: none;
+  color: currentColor;
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
