@@ -50,14 +50,12 @@ export const login = async ({ commit, dispatch }, { email, password }) => {
       "setError",
       error.response ? error.response.data.message : error.message
     );
-    localStorage.removeItem("token");
   } finally {
     commit("setLoading", false);
   }
 };
 
 export const refresh = async ({ commit }, { userId, refreshToken }) => {
-  localStorage.removeItem("token");
   commit("setToken", null);
 
   const refreshResponse = await axios.post(

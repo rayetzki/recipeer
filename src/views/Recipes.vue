@@ -1,10 +1,30 @@
 <template>
   <div id="recipes">
     <header>
-      <h1 class="recipes__title">Рецепты</h1>
+      <h1 class="recipes__title" v-show="!openSearch">Рецепты</h1>
       <div class="recipes__options">
-        <span id="search"><i class="fas fa-search"></i></span>
-        <span id="settings"><i class="fas fa-plus-circle"></i></span>
+        <span
+          id="search"
+          v-show="!openSearch"
+          @click="openSearch = !openSearch"
+        >
+          <i class="fas fa-search"></i>
+        </span>
+        <span id="settings" v-show="!openSearch">
+          <i class="fas fa-plus-circle"></i>
+        </span>
+      </div>
+      <div class="recipes__search" v-show="openSearch">
+        <form-input
+          error=""
+          type="text"
+          name="search-recipe"
+          placeholder="Найди рецепт"
+          v-model.lazy="searchCondition"
+        ></form-input>
+        <span id="close" @click="openSearch = !openSearch">
+          <i class="far fa-times-circle"></i>
+        </span>
       </div>
     </header>
     <section class="recipes__categories">
@@ -16,14 +36,20 @@
       Не найдено рецептов
     </h5>
     <ul class="recipes__grid" v-if="recipes && recipes.length >= 0">
-      <li class="recipes__preview" :key="recipe.id" v-for="recipe in recipes">
-        <router-link :to="{ path: 'recipe', query: { id: recipe.id } }">
+      <li
+        class="recipes__preview"
+        :key="recipe && recipe.id"
+        v-for="recipe in recipes"
+      >
+        <router-link
+          :to="{ path: 'recipe', query: { id: recipe && recipe.id } }"
+        >
           <recipe
             @remove="removeRecipe"
             @favourite="toggleSaved"
-            :favourite="recipe.favourite"
+            :favourite="recipe && recipe.favourite"
             :recipe="recipe"
-            :delete="recipe.author.id === user.id"
+            :delete="recipe && recipe.author && recipe.author.id === user.id"
             :userId="user.id"
           ></recipe>
         </router-link>
@@ -35,8 +61,13 @@
 <script>
 import { mapGetters } from "vuex";
 import Recipe from "../components/Recipe";
+import FormInput from "../components/FormInput";
 import { Tag } from "element-ui";
-import { getRecipes, deleteRecipe } from "../store/recipes/recipes.actions";
+import {
+  getRecipes,
+  deleteRecipe,
+  findRecipe
+} from "../store/recipes/recipes.actions";
 import {
   removeFavourite,
   addFavourite
@@ -45,19 +76,31 @@ import {
 export default {
   name: "recipes-list",
   components: {
+    "form-input": FormInput,
     "el-tag": Tag,
     recipe: Recipe
+  },
+  watch: {
+    async searchCondition() {
+      if (this.searchCondition.trim().length === 0) {
+        this.searchCondition = "";
+      }
+      const recipes = await findRecipe(this.searchCondition);
+      this.recipes = recipes;
+    }
   },
   data: () => ({
     recipes: undefined,
     page: 0,
+    searchCondition: "",
     items: [
       { type: "", label: "Завтрак" },
       { type: "success", label: "Обед" },
       { type: "info", label: "Полудник" },
       { type: "danger", label: "Перекус" },
       { type: "warning", label: "Ужин" }
-    ]
+    ],
+    openSearch: false
   }),
   computed: {
     ...mapGetters({

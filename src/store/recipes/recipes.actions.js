@@ -9,43 +9,34 @@ export const getRecipes = (page, userId = null) => {
         page: page || null
       }
     })
-    .then(recipesResponse => {
-      if (recipesResponse.status === 200) {
-        return recipesResponse.data;
-      }
-    })
+    .then(response => response.data)
     .catch(error => Promise.reject(error));
 };
 
 export const getRecipeById = id => {
   return axios
     .get(`${API_URL}/recipes?id=${id}`)
-    .then(response => {
-      if (response.status === 200) {
-        return response.data;
-      }
-    })
+    .then(response => response.data)
     .catch(error => console.error(error));
 };
 
 export const getRandomRecipe = () => {
   return axios
     .get(`${API_URL}/recipes/recommendation`)
-    .then(response => {
-      if (response.status === 200) {
-        return response.data;
-      }
-    })
+    .then(response => response.data)
     .catch(error => console.error(error));
 };
 
 export const deleteRecipe = id => {
   return axios
     .delete(`${API_URL}/recipes/${id}`)
-    .then(response => {
-      if (response.status === 200) {
-        return response.data;
-      }
-    })
+    .then(response => response.data)
+    .catch(error => console.error(error));
+};
+
+export const findRecipe = condition => {
+  return axios
+    .get(`${API_URL}/recipes/search?condition=${condition}`)
+    .then(response => response.data)
     .catch(error => console.error(error));
 };
