@@ -15,12 +15,16 @@
         :key="favourite.recipeId"
         v-for="favourite in favourites"
       >
-        <recipe
-          @favourite="removeSaved"
-          :recipe="favourite.recipe"
-          :favourite="true"
-          :delete="false"
-        ></recipe>
+        <router-link
+          :to="{ path: 'recipe', query: { id: favourite.recipe.id } }"
+        >
+          <recipe
+            @favourite="removeSaved"
+            :recipe="favourite.recipe"
+            :favourite="true"
+            :delete="false"
+          ></recipe>
+        </router-link>
       </li>
     </ul>
   </div>

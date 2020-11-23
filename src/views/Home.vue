@@ -6,84 +6,85 @@
       :direction="'ltr'"
       :size="'300px'"
     >
-      <router-link to="" v-if="isLoggedIn">
-        <span class="logout" @click="logout">Выйти</span>
-      </router-link>
+      <span class="logout" @click="logout">Выйти</span>
     </el-drawer>
     <app-header
-      :avatar="user && user.avatar"
+      v-if="user"
+      :avatar="user.avatar"
       @toggle-drawer="openDrawer = !openDrawer"
     ></app-header>
-    <main class="recipe-recommendation" :class="recommendationBg">
-      <h3 class="recipe-recommendation__header" v-if="randomRecipe">
-        Рекомендуем если проголодался:
-      </h3>
-      <h3 class="recipe-recommendation__night-header" v-else>
-        Мы не рекомендуем кушать на ночь, потому что это очень вредно для
-        здоровья.
-      </h3>
-      <h5 class="recipe-recommendation__title" v-if="randomRecipe">
-        {{ randomRecipe && randomRecipe.title }}
-      </h5>
-      <img
-        class="recipe-recommendation__preview-image"
-        v-if="randomRecipe"
-        alt="Картинка рецепта"
-        :src="randomRecipe && randomRecipe.banner"
-      />
-      <p class="recipe-recommendation__description">
-        {{ randomRecipe && randomRecipe.description }}
-      </p>
-      <div class="recipe-recommendation__secondary-info" v-if="randomRecipe">
-        <div class="secondary__info--time">
-          <i class="far fa-clock"></i>
-          <p>{{ randomRecipe && randomRecipe.cookingTime }}</p>
+    <router-link
+      v-if="randomRecipe"
+      :to="{ path: 'recipe', query: { id: randomRecipe.id } }"
+    >
+      <main class="recipe-recommendation" :class="recommendationBg">
+        <h3 class="recipe-recommendation__header">
+          Рекомендуем если проголодался:
+        </h3>
+        <h3 class="recipe-recommendation__night-header">
+          Мы не рекомендуем кушать на ночь, потому что это очень вредно для
+          здоровья.
+        </h3>
+        <h5 class="recipe-recommendation__title">
+          {{ randomRecipe.title }}
+        </h5>
+        <img
+          class="recipe-recommendation__preview-image"
+          v-if="randomRecipe"
+          alt="Картинка рецепта"
+          :src="randomRecipe.banner"
+        />
+        <p class="recipe-recommendation__description">
+          {{ randomRecipe.description }}
+        </p>
+        <div class="recipe-recommendation__secondary-info">
+          <div class="secondary__info--time">
+            <i class="far fa-clock"></i>
+            <p>{{ randomRecipe.cookingTime }}</p>
+          </div>
+          <span class="secondary__info--cost">
+            Cтоимость:
+            {{ convertPrice(randomRecipe.cost) }}
+          </span>
         </div>
-        <span class="secondary__info--cost">
-          Cтоимость:
-          {{ convertPrice(randomRecipe && randomRecipe.cost) }}
-        </span>
-      </div>
-      <img
-        class="recipe-recommendation__night-banner"
-        v-if="!randomRecipe"
-        alt="Спящий мишка"
-        src="../assets/Sleeping_Bear.png"
-      />
-      <img
-        class="recipe-recommendation__banner"
-        src="../assets/sunrise-svgrepo-com.svg"
-        alt="Recommendation banner"
-        v-if="randomRecipe && randomRecipe.dayTime === 'завтрак'"
-      />
-      <img
-        class="recipe-recommendation__banner"
-        src="../assets/sunrise-svgrepo-com.svg"
-        alt="Recommendation banner"
-        v-else-if="
-          (randomRecipe && randomRecipe.dayTime === 'обед') ||
-            (randomRecipe && randomRecipe.dayTime === 'перекус')
-        "
-      />
-      <img
-        class="recipe-recommendation__banner"
-        src="../assets/partially-sunny-svgrepo-com.svg"
-        alt="Recommendation banner"
-        v-else-if="randomRecipe && randomRecipe.dayTime === 'полудник'"
-      />
-      <img
-        class="recipe-recommendation__banner"
-        src="../assets/sunset-svgrepo-com.svg"
-        alt="Recommendation banner"
-        v-else-if="randomRecipe && randomRecipe.dayTime === 'ужин'"
-      />
-      <img
-        class="recipe-recommendation__banner"
-        src="../assets/night-svgrepo-com.svg"
-        alt="Recommendation banner"
-        v-else
-      />
-    </main>
+        <img
+          class="recipe-recommendation__night-banner"
+          v-if="!randomRecipe"
+          alt="Спящий мишка"
+          src="../assets/Sleeping_Bear.png"
+        />
+        <img
+          class="recipe-recommendation__banner"
+          src="../assets/sunrise-svgrepo-com.svg"
+          alt="Recommendation banner"
+          v-if="randomRecipe.dayTime === 'завтрак'"
+        />
+        <img
+          class="recipe-recommendation__banner"
+          src="../assets/sunrise-svgrepo-com.svg"
+          alt="Recommendation banner"
+          v-else-if="['обед', 'перекус'].includes(randomRecipe.dayTime)"
+        />
+        <img
+          class="recipe-recommendation__banner"
+          src="../assets/partially-sunny-svgrepo-com.svg"
+          alt="Recommendation banner"
+          v-else-if="randomRecipe.dayTime === 'полудник'"
+        />
+        <img
+          class="recipe-recommendation__banner"
+          src="../assets/sunset-svgrepo-com.svg"
+          alt="Recommendation banner"
+          v-else-if="randomRecipe.dayTime === 'ужин'"
+        />
+        <img
+          class="recipe-recommendation__banner"
+          src="../assets/night-svgrepo-com.svg"
+          alt="Recommendation banner"
+          v-else
+        />
+      </main>
+    </router-link>
   </div>
 </template>
 

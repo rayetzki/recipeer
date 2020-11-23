@@ -44,7 +44,7 @@ export default {
       });
     });
   },
-  mounted() {
+  beforeMount() {
     const user = this.$store.getters["user/user"];
     const access = this.$store.getters["auth/token"];
     const refresh = this.$store.getters["auth/refreshToken"];
