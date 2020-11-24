@@ -24,18 +24,13 @@
         :key="recipe && recipe.id"
         v-for="recipe in recipes"
       >
-        <router-link
-          :to="{ path: 'recipe', query: { id: recipe && recipe.id } }"
-        >
-          <recipe
-            @remove="removeRecipe"
-            @favourite="toggleSaved"
-            :favourite="recipe && recipe.favourite"
-            :recipe="recipe"
-            :delete="recipe && recipe.author && recipe.author.id === user.id"
-            :userId="user.id"
-          ></recipe>
-        </router-link>
+        <recipe
+          @favourite="toggleSaved"
+          :favourite="recipe && recipe.favourite"
+          :recipe="recipe"
+          :delete="recipe && recipe.author && recipe.author.id === user.id"
+          :userId="user.id"
+        ></recipe>
       </li>
     </ul>
   </div>
@@ -43,9 +38,13 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { deleteRecipe, getRecipes } from "../store/recipes/recipes.actions";
+import { getRecipes } from "../store/recipes/recipes.actions";
 import Recipe from "../components/Recipe";
 import Spinner from "../components/Spinner";
+import {
+  addFavourite,
+  removeFavourite
+} from "../store/favourites/favourites.actions";
 
 export default {
   name: "MyRecipes",
@@ -69,11 +68,24 @@ export default {
   },
   methods: {
     getRecipes,
-    removeRecipe(id) {
+    toggleSaved(id) {
       const index = this.recipes.findIndex(recipe => recipe.id === id);
-      deleteRecipe(id).then(() => {
-        this.recipes.splice(index, 1);
-      });
+      const recipe = this.recipes[index];
+      if (!recipe.favourite) {
+        addFavourite(this.user.id, id).then(() => {
+          this.$set(this.recipes, index, {
+            ...recipe,
+            favourite: !recipe.favourite
+          });
+        });
+      } else {
+        removeFavourite(this.user.id, id).then(() => {
+          this.$set(this.recipes, index, {
+            ...recipe,
+            favourite: !recipe.favourite
+          });
+        });
+      }
     }
   }
 };

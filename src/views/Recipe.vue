@@ -13,14 +13,14 @@
         <i class="fas fa-ellipsis-h"></i>
       </span>
       <span
-        @click="addBookmark(recipe.id)"
+        @click="toggleSaved(recipe.id)"
         v-show="!recipe.favourite"
         class="recipe__header--saved"
       >
         <i class="far fa-bookmark"></i>
       </span>
       <span
-        @click="addBookmark(recipe.id)"
+        @click="toggleSaved(recipe.id)"
         v-show="recipe.favourite"
         class="recipe__header--saved"
       >
@@ -122,18 +122,31 @@
 </template>
 
 <script>
-import { addFavourite } from "../store/favourites/favourites.actions";
+import Spinner from "../components/Spinner";
+import {
+  addFavourite,
+  removeFavourite
+} from "../store/favourites/favourites.actions";
 import { getRecipeById } from "../store/recipes/recipes.actions";
 import { parseBalance } from "../utils/parseBalance";
 import { convertNutritionType } from "../utils/convertNutritionType";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Recipe",
+  components: {
+    spinner: Spinner
+  },
   data() {
     return {
       id: this.$route.query.id,
       recipe: undefined
     };
+  },
+  computed: {
+    ...mapGetters({
+      user: "user/user"
+    })
   },
   mounted() {
     getRecipeById(this.id).then(recipe => {
@@ -141,10 +154,16 @@ export default {
     });
   },
   methods: {
-    addBookmark(id) {
-      return addFavourite(id).then(() => {
-        this.recipe = { ...this.recipe, favourite: !this.recipe.favourite };
-      });
+    toggleSaved(id) {
+      if (!this.recipe.favourite) {
+        addFavourite(this.user.id, id).then(() => {
+          this.recipe.favourite = !this.recipe.favourite;
+        });
+      } else {
+        removeFavourite(this.user.id, id).then(() => {
+          this.recipe.favourite = !this.recipe.favourite;
+        });
+      }
     },
     capitalize(text) {
       return text

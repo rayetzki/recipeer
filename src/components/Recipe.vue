@@ -1,11 +1,13 @@
 <template>
   <div id="#recipe" class="recipe__preview">
     <div class="recipe__preview--view">
-      <img
-        :src="recipe.banner"
-        alt="Изображение рецепта"
-        class="recipe__preview--banner"
-      />
+      <router-link :to="{ path: 'recipe', query: { id: recipe && recipe.id } }">
+        <img
+          :src="recipe.banner"
+          alt="Изображение рецепта"
+          class="recipe__preview--banner"
+        />
+      </router-link>
       <span
         @click="$emit('remove', recipe.id)"
         v-show="showDelete"
@@ -13,6 +15,7 @@
       >
         <i class="fas fa-trash"></i>
       </span>
+
       <span
         @click="$emit('favourite', recipe.id)"
         class="recipe__preview--saved"

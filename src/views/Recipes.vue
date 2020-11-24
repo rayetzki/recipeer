@@ -47,18 +47,13 @@
         :key="recipe && recipe.id"
         v-for="recipe in recipes"
       >
-        <router-link
-          :to="{ path: 'recipe', query: { id: recipe && recipe.id } }"
-        >
-          <recipe
-            @remove="removeRecipe"
-            @favourite="toggleSaved"
-            :favourite="recipe && recipe.favourite"
-            :recipe="recipe"
-            :delete="false"
-            :userId="user.id"
-          ></recipe>
-        </router-link>
+        <recipe
+          @favourite="toggleSaved"
+          :favourite="recipe && recipe.favourite"
+          :recipe="recipe"
+          :delete="false"
+          :userId="user.id"
+        ></recipe>
       </li>
     </ul>
   </div>
