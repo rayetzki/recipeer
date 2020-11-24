@@ -1,5 +1,6 @@
 <template>
   <div id="login">
+    <spinner :open="loading"></spinner>
     <form class="form__centered">
       <h3 class="form__header">Задай email и пароль</h3>
       <FormInput
@@ -43,18 +44,20 @@
 </template>
 
 <script>
-import { Button, Alert } from "element-ui";
 import { mapGetters } from "vuex";
-import FormInput from "../components/FormInput";
+import { Button, Alert } from "element-ui";
 import { LoginValidationSchema } from "../validation-schemas/Login.schema";
 import { validateField } from "../utils/runValidation";
+import Spinner from "../components/Spinner";
+import FormInput from "../components/FormInput";
 
 export default {
   name: "Login",
   components: {
     FormInput,
     Button,
-    Alert
+    Alert,
+    spinner: Spinner
   },
   data: () => ({
     values: {

@@ -10,10 +10,8 @@
         >
           <i class="fas fa-search"></i>
         </span>
-        <router-link id="settings" to="/add-recipe">
-          <span v-show="!openSearch">
-            <i class="fas fa-plus-circle"></i>
-          </span>
+        <router-link id="settings" to="/add-recipe" v-show="!openSearch">
+          <i class="fas fa-plus-circle"></i>
         </router-link>
       </div>
       <div class="recipes__search" v-show="openSearch">
@@ -29,6 +27,7 @@
         </span>
       </div>
     </header>
+    <spinner :open="recipes === undefined"></spinner>
     <section class="recipes__categories">
       <el-tag
         @click="filterCondition = item.label"
@@ -69,6 +68,7 @@
 import { mapGetters } from "vuex";
 import Recipe from "../components/Recipe";
 import FormInput from "../components/FormInput";
+import Spinner from "../components/Spinner";
 import { Tag } from "element-ui";
 import { getRecipes, findRecipe } from "../store/recipes/recipes.actions";
 import {
@@ -81,7 +81,8 @@ export default {
   components: {
     "form-input": FormInput,
     "el-tag": Tag,
-    recipe: Recipe
+    recipe: Recipe,
+    spinner: Spinner
   },
   watch: {
     async searchCondition() {

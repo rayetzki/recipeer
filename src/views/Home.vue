@@ -13,6 +13,7 @@
       :avatar="user.avatar"
       @toggle-drawer="openDrawer = !openDrawer"
     ></app-header>
+    <spinner :open="randomRecipe === undefined"></spinner>
     <router-link
       v-if="randomRecipe"
       :to="{ path: 'recipe', query: { id: randomRecipe.id } }"
@@ -93,21 +94,23 @@
 
 <script>
 import { Drawer } from "element-ui";
-import Header from "../components/Header";
 import { mapGetters } from "vuex";
 import { getRandomRecipe } from "../store/recipes/recipes.actions";
 import { parseBalance } from "../utils/parseBalance";
+import Header from "../components/Header";
+import Spinner from "../components/Spinner";
 
 export default {
   name: "Home",
   components: {
     "app-header": Header,
-    "el-drawer": Drawer
+    "el-drawer": Drawer,
+    spinner: Spinner
   },
   data() {
     return {
       openDrawer: false,
-      randomRecipe: null
+      randomRecipe: undefined
     };
   },
   computed: {
@@ -145,132 +148,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styles/theme.scss";
-
-.recipe-recommendation {
-  position: relative;
-  margin-top: 36px;
-  margin: 0 auto;
-  width: calc(100% - 24px);
-  height: 70vh;
-  border-radius: $borderRadius;
-  border: 1px dashed cadetblue;
-
-  &.morning {
-    background-color: cornsilk;
-    color: peru;
-  }
-
-  &.evening {
-    background-color: violet;
-    color: white;
-  }
-
-  &.day {
-    background-color: beige;
-    color: teal;
-  }
-
-  &.night {
-    background-color: darkslateblue;
-    color: white;
-  }
-
-  &__header {
-    font-family: $secondary-font;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    margin: 4vh 16px 16px;
-    letter-spacing: 0.3px;
-  }
-
-  &__title {
-    font-family: $secondary-font;
-    font-size: 14px;
-    padding: 4px;
-    border: 1px solid rosybrown;
-    border-radius: 13px;
-    width: calc(100% - 108px);
-    margin: 8px auto;
-  }
-
-  &__preview-image {
-    width: calc(100% - 32px);
-    object-fit: cover;
-    height: 200px;
-    margin-top: 16px;
-    border-radius: $borderRadius;
-  }
-
-  &__description {
-    font-family: $secondary-font;
-    margin: 8px 16px;
-    text-align: left;
-    font-size: 14px;
-    max-height: 28px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: relative;
-
-    &::before {
-      content: "...";
-      position: absolute;
-      right: 24px;
-      bottom: 0;
-    }
-  }
-
-  &__secondary-info {
-    margin: 16px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-
-    .secondary__info--time {
-      font-family: $secondary-font;
-      display: flex;
-      flex-direction: row;
-      font-size: 12px;
-
-      > p {
-        font-family: $secondary-font;
-      }
-
-      svg {
-        margin-right: 4px;
-      }
-    }
-
-    .secondary__info--cost {
-      font-family: $secondary-font;
-      font-size: 12px;
-    }
-  }
-
-  &__night-header {
-    @extend .recipe-recommendation__header;
-    font-weight: 100;
-  }
-
-  &__night-banner {
-    width: 200px;
-    height: 200px;
-    margin-top: 24px;
-  }
-
-  &__banner {
-    width: 48px;
-    height: 48px;
-    position: absolute;
-    left: 16px;
-    bottom: 16px;
-  }
-
-  &:hover {
-    box-shadow: $boxShadow;
-  }
-}
+@import "../styles/modules/recommendation.scss";
 
 .logout {
   position: absolute;

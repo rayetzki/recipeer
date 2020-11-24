@@ -27,6 +27,7 @@
         <i class="fas fa-bookmark"></i>
       </span>
     </header>
+    <spinner :open="recipe === undefined"></spinner>
     <main class="recipe__body">
       <section class="recipe__basic">
         <h2 class="recipe__basic--title">{{ recipe.title }}</h2>
@@ -131,7 +132,7 @@ export default {
   data() {
     return {
       id: this.$route.query.id,
-      recipe: null
+      recipe: undefined
     };
   },
   mounted() {

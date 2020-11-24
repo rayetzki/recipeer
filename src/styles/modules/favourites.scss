@@ -2,39 +2,44 @@
 @import "../breakpoints.scss";
 @import "../mixins.scss";
 
-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+.favourites {
+  padding: 24px;
+  $this: &;
 
-  .favourites__title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: left;
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    #{$this}__title {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: left;
+    }
   }
-}
 
-.favourites__empty-list {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: calc(100% - 32px);
-  font-weight: bold;
-  font-size: 16px;
-}
+  #{$this}__empty-list {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 32px);
+    font-weight: bold;
+    font-size: 16px;
+  }
 
-.favourites__grid {
-  top: 16px;
-  margin: 1.5em auto;
-  display: grid;
-  grid-template-columns: 1fr minmax(150px, 1fr);
-  grid-gap: 16px;
-}
+  #{$this}__grid {
+    top: 16px;
+    margin: 1.5em auto;
+    display: grid;
+    grid-template-columns: 1fr minmax(150px, 1fr);
+    grid-gap: 16px;
+  }
 
-@media screen and (min-width: $mobileS) and (max-width: $mobileL) {
-  .favourites__grid {
-    grid-template-columns: 1fr;
+  @media screen and (min-width: $mobileS) and (max-width: $mobileL) {
+    #{$this}__grid {
+      grid-template-columns: 1fr;
+    }
   }
 }

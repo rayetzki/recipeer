@@ -4,20 +4,21 @@
       <h1 class="my-recipes__title">Мои Рецепты</h1>
       <div class="my-recipes__options"></div>
       <router-link
-        v-if="!recipes || recipes.length === 0"
+        v-if="recipes && recipes.length > 0"
         id="add"
         to="/add-recipe"
       >
         <i class="fas fa-plus-circle"></i>
       </router-link>
     </header>
+    <spinner :open="recipes === undefined"></spinner>
     <h5 v-if="recipes && recipes.length === 0" class="my-recipes__empty-list">
       Вы не добавили ни одного рецепта
       <router-link class="my-recipes__add-recipe-link" to="/add-recipe">
         <i class="fas fa-plus-circle"></i> Добавить
       </router-link>
     </h5>
-    <ul class="my-recipes__grid" v-if="!recipes || recipes.length >= 0">
+    <ul class="my-recipes__grid" v-if="recipes && recipes.length >= 0">
       <li
         class="my-recipes__preview"
         :key="recipe && recipe.id"
@@ -44,15 +45,17 @@
 import { mapGetters } from "vuex";
 import { deleteRecipe, getRecipes } from "../store/recipes/recipes.actions";
 import Recipe from "../components/Recipe";
+import Spinner from "../components/Spinner";
 
 export default {
   name: "MyRecipes",
   components: {
-    recipe: Recipe
+    recipe: Recipe,
+    spinner: Spinner
   },
   data: () => ({
     page: 0,
-    recipes: null
+    recipes: undefined
   }),
   computed: {
     ...mapGetters({

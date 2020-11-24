@@ -1,5 +1,6 @@
 <template>
   <div id="signup">
+    <spinner :open="loading"></spinner>
     <form class="form__centered">
       <h3 class="form__header">
         Регистрация в книге рецептов
@@ -89,6 +90,7 @@
 <script>
 import { Select, Option, Button } from "element-ui";
 import FormInput from "../components/FormInput";
+import Spinner from "../components/Spinner";
 import { nutritionTypes } from "../data/nutritionTypes";
 import { validateField } from "../utils/runValidation";
 import { SignupValidationSchema } from "../validation-schemas/Singup.schema";
@@ -99,7 +101,8 @@ export default {
     FormInput,
     Select,
     Option,
-    Button
+    Button,
+    spinner: Spinner
   },
   data: () => ({
     values: {

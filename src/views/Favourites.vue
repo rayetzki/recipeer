@@ -1,5 +1,5 @@
 <template>
-  <div id="favourites">
+  <div class="favourites">
     <header>
       <h1 class="favourites__title">Избранное</h1>
     </header>
@@ -9,6 +9,7 @@
     >
       Нету избранных рецептов
     </h5>
+    <spinner :open="!favourites"></spinner>
     <ul class="favourites__grid" v-if="favourites && favourites.length > 0">
       <li
         class="favourite__preview"
@@ -16,9 +17,14 @@
         v-for="favourite in favourites"
       >
         <router-link
-          :to="{ path: 'recipe', query: { id: favourite.recipe.id } }"
+          v-if="favourite.recipe"
+          :to="{
+            path: 'recipe',
+            query: { id: favourite.recipe.id }
+          }"
         >
           <recipe
+            v-if="favourite.recipe"
             @favourite="removeSaved"
             :recipe="favourite.recipe"
             :favourite="true"
@@ -32,16 +38,18 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Recipe from "../components/Recipe";
 import {
   getFavourites,
   removeFavourite
 } from "../store/favourites/favourites.actions";
+import Recipe from "../components/Recipe";
+import Spinner from "../components/Spinner";
 
 export default {
   name: "Favourites",
   components: {
-    recipe: Recipe
+    recipe: Recipe,
+    spinner: Spinner
   },
   data: () => ({
     favourites: undefined
@@ -69,8 +77,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styles/modules/favourites.scss";
-#favourites {
-  padding: 24px;
-  position: relative;
-}
 </style>
