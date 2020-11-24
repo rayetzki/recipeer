@@ -3,7 +3,11 @@
     <header>
       <h1 class="my-recipes__title">Мои Рецепты</h1>
       <div class="my-recipes__options"></div>
-      <router-link id="add" to="add-recipe">
+      <router-link
+        v-if="!recipes || recipes.length === 0"
+        id="add"
+        to="/add-recipe"
+      >
         <i class="fas fa-plus-circle"></i>
       </router-link>
     </header>
