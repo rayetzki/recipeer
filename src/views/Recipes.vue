@@ -10,9 +10,11 @@
         >
           <i class="fas fa-search"></i>
         </span>
-        <span id="settings" v-show="!openSearch">
-          <i class="fas fa-plus-circle"></i>
-        </span>
+        <router-link id="settings" to="/add-recipe">
+          <span v-show="!openSearch">
+            <i class="fas fa-plus-circle"></i>
+          </span>
+        </router-link>
       </div>
       <div class="recipes__search" v-show="openSearch">
         <form-input
@@ -54,7 +56,7 @@
             @favourite="toggleSaved"
             :favourite="recipe && recipe.favourite"
             :recipe="recipe"
-            :delete="recipe && recipe.author && recipe.author.id === user.id"
+            :delete="false"
             :userId="user.id"
           ></recipe>
         </router-link>
@@ -68,11 +70,7 @@ import { mapGetters } from "vuex";
 import Recipe from "../components/Recipe";
 import FormInput from "../components/FormInput";
 import { Tag } from "element-ui";
-import {
-  getRecipes,
-  deleteRecipe,
-  findRecipe
-} from "../store/recipes/recipes.actions";
+import { getRecipes, findRecipe } from "../store/recipes/recipes.actions";
 import {
   removeFavourite,
   addFavourite
@@ -156,12 +154,6 @@ export default {
           });
         });
       }
-    },
-    removeRecipe(id) {
-      const index = this.recipes.findIndex(recipe => recipe.id === id);
-      deleteRecipe(id).then(() => {
-        this.recipes.splice(index, 1);
-      });
     }
   }
 };
@@ -169,8 +161,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styles/modules/recipes.scss";
-
-#recipes {
-  padding: 24px;
-}
 </style>

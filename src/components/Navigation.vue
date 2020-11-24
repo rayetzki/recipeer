@@ -31,8 +31,8 @@
         @click="navigate"
         v-show="isExactActive"
       >
-        <i class="fas fa-book-open"></i>
-        Рецепты
+        <i class="fas fa-map"></i>
+        Все рецепты
       </a>
       <a
         :href="href"
@@ -40,8 +40,28 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="fas fa-book"></i>
-        Рецепты
+        <i class="far fa-map"></i>
+        Все рецепты
+      </a>
+    </router-link>
+    <router-link v-slot="{ isExactActive, navigate, href }" to="/my-recipes">
+      <a
+        :href="href"
+        class="navigation__link"
+        @click="navigate"
+        v-show="isExactActive"
+      >
+        <i class="fas fa-plus-square"></i>
+        Мои рецепты
+      </a>
+      <a
+        :href="href"
+        v-show="!isExactActive"
+        class="navigation__link"
+        @click="navigate"
+      >
+        <i class="far fa-plus-square"></i>
+        Мои рецепты
       </a>
     </router-link>
     <router-link v-slot="{ isExactActive, navigate, href }" to="/favourites">

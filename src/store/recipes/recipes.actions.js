@@ -5,8 +5,8 @@ export const getRecipes = (page, userId = null, dayTime) => {
   return axios
     .get(`${API_URL}/recipes`, {
       params: {
-        userId: userId || null,
         page,
+        userId: userId || null,
         dayTime: dayTime || null
       }
     })
