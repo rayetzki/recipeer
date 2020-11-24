@@ -36,7 +36,7 @@
           <p>{{ recipe.cookingTime }}</p>
         </div>
         <span class="recipe__info--cost">
-          Примерная стоимость: {{ convertPrice(recipe.cost) }}
+          Примерная стоимость: {{ parseBalance(recipe.cost) }}
         </span>
       </div>
     </div>
@@ -54,9 +54,7 @@ export default {
     };
   },
   methods: {
-    convertPrice(balance) {
-      return parseBalance(balance);
-    }
+    parseBalance
   }
 };
 </script>

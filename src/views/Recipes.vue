@@ -29,7 +29,7 @@
     </header>
     <section class="recipes__categories">
       <el-tag
-        @click="toggleLabel(item.label)"
+        @click="filterCondition = item.label"
         v-for="item in items"
         :key="item.label"
         :type="item.type"
@@ -137,18 +137,7 @@ export default {
     });
   },
   methods: {
-    toggleLabel(label) {
-      this.filterCondition = label;
-    },
-    getRecipes(page) {
-      return getRecipes(page);
-    },
-    setRecipes(recipesData) {
-      this.recipes = recipesData;
-    },
-    setPage(page) {
-      this.page = page;
-    },
+    getRecipes,
     toggleSaved(id) {
       const index = this.recipes.findIndex(recipe => recipe.id === id);
       const recipe = this.recipes[index];

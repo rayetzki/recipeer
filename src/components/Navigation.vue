@@ -84,6 +84,7 @@ export default {
   align-items: center;
   position: fixed;
   bottom: 0;
+  background-color: white;
   box-shadow: $borderBoxShadow;
 
   .navigation__link {

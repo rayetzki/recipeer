@@ -15,3 +15,14 @@
   cursor: pointer;
   border-radius: 50%;
 }
+
+@mixin infoIcon($backgroundColor) {
+  border-radius: $borderRadius;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  background-color: $backgroundColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

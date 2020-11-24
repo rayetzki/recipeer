@@ -25,4 +25,187 @@
       @include action(null, 16px, 16px, null);
     }
   }
+
+  &__basic {
+    padding: 24px;
+    $this: &;
+
+    &--title {
+      font-family: $secondary-font;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: left;
+      width: fit-content;
+    }
+
+    &--list {
+      display: flex;
+      flex-direction: column;
+      margin: 16px 0;
+      width: 100%;
+
+      & > li {
+        padding: 16px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        #{$this}--additional {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          & > h4 {
+            margin-left: 24px;
+            font-size: 14px;
+            font-weight: bolder;
+          }
+        }
+
+        #{$this}--main {
+          & > p {
+            font-size: 14px;
+            font-family: monospace;
+          }
+        }
+      }
+
+      #{$this}--time {
+        #{$this}--icon {
+          @include infoIcon(peachpuff);
+        }
+      }
+
+      #{$this}--cost {
+        #{$this}--icon {
+          @include infoIcon(palegoldenrod);
+        }
+      }
+
+      #{$this}--author {
+        #{$this}--icon {
+          @include infoIcon(wheat);
+        }
+      }
+
+      #{$this}--nutrition {
+        #{$this}--icon {
+          @include infoIcon(wheat);
+        }
+      }
+
+      #{$this}--dayTime {
+        #{$this}--icon {
+          @include infoIcon(pink);
+        }
+      }
+
+      & > li:not(:last-of-type) {
+        border-bottom: 1px solid gainsboro;
+      }
+    }
+  }
+
+  &__ingredients {
+    background-color: ivory;
+    min-height: 120px;
+    padding: 24px;
+    $this: &;
+
+    &--title {
+      font-family: $secondary-font;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: left;
+      width: fit-content;
+      margin-bottom: 16px;
+    }
+
+    &--list {
+      display: flex;
+      flex-direction: column;
+
+      #{$this}--item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+
+        &:not(:last-of-type) {
+          border-bottom: 1px solid gainsboro;
+        }
+
+        #{$this}--ingredient {
+          margin-left: 16px;
+          font-family: $secondary-font;
+          font-size: 14px;
+          font-weight: bolder;
+        }
+
+        #{$this}--unit {
+          font-family: monospace;
+          font-size: 14px;
+        }
+
+        &::after {
+          content: "⬤";
+          color: sandybrown;
+          position: absolute;
+          left: 24px;
+        }
+      }
+    }
+  }
+
+  &__steps {
+    background-color: mintcream;
+    min-height: 275px;
+    padding: 24px 16px;
+    $this: &;
+
+    &--title {
+      font-family: $secondary-font;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: left;
+      width: fit-content;
+      margin-bottom: 16px;
+    }
+
+    &--list {
+      #{$this}--item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 16px;
+        padding: 8px 0;
+      }
+
+      #{$this}--index {
+        margin-bottom: 8px;
+        font-family: $secondary-font;
+        font-size: 14px;
+        font-weight: bolder;
+        &::before {
+          content: "⬤";
+          margin-right: 8px;
+          color: sandybrown;
+        }
+      }
+
+      #{$this}--description {
+        text-align: left;
+        font-family: $secondary-font;
+      }
+    }
+
+    &--final {
+      margin: 24px 0;
+      text-align: center;
+      font-family: $primary-font;
+      font-weight: bolder;
+    }
+  }
 }

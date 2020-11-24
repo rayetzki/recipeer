@@ -21,7 +21,10 @@
         <h3 class="recipe-recommendation__header">
           Рекомендуем если проголодался:
         </h3>
-        <h3 class="recipe-recommendation__night-header">
+        <h3
+          v-if="!randomRecipe.title"
+          class="recipe-recommendation__night-header"
+        >
           Мы не рекомендуем кушать на ночь, потому что это очень вредно для
           здоровья.
         </h3>
