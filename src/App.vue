@@ -23,18 +23,50 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: "auth/isLoggedIn",
-      user: "user/user"
+      user: "user/user",
+      token: "auth/token",
+      refresh: "auth/refreshToken"
     })
   },
   created() {
+    const expiration = this.token && this.token.expiresIn - Date.now();
+    const refreshExpiration =
+      this.refresh && this.refresh.refreshExpiresIn - Date.now();
+
+    if (expiration > 0 && refreshExpiration > 0) {
+      setTimeout(() => {
+        store.dispatch(
+          "auth/refresh",
+          { userId: this.user.id, refreshToken: this.refresh.refreshToken },
+          { root: true }
+        );
+      }, expiration);
+    }
+
     axios.defaults.baseURL = BASE_URL;
     axios.interceptors.request.use(config => {
-      const token = this.$store.getters["auth/token"];
-      if (token !== null) {
-        config.headers["Authorization"] = `Bearer ${token.accessToken}`;
+      if (
+        this.token &&
+        this.refreshToken &&
+        expiration < 0 &&
+        refreshExpiration > 0
+      ) {
+        store.dispatch(
+          "auth/refresh",
+          { userId: this.user.id, refreshToken: this.refresh.refreshToken },
+          { root: true }
+        );
+      } else if (expiration < 0 && refreshExpiration < 0) {
+        store.dispatch("auth/logout", null, { root: true });
       }
+
+      if (this.token !== null) {
+        config.headers["Authorization"] = `Bearer ${this.token.accessToken}`;
+      }
+
       return Promise.resolve(config);
     });
+
     axios.interceptors.response.use(undefined, error => {
       return new Promise((resolve, reject) => {
         if (error.status >= 401) {
@@ -44,35 +76,6 @@ export default {
         reject(error);
       });
     });
-  },
-  beforeMount() {
-    const user = this.$store.getters["user/user"];
-    const access = this.$store.getters["auth/token"];
-    const refresh = this.$store.getters["auth/refreshToken"];
-    const expiration = access && access.expiresIn - Date.now();
-    const refreshExpiration = refresh && refresh.refreshExpiresIn - Date.now();
-
-    if (expiration > 0 && refreshExpiration > 0) {
-      setTimeout(() => {
-        store.dispatch(
-          "auth/refresh",
-          { userId: user.id, refreshToken: refresh.refreshToken },
-          { root: true }
-        );
-      }, expiration);
-    }
-
-    if (expiration < 0 && refreshExpiration > 0) {
-      store.dispatch(
-        "auth/refresh",
-        { userId: user.id, refreshToken: refresh.refreshToken },
-        { root: true }
-      );
-    }
-
-    if (expiration < 0 && refreshExpiration < 0) {
-      store.dispatch("auth/logout", null, { root: true });
-    }
   }
 };
 </script>
