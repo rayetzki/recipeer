@@ -10,7 +10,12 @@
         >
           <i class="fas fa-search"></i>
         </span>
-        <router-link id="settings" to="/add-recipe" v-show="!openSearch">
+        <router-link
+          id="add"
+          v-if="user.role !== 'user'"
+          to="/add-recipe"
+          v-show="!openSearch"
+        >
           <i class="fas fa-plus-circle"></i>
         </router-link>
       </div>

@@ -3,7 +3,7 @@
     <transition name="fade" mode="out-in">
       <router-view :key="$route.path"></router-view>
     </transition>
-    <app-navigation v-if="isLoggedIn"></app-navigation>
+    <app-navigation :role="user.role" v-if="isLoggedIn"></app-navigation>
   </div>
 </template>
 
@@ -22,7 +22,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: "auth/isLoggedIn"
+      isLoggedIn: "auth/isLoggedIn",
+      user: "user/user"
     })
   },
   created() {

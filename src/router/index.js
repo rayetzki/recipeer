@@ -46,7 +46,8 @@ const routes = [
     name: "MyRecipes",
     component: () => import("../views/MyRecipes.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      forEditors: true
     }
   },
   {
@@ -64,6 +65,15 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: "/add-recipe",
+    name: "AddRecipe",
+    component: () => import("../views/AddRecipe.vue"),
+    meta: {
+      requiresAuth: true,
+      forEditors: true
+    }
   }
 ];
 
@@ -78,6 +88,13 @@ router.beforeEach((to, from, next) => {
     const isLoggedIn = store.getters["auth/isLoggedIn"];
     if (isLoggedIn === false) {
       next("/login");
+    } else {
+      next();
+    }
+  } else if (to.matched.some(route => route.meta.forEditors)) {
+    const user = store.getters["user/user"];
+    if (user.role === "user") {
+      next("recipes");
     } else {
       next();
     }

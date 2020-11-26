@@ -44,7 +44,11 @@
         Все рецепты
       </a>
     </router-link>
-    <router-link v-slot="{ isExactActive, navigate, href }" to="/my-recipes">
+    <router-link
+      v-if="role !== 'user'"
+      v-slot="{ isExactActive, navigate, href }"
+      to="/my-recipes"
+    >
       <a
         :href="href"
         class="navigation__link"
@@ -89,7 +93,8 @@
 
 <script>
 export default {
-  name: "Navigation"
+  name: "Navigation",
+  props: ["role"]
 };
 </script>
 

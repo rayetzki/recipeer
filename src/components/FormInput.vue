@@ -17,6 +17,7 @@
       @input="$emit('input', $event)"
     />
     <span v-if="!!error" class="input__error--message">{{ error }}</span>
+    <slot></slot>
   </div>
 </template>
 
@@ -47,23 +48,53 @@ export default {
 @import "../styles/forms.scss";
 @import "../styles/theme.scss";
 
-.input__container {
-  position: relative;
-}
+.input {
+  &__container {
+    position: relative;
 
-.input__error--message {
-  font-size: 12px;
-  color: $textError;
-}
+    & .el-textarea {
+      & > textarea {
+        resize: none;
+        height: 60px;
+        font-family: $primary-font;
 
-.input__error {
-  border: 1px solid $borderError;
-  border-radius: 10px;
-  margin-bottom: 8px;
+        &::placeholder {
+          font-family: $primary-font;
+        }
+      }
+    }
+  }
 
-  & .el-input__inner {
-    border: none;
-    border-radius: 50%;
+  &__error {
+    border: 1px solid $borderError;
+    border-radius: 10px;
+    margin-bottom: 8px;
+
+    & .el-input__inner {
+      border: none;
+      border-radius: 50%;
+    }
+
+    &--message {
+      font-size: 12px;
+      color: $textError;
+      position: absolute;
+      left: 4px;
+    }
+  }
+
+  &__tags {
+    margin-top: 8px;
+
+    &--list {
+      display: inline-flex;
+      position: absolute;
+      left: 4px;
+
+      & > li {
+        margin-right: 8px;
+      }
+    }
   }
 }
 </style>
