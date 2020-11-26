@@ -24,7 +24,6 @@ export const validateObject = (
       instance.$set(errors, index, { ...errors[index], [property]: "" });
     })
     .catch(error => {
-      console.log(errors);
       instance.$set(errors, index, {
         ...errors[index],
         [property]: error.message
