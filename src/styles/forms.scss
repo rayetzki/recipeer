@@ -11,15 +11,19 @@
   margin-bottom: 4px;
 }
 
-.form__centered {
+.form__aligned {
   display: grid;
-  grid-gap: 16px;
+  grid-gap: 24px;
+  width: calc(100% - 32px);
+  padding: 0 16px;
+}
+
+.form__centered {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100% - 32px);
-  padding: 0 16px;
+  @extend .form__aligned;
 }
 
 .form__select {

@@ -41,3 +41,19 @@ export const findRecipe = condition => {
     .then(response => response.data)
     .catch(error => console.error(error));
 };
+
+export const uploadRecipe = (userId, recipe) => {
+  return axios
+    .post(`${API_URL}/recipes?userId=${userId}`, recipe)
+    .then(response => response.data)
+    .catch(error => console.error(error));
+};
+
+export const uploadRecipeBanner = (recipeId, file) => {
+  const formData = new FormData();
+  formData.append("banner", file);
+  return axios
+    .post(`${API_URL}/recipes/banner?id=${recipeId}`, formData)
+    .then(response => response.data)
+    .catch(error => console.error(error));
+};

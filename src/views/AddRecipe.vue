@@ -1,7 +1,12 @@
 <template>
   <div class="add-recipe">
-    <form class="form">
-      <h3 class="form__header">Добавь новый рецепт</h3>
+    <banner-upload
+      :banner="bannerPreview"
+      title="Загрузи картинку рецепта"
+      @fileload="addBanner"
+    ></banner-upload>
+    <form class="add-recipe__form">
+      <h3 class="add-recipe__title">Добавь новый рецепт</h3>
       <FormInput
         name="title"
         type="text"
@@ -127,13 +132,15 @@ import { mapGetters } from "vuex";
 import { validateField, validateObject } from "../utils/runValidation";
 import FormInput from "../components/FormInput.vue";
 import { AddRecipeValidationSchema } from "../validation-schemas/AddRecipe.schema";
+import BannerUpload from "../components/BannerUpload.vue";
 
 export default {
   name: "AddRecipe",
   components: {
     Alert,
     FormInput,
-    "el-tag": Tag
+    "el-tag": Tag,
+    "banner-upload": BannerUpload
   },
   computed: {
     ...mapGetters({
@@ -143,7 +150,8 @@ export default {
   data: () => ({
     loading: false,
     error: "",
-    tags: ["минут", "час"],
+    tags: ["минут", "час(а)"],
+    bannerPreview: "",
     errors: {
       title: "",
       description: "",
@@ -196,57 +204,20 @@ export default {
     },
     removeIngredient(index) {
       this.values.ingredients.splice(index, 1);
+    },
+    addBanner(event) {
+      const file = event.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", event => {
+        this.bannerPreview = event.target.result;
+        this.values.banner = file;
+      });
+      fileReader.readAsDataURL(file);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/forms.scss";
-
-.add-recipe {
-  margin-top: 128px;
-}
-
-.form {
-  display: grid;
-  grid-gap: 16px;
-  width: calc(100% - 32px);
-  padding: 0 16px;
-}
-
-.ingredients {
-  &__container {
-    margin: 32px 0 80px 0;
-  }
-
-  &__header {
-    margin: 16px 0;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: left;
-  }
-
-  &__item {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    grid-gap: 8px;
-    margin-bottom: 8px;
-  }
-
-  &__append {
-    position: absolute;
-    left: 4px;
-    top: 48px;
-    bottom: 0;
-  }
-
-  &__remove {
-    position: absolute;
-    right: 4px;
-    top: 48px;
-    bottom: 0;
-  }
-}
+@import "../styles/modules/add-recipe.scss";
 </style>
