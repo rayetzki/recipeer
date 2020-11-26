@@ -13,14 +13,13 @@
 
 .form__centered {
   display: grid;
-  grid-gap: 24px;
-  place-items: center;
+  grid-gap: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: calc(100% - 32px);
   padding: 0 16px;
-
-  & > * {
-    width: 100%;
-  }
 }
 
 .form__select {

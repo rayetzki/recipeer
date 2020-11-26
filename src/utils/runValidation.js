@@ -21,9 +21,10 @@ export const validateObject = (
   return schema
     .validateAt(field, object)
     .then(() => {
-      instance.$set(errors, index, { [property]: "" });
+      instance.$set(errors, index, { ...errors, [property]: "" });
     })
     .catch(error => {
-      instance.$set(errors, index, { [property]: error.message });
+      console.log(errors);
+      instance.$set(errors, index, { ...errors, [property]: error.message });
     });
 };

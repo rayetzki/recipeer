@@ -15,8 +15,8 @@ export const AddRecipeValidationSchema = Yup.object({
     .typeError("Должно быть числом"),
   ingredients: Yup.array().of(
     Yup.object({
-      unit: Yup.string().required("Введи единицу измерения"),
-      ingredient: Yup.string().required("Введи название ингредиента")
+      unit: Yup.string().required("Пусто"),
+      ingredient: Yup.string().required("Пусто")
     })
   ),
   cookingTime: Yup.string().required("Введи примерное время приготовление")

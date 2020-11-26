@@ -1,6 +1,6 @@
 <template>
   <div class="add-recipe">
-    <form class="form__centered">
+    <form class="form">
       <h3 class="form__header">Добавь новый рецепт</h3>
       <FormInput
         name="title"
@@ -206,6 +206,13 @@ export default {
 
 .add-recipe {
   margin-top: 128px;
+}
+
+.form {
+  display: grid;
+  grid-gap: 16px;
+  width: calc(100% - 32px);
+  padding: 0 16px;
 }
 
 .ingredients {
