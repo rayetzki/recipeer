@@ -43,38 +43,45 @@ export default {
       }, expiration);
     }
 
+    if (expiration < 0 && refreshExpiration < 0) {
+      store.dispatch("auth/logout", null, { root: true });
+    }
+
     axios.defaults.baseURL = BASE_URL;
+
     axios.interceptors.request.use(config => {
-      if (
-        this.token &&
-        this.refreshToken &&
-        expiration < 0 &&
-        refreshExpiration > 0
-      ) {
-        store.dispatch(
-          "auth/refresh",
-          { userId: this.user.id, refreshToken: this.refresh.refreshToken },
-          { root: true }
-        );
-      } else if (expiration < 0 && refreshExpiration < 0) {
-        store.dispatch("auth/logout", null, { root: true });
-      }
-
       if (this.token !== null) {
-        config.headers["Authorization"] = `Bearer ${this.token.accessToken}`;
+        const token = this.token.accessToken;
+        axios.defaults.headers["Authorization"] = `Bearer ${token}`;
       }
-
       return Promise.resolve(config);
     });
 
     axios.interceptors.response.use(undefined, error => {
-      return new Promise((resolve, reject) => {
-        if (error.status >= 401) {
-          store.dispatch("auth/logout", null, { root: true });
-          resolve();
-        }
-        reject(error);
-      });
+      if (error.response.status === 401) {
+        const originalRequest = error.config;
+        store
+          .dispatch(
+            "auth/refresh",
+            { userId: this.user.id, refreshToken: this.refresh.refreshToken },
+            { root: true }
+          )
+          .then(() => {
+            const token = this.token.accessToken;
+            originalRequest.headers["Authorization"] = `Bearer ${token}`;
+            return new Promise((resolve, reject) => {
+              axios
+                .request(originalRequest)
+                .then(response => {
+                  resolve(response);
+                })
+                .catch(error => {
+                  reject(error);
+                });
+            });
+          });
+      }
+      return Promise.reject(error);
     });
   }
 };
