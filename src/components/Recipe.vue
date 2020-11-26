@@ -1,7 +1,7 @@
 <template>
-  <div id="#recipe" class="recipe__preview">
+  <div id="#recipe" class="recipe__preview" v-if="recipe">
     <div class="recipe__preview--view">
-      <router-link :to="{ path: 'recipe', query: { id: recipe && recipe.id } }">
+      <router-link :to="{ path: 'recipe', query: { id: recipe.id } }">
         <img
           :src="recipe.banner"
           alt="Изображение рецепта"
@@ -15,7 +15,11 @@
       >
         <i class="fas fa-trash"></i>
       </span>
-
+      <router-link v-if="edit" :to="{ path: 'edit', query: { id: recipe.id } }">
+        <span class="recipe__preview--edit">
+          <i class="far fa-edit"></i>
+        </span>
+      </router-link>
       <span
         @click="$emit('favourite', recipe.id)"
         class="recipe__preview--saved"
@@ -50,7 +54,7 @@
 import { parseBalance } from "../utils/parseBalance";
 export default {
   name: "Recipe",
-  props: ["recipe", "delete", "favourite"],
+  props: ["recipe", "delete", "favourite", "edit"],
   data() {
     return {
       showDelete: this.delete
@@ -88,6 +92,10 @@ export default {
 
   &--saved {
     @include action(null, 16px, 16px, null);
+  }
+
+  &--edit {
+    @include action(16px, null, null, 16px);
   }
 
   &:hover {

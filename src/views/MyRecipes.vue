@@ -26,6 +26,7 @@
       >
         <recipe
           @favourite="toggleSaved"
+          :edit="true"
           :favourite="recipe && recipe.favourite"
           :recipe="recipe"
           :delete="recipe && recipe.author && recipe.author.id === user.id"
