@@ -46,26 +46,13 @@
     <h5 v-if="recipes && recipes.length === 0" class="recipes__empty-list">
       Не найдено рецептов
     </h5>
-    <div class="recipes__pagination">
-      <span
-        @click="decrementPage"
-        :class="[
-          page < 1 && 'recipes__pagination--disabled',
-          'recipes__pagination--backwards'
-        ]"
-      >
-        <i class="fas fa-long-arrow-alt-left"></i>
-      </span>
-      <span
-        @click="incrementPage"
-        :class="[
-          page * limit >= total && 'recipes__pagination--disabled',
-          'recipes__pagination--forwards'
-        ]"
-      >
-        <i class="fas fa-long-arrow-alt-right"></i>
-      </span>
-    </div>
+    <pagination
+      :page="page"
+      :limit="limit"
+      :total="total"
+      @increment="incrementPage"
+      @decrement="decrementPage"
+    ></pagination>
     <ul class="recipes__grid" v-if="recipes && recipes.length >= 0">
       <li
         class="recipes__preview"
@@ -91,6 +78,7 @@ import { mapGetters } from "vuex";
 import Recipe from "../components/Recipe";
 import FormInput from "../components/FormInput";
 import Spinner from "../components/Spinner";
+import Pagination from "../components/Pagination.vue";
 import { Tag } from "element-ui";
 import { getRecipes, findRecipe } from "../store/recipes/recipes.actions";
 import {
@@ -104,38 +92,42 @@ export default {
     "form-input": FormInput,
     "el-tag": Tag,
     recipe: Recipe,
-    spinner: Spinner
+    spinner: Spinner,
+    pagination: Pagination
   },
   watch: {
     page() {
-      this.getRecipes(this.page).then(data => {
+      this.getRecipes(this.page, null, null, this.limit).then(data => {
         this.recipes = data.recipes;
         this.total = data.total;
       });
     },
-    async searchCondition() {
+    searchCondition() {
       if (this.searchCondition.trim().length === 0) {
         this.searchCondition = "";
         return;
       }
-      const recipes = await findRecipe(this.searchCondition);
-      this.recipes = recipes;
+      findRecipe(this.searchCondition).then(response => {
+        this.recipes = response.recipes;
+        this.total = response.total;
+      });
     },
-    async filterCondition() {
+    filterCondition() {
       const dayTime = this.filterCondition.toLowerCase().trim();
-
       if (dayTime.length === 0) {
         this.filterCondition = "";
         return;
       }
 
-      const response = await getRecipes(
+      getRecipes(
         this.page,
         null,
+        this.limit,
         dayTime === "все" ? null : dayTime
-      );
-
-      this.recipes = response.recipes;
+      ).then(response => {
+        this.recipes = response.recipes;
+        this.total = response.total;
+      });
     }
   },
   data: () => ({
@@ -167,20 +159,6 @@ export default {
     });
   },
   methods: {
-    incrementPage() {
-      if (this.page * this.limit >= this.total) {
-        return;
-      } else {
-        this.page = this.page + 1;
-      }
-    },
-    decrementPage() {
-      if (this.page < 1) {
-        return;
-      } else {
-        this.page = this.page - 1;
-      }
-    },
     getRecipes,
     toggleSaved(id) {
       const index = this.recipes.findIndex(recipe => recipe.id === id);
@@ -200,6 +178,18 @@ export default {
           });
         });
       }
+    },
+    incrementPage() {
+      if (this.page * this.limit >= this.total) return;
+      this.page = this.page + 1;
+      this.limit =
+        this.total - this.limit * (this.page + 1) < 0
+          ? this.total - this.limit
+          : this.limit;
+    },
+    decrementPage() {
+      if (this.page < 1) return;
+      this.page = this.page - 1;
     }
   }
 };

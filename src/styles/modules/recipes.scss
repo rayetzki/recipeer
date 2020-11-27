@@ -80,23 +80,6 @@
     font-size: 16px;
   }
 
-  .recipes__pagination {
-    position: absolute;
-    right: 24px;
-
-    & > * {
-      cursor: pointer;
-    }
-
-    &--backwards {
-      margin-right: 16px;
-    }
-
-    &--disabled {
-      opacity: 0.1;
-    }
-  }
-
   .recipes__grid {
     top: 16px;
     margin: 2.5em auto;

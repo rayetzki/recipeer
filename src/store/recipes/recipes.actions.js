@@ -2,12 +2,12 @@ import axios from "axios";
 import router from "../../router";
 import { API_URL } from "../../config/API";
 
-export const getRecipes = (page, userId = null, dayTime) => {
+export const getRecipes = (page, userId = null, dayTime, limit = 5) => {
   return axios
     .get(`${API_URL}/recipes`, {
       params: {
         page,
-        limit: 5,
+        limit,
         userId: userId || null,
         dayTime: dayTime || null
       }

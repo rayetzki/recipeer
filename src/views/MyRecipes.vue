@@ -18,6 +18,13 @@
         <i class="fas fa-plus-circle"></i> Добавить
       </router-link>
     </h5>
+    <pagination
+      :page="page"
+      :limit="limit"
+      :total="total"
+      @increment="incrementPage"
+      @decrement="decrementPage"
+    ></pagination>
     <ul class="my-recipes__grid" v-if="recipes && recipes.length >= 0">
       <li
         class="my-recipes__preview"
@@ -48,16 +55,20 @@ import {
   addFavourite,
   removeFavourite
 } from "../store/favourites/favourites.actions";
+import Pagination from "../components/Pagination.vue";
 
 export default {
   name: "MyRecipes",
   components: {
     recipe: Recipe,
-    spinner: Spinner
+    spinner: Spinner,
+    pagination: Pagination
   },
   data: () => ({
     page: 0,
-    recipes: undefined
+    recipes: undefined,
+    total: undefined,
+    limit: 5
   }),
   computed: {
     ...mapGetters({
@@ -65,9 +76,18 @@ export default {
     })
   },
   mounted() {
-    getRecipes(this.page, this.user.id).then(response => {
+    getRecipes(this.page, this.user.id, null, this.limit).then(response => {
       this.recipes = response.recipes;
+      this.total = response.total;
     });
+  },
+  watch: {
+    page() {
+      this.getRecipes(this.page, null, null, this.limit).then(data => {
+        this.recipes = data.recipes;
+        this.total = data.total;
+      });
+    }
   },
   methods: {
     getRecipes,
@@ -89,6 +109,18 @@ export default {
           });
         });
       }
+    },
+    incrementPage() {
+      if (this.page * this.limit >= this.total) return;
+      this.page = this.page + 1;
+      this.limit =
+        this.total - this.limit * (this.page + 1) <= 0
+          ? this.total - this.limit
+          : this.limit;
+    },
+    decrementPage() {
+      if (this.page < 1) return;
+      this.page = this.page - 1;
     }
   }
 };
