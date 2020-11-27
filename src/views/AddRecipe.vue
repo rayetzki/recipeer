@@ -52,7 +52,7 @@
           </ul>
         </div>
       </FormInput>
-      <ul class="ingredients__container">
+      <ul class="ingredients">
         <h3 class="ingredients__header">Ингредиенты</h3>
         <li
           class="ingredients__item"
@@ -119,6 +119,43 @@
           </FormInput>
         </li>
       </ul>
+      <ul class="steps">
+        <h3 class="steps__header">Шаги приготовления</h3>
+        <li
+          class="steps__item"
+          v-for="(step, index) in values.body"
+          :key="index"
+        >
+          <FormInput
+            type="textarea"
+            v-model="values.body[index]"
+            :name="`step--${index}`"
+            :placeholder="`${index + 1}-й шаг`"
+            :error="errors.body[index]"
+            @validate="validateCollection(`body.${index}`, index, errors.body)"
+          >
+            <span
+              v-if="index === values.body.length - 1"
+              v-show="!errors.body[index]"
+              @click="appendStep"
+              class="steps__append"
+            >
+              <i class="far fa-plus-square"></i>
+            </span>
+            <span
+              @click="removeStep(index)"
+              v-if="values.body.length > 1 && index === values.body.length - 1"
+              v-show="!errors.body[index]"
+              class="steps__remove"
+            >
+              <i class="fas fa-trash"></i>
+            </span>
+          </FormInput>
+        </li>
+      </ul>
+      <Button @click.prevent="addRecipe" class="add-recipe__submit">
+        Готово
+      </Button>
     </form>
     <Alert v-if="error" title="Произошла ошибка" show-icon type="error">
       {{ error }}
@@ -127,12 +164,16 @@
 </template>
 
 <script>
-import { Alert, Tag } from "element-ui";
 import { mapGetters } from "vuex";
-import { validateField, validateObject } from "../utils/runValidation";
+import { Alert, Tag, Button } from "element-ui";
 import FormInput from "../components/FormInput.vue";
-import { AddRecipeValidationSchema } from "../validation-schemas/AddRecipe.schema";
 import BannerUpload from "../components/BannerUpload.vue";
+import { AddRecipeValidationSchema } from "../validation-schemas/AddRecipe.schema";
+import {
+  validateArray,
+  validateField,
+  validateObject
+} from "../utils/runValidation";
 
 export default {
   name: "AddRecipe",
@@ -140,7 +181,8 @@ export default {
     Alert,
     FormInput,
     "el-tag": Tag,
-    "banner-upload": BannerUpload
+    "banner-upload": BannerUpload,
+    Button
   },
   computed: {
     ...mapGetters({
@@ -155,7 +197,7 @@ export default {
     errors: {
       title: "",
       description: "",
-      body: [],
+      body: [""],
       ingredients: [{ unit: "", ingredient: "" }],
       cost: "",
       cookingTime: "",
@@ -164,7 +206,7 @@ export default {
     values: {
       title: "",
       description: "",
-      body: [],
+      body: [""],
       ingredients: [{ unit: "", ingredient: "" }],
       cost: "",
       cookingTime: "",
@@ -191,6 +233,16 @@ export default {
         this
       );
     },
+    validateCollection(field, index, errors) {
+      return validateArray(
+        AddRecipeValidationSchema,
+        field,
+        index,
+        this.values,
+        errors,
+        this
+      );
+    },
     appendTag(tag, name) {
       const value = this.values[name];
       if (/\D+/g.test(value)) {
@@ -204,6 +256,15 @@ export default {
     },
     removeIngredient(index) {
       this.values.ingredients.splice(index, 1);
+    },
+    appendStep() {
+      this.values.body.push("");
+    },
+    removeStep(index) {
+      this.values.body.splice(index, 1);
+    },
+    addRecipe() {
+      console.log(this.values);
     },
     addBanner(event) {
       const file = event.target.files[0];

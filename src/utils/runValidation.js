@@ -30,3 +30,21 @@ export const validateObject = (
       });
     });
 };
+
+export const validateArray = (
+  schema,
+  field,
+  index,
+  object,
+  errors,
+  instance
+) => {
+  return schema
+    .validateAt(field, object)
+    .then(() => {
+      instance.$set(errors, index, "");
+    })
+    .catch(error => {
+      instance.$set(errors, index, error.message);
+    });
+};

@@ -19,5 +19,6 @@ export const AddRecipeValidationSchema = Yup.object({
       ingredient: Yup.string().required("Пусто")
     })
   ),
+  body: Yup.array().of(Yup.string().required("Пусто")),
   cookingTime: Yup.string().required("Введи примерное время приготовление")
 });
