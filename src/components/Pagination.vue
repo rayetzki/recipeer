@@ -9,7 +9,7 @@
     <span
       @click="$emit('increment')"
       :class="[
-        page * limit >= total && 'pagination__disabled',
+        (page + 1) * limit >= total && 'pagination__disabled',
         'pagination__forwards'
       ]"
     >

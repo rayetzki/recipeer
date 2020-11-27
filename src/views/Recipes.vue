@@ -97,7 +97,14 @@ export default {
   },
   watch: {
     page() {
-      this.getRecipes(this.page, null, null, this.limit).then(data => {
+      this.getRecipes(
+        this.page,
+        null,
+        null,
+        this.total - this.limit * (this.page + 1) < 0
+          ? this.total - this.limit
+          : this.limit
+      ).then(data => {
         this.recipes = data.recipes;
         this.total = data.total;
       });
@@ -182,10 +189,6 @@ export default {
     incrementPage() {
       if (this.page * this.limit >= this.total) return;
       this.page = this.page + 1;
-      this.limit =
-        this.total - this.limit * (this.page + 1) < 0
-          ? this.total - this.limit
-          : this.limit;
     },
     decrementPage() {
       if (this.page < 1) return;
