@@ -110,7 +110,9 @@
           <li
             :key="index"
             class="recipe__steps--item"
-            v-for="(description, index) in recipe.body.split('. ')"
+            v-for="(description, index) in recipe.body
+              .split('. ')
+              .filter(step => step.length > 0)"
           >
             <span class="recipe__steps--index">{{ `${++index}-й шаг` }}</span>
             <span class="recipe__steps--description">{{ description }}</span>
