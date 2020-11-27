@@ -14,14 +14,16 @@
       </span>
       <span
         @click="toggleSaved(recipe.id)"
-        v-show="!recipe.favourite"
+        v-if="!recipe.favourite"
         class="recipe__header--saved"
       >
         <i class="far fa-bookmark"></i>
       </span>
       <span
         @click="toggleSaved(recipe.id)"
-        v-show="recipe.favourite"
+        v-else-if="
+          recipe && recipe.favourite && recipe.favourite.userId === user.id
+        "
         class="recipe__header--saved"
       >
         <i class="fas fa-bookmark"></i>

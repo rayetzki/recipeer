@@ -55,9 +55,7 @@
         <recipe
           @favourite="toggleSaved"
           :favourite="
-            recipe &&
-              recipe.favourite &&
-              recipe.favourite.userId === this.user.id
+            recipe && recipe.favourite && recipe.favourite.userId === user.id
           "
           :recipe="recipe"
           :delete="false"
