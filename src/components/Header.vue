@@ -1,10 +1,10 @@
 <template>
   <header>
+    <Button class="logout" @click="$emit('logout')">Выйти</Button>
+    <h1>Книга рецептов</h1>
     <router-link to="/update-user">
       <img class="avatar" v-if="avatar" :src="avatar" />
     </router-link>
-    <h1>Книга рецептов</h1>
-    <Button class="logout" @click="$emit('logout')">Выйти</Button>
   </header>
 </template>
 
