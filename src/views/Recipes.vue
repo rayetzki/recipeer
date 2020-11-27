@@ -125,12 +125,11 @@ export default {
         this.filterCondition = "";
         return;
       }
-
       getRecipes(
         this.page,
         null,
-        this.limit,
-        dayTime === "все" ? null : dayTime
+        dayTime === "все" ? null : dayTime,
+        this.limit
       ).then(response => {
         this.recipes = response.recipes;
         this.total = response.total;
