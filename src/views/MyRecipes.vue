@@ -85,7 +85,7 @@ export default {
     page() {
       this.getRecipes(
         this.page,
-        null,
+        this.user.id,
         null,
         this.total - this.limit * (this.page + 1) < 0
           ? this.total - this.limit

@@ -35,6 +35,7 @@ header {
   h1 {
     font-size: 24px;
     font-weight: bold;
+    margin-right: 16px;
   }
 
   .fa-bars {
