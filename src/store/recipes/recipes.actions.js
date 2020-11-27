@@ -7,6 +7,7 @@ export const getRecipes = (page, userId = null, dayTime) => {
     .get(`${API_URL}/recipes`, {
       params: {
         page,
+        limit: 5,
         userId: userId || null,
         dayTime: dayTime || null
       }

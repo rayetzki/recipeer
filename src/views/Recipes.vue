@@ -46,6 +46,26 @@
     <h5 v-if="recipes && recipes.length === 0" class="recipes__empty-list">
       Не найдено рецептов
     </h5>
+    <div class="recipes__pagination">
+      <span
+        @click="decrementPage"
+        :class="[
+          page < 1 && 'recipes__pagination--disabled',
+          'recipes__pagination--backwards'
+        ]"
+      >
+        <i class="fas fa-long-arrow-alt-left"></i>
+      </span>
+      <span
+        @click="incrementPage"
+        :class="[
+          page * limit >= total && 'recipes__pagination--disabled',
+          'recipes__pagination--forwards'
+        ]"
+      >
+        <i class="fas fa-long-arrow-alt-right"></i>
+      </span>
+    </div>
     <ul class="recipes__grid" v-if="recipes && recipes.length >= 0">
       <li
         class="recipes__preview"
@@ -87,6 +107,12 @@ export default {
     spinner: Spinner
   },
   watch: {
+    page() {
+      this.getRecipes(this.page).then(data => {
+        this.recipes = data.recipes;
+        this.total = data.total;
+      });
+    },
     async searchCondition() {
       if (this.searchCondition.trim().length === 0) {
         this.searchCondition = "";
@@ -115,6 +141,8 @@ export default {
   data: () => ({
     recipes: undefined,
     page: 0,
+    total: undefined,
+    limit: 5,
     searchCondition: "",
     filterCondition: "",
     items: [
@@ -135,9 +163,24 @@ export default {
   mounted() {
     this.getRecipes(this.page).then(data => {
       this.recipes = data.recipes;
+      this.total = data.total;
     });
   },
   methods: {
+    incrementPage() {
+      if (this.page * this.limit >= this.total) {
+        return;
+      } else {
+        this.page = this.page + 1;
+      }
+    },
+    decrementPage() {
+      if (this.page < 1) {
+        return;
+      } else {
+        this.page = this.page - 1;
+      }
+    },
     getRecipes,
     toggleSaved(id) {
       const index = this.recipes.findIndex(recipe => recipe.id === id);
