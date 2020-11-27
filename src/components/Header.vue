@@ -1,20 +1,21 @@
 <template>
   <header>
-    <div @click="$emit('toggle-drawer')">
-      <i class="fas fa-bars"></i>
-    </div>
+    <router-link to="/update-user">
+      <img class="avatar" v-if="avatar" :src="avatar" />
+    </router-link>
     <h1>Книга рецептов</h1>
-    <section class="info">
-      <router-link to="/update-user">
-        <img class="avatar" v-if="avatar" :src="avatar" />
-      </router-link>
-    </section>
+    <Button class="logout" @click="$emit('logout')">Выйти</Button>
   </header>
 </template>
 
 <script>
+import { Button } from "element-ui";
+
 export default {
   name: "app-header",
+  components: {
+    Button
+  },
   props: {
     avatar: String || null
   }
@@ -22,11 +23,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/theme.scss";
+
 header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 16px;
 
   h1 {
@@ -38,22 +41,29 @@ header {
     cursor: pointer;
   }
 
-  .info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+  .avatar {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+  }
 
-    .avatar {
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      object-fit: cover;
-    }
+  .name {
+    font-size: 14px;
+    margin-top: 8px;
+  }
 
-    .name {
-      font-size: 14px;
-      margin-top: 8px;
+  .logout {
+    border-radius: 13px;
+    padding: 16px;
+    color: $textError;
+    background-color: $whiteBg;
+
+    &:hover {
+      background-color: $borderRed;
+      color: $textWhite;
+      transition: background-color 0.7s ease,
+        color 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
   }
 }

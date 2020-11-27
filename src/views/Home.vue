@@ -1,17 +1,10 @@
 <template>
   <div class="home">
-    <el-drawer
-      title="Рецепты других пользователей"
-      :visible.sync="openDrawer"
-      :direction="'ltr'"
-      :size="'300px'"
-    >
-      <span class="logout" @click="logout">Выйти</span>
-    </el-drawer>
     <app-header
       v-if="user"
       :avatar="user.avatar"
       @toggle-drawer="openDrawer = !openDrawer"
+      @logout="logout"
     ></app-header>
     <spinner :open="randomRecipe === undefined"></spinner>
     <router-link
@@ -93,18 +86,16 @@
 </template>
 
 <script>
-import { Drawer } from "element-ui";
 import { mapGetters } from "vuex";
 import { getRandomRecipe } from "../store/recipes/recipes.actions";
 import { parseBalance } from "../utils/parseBalance";
-import Header from "../components/Header";
 import Spinner from "../components/Spinner";
+import Header from "../components/Header.vue";
 
 export default {
   name: "Home",
   components: {
     "app-header": Header,
-    "el-drawer": Drawer,
     spinner: Spinner
   },
   data() {
@@ -149,22 +140,4 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/theme.scss";
 @import "../styles/modules/recommendation.scss";
-
-.logout {
-  position: absolute;
-  bottom: 32px;
-  margin-left: -36px;
-  border: 1px dotted $borderRed;
-  border-radius: 13px;
-  padding: 16px;
-  color: $textError;
-  background-color: $whiteBg;
-
-  &:hover {
-    background-color: $borderRed;
-    color: $textWhite;
-    transition: background-color 0.7s ease,
-      color 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
-  }
-}
 </style>
