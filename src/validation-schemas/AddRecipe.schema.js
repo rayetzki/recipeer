@@ -8,7 +8,7 @@ export const AddRecipeValidationSchema = Yup.object({
   description: Yup.string()
     .required("Введи описание рецепта")
     .min(10, "Минимум 10 символов")
-    .max(100, "Максимум 100 символов"),
+    .max(200, "Максимум 200 символов"),
   cost: Yup.number()
     .nullable()
     .required("Введи примерную стоимость готового блюда")

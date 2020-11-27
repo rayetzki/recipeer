@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "../../router";
 import { API_URL } from "../../config/API";
 
 export const getRecipes = (page, userId = null, dayTime) => {
@@ -51,11 +52,24 @@ export const uploadRecipeBanner = (recipeId, file) => {
     .catch(error => console.error(error));
 };
 
-export const uploadRecipe = (userId, recipe) => {
+export const uploadRecipe = (userId, recipeData) => {
+  const { banner, body, ...rest } = recipeData;
+  const recipe = {
+    ...rest,
+    body: body.join(". "),
+    banner:
+      "https://img1.russianfood.com/dycontent/images_upl/132/big_131907.jpg"
+  };
+
   return axios
     .post(`${API_URL}/recipes?userId=${userId}`, recipe)
-    .then(response => response.data)
-    .catch(error => console.error(error));
+    .then(response => {
+      if (response.status === 201) {
+        uploadRecipeBanner(response.data.id, banner).then(() => {
+          router.push("/my-recipes");
+        });
+      }
+    });
 };
 
 export const editRecipe = (recipeId, recipe) => {

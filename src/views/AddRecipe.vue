@@ -23,6 +23,34 @@
         :error="errors.description"
         @validate="validate('description')"
       />
+      <Select
+        size="large"
+        name="nutritionType"
+        class="add-recipe__nutrition-type"
+        v-model="values.nutritionType"
+        placeholder="Тип питания"
+      >
+        <Option
+          v-for="type in nutritionTypes"
+          :key="type.value"
+          :label="type.label"
+          :value="type.value"
+        />
+      </Select>
+      <Select
+        size="large"
+        name="nutritionType"
+        class="add-recipe__dayTime"
+        v-model="values.dayTime"
+        placeholder="Время суток"
+      >
+        <Option
+          v-for="dayTime in dayTimes"
+          :key="dayTime"
+          :label="capitalize(dayTime)"
+          :value="dayTime"
+        />
+      </Select>
       <FormInput
         name="cost"
         type="number"
@@ -165,10 +193,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { Alert, Tag, Button } from "element-ui";
+import { Alert, Tag, Button, Select, Option } from "element-ui";
 import FormInput from "../components/FormInput.vue";
 import BannerUpload from "../components/BannerUpload.vue";
 import { AddRecipeValidationSchema } from "../validation-schemas/AddRecipe.schema";
+import { nutritionTypes } from "../data/nutritionTypes";
+import { uploadRecipe } from "../store/recipes/recipes.actions";
 import {
   validateArray,
   validateField,
@@ -182,7 +212,9 @@ export default {
     FormInput,
     "el-tag": Tag,
     "banner-upload": BannerUpload,
-    Button
+    Button,
+    Select,
+    Option
   },
   computed: {
     ...mapGetters({
@@ -194,6 +226,8 @@ export default {
     error: "",
     tags: ["минут", "час(а)"],
     bannerPreview: "",
+    nutritionTypes,
+    dayTimes: ["завтрак", "обед", "полудник", "перекус", "ужин"],
     errors: {
       title: "",
       description: "",
@@ -201,7 +235,8 @@ export default {
       ingredients: [{ unit: "", ingredient: "" }],
       cost: "",
       cookingTime: "",
-      banner: ""
+      banner: "",
+      nutritionType: "any"
     },
     values: {
       title: "",
@@ -264,7 +299,9 @@ export default {
       this.values.body.splice(index, 1);
     },
     addRecipe() {
-      console.log(this.values);
+      uploadRecipe(this.user.id, this.values).catch(
+        error => (this.error = error.message)
+      );
     },
     addBanner(event) {
       const file = event.target.files[0];
@@ -274,6 +311,12 @@ export default {
         this.values.banner = file;
       });
       fileReader.readAsDataURL(file);
+    },
+    capitalize(text) {
+      return text
+        .slice(0, 1)
+        .toUpperCase()
+        .concat(text.slice(1));
     }
   }
 };
