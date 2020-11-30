@@ -1,13 +1,13 @@
 <template>
   <div class="pagination">
     <fa-icon
-      @click="$emit('decrement')"
+      @action="$emit('decrement')"
       icon="fas fa-long-arrow-alt-left"
       :class="[page < 1 && 'pagination__disabled', 'pagination__backwards']"
     >
     </fa-icon>
     <fa-icon
-      @click="$emit('increment')"
+      @action="$emit('increment')"
       icon="fas fa-long-arrow-alt-right"
       :class="[
         (page + 1) * limit >= total && 'pagination__disabled',

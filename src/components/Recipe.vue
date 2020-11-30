@@ -10,7 +10,7 @@
       </router-link>
       <fa-icon
         class="recipe__preview--remove"
-        @click="$emit('remove', recipe.id)"
+        @action="$emit('remove', recipe.id)"
         v-show="this.delete"
         icon="fas fa-trash"
       >
@@ -23,14 +23,14 @@
       </router-link>
       <fa-icon
         class="recipe__preview--saved"
-        @click="$emit('favourite', recipe.id)"
+        @action="$emit('favourite', recipe.id)"
         v-show="!this.favourite"
         icon="far fa-bookmark"
       >
       </fa-icon>
       <fa-icon
         class="recipe__preview--saved"
-        @click="$emit('favourite', recipe.id)"
+        @action="$emit('favourite', recipe.id)"
         v-show="this.favourite"
         icon="fas fa-bookmark"
       >

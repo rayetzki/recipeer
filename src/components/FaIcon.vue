@@ -1,5 +1,5 @@
 <template>
-  <span :class="name">
+  <span @click="$emit('action')" :class="name || null">
     <i :class="icon"></i>
   </span>
 </template>

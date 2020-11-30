@@ -9,18 +9,18 @@
       <fa-icon
         icon="fas fa-arrow-left"
         name="recipe__header--back"
-        @click="$router.go(-1)"
+        @action="$router.go(-1)"
       >
       </fa-icon>
       <fa-icon
-        @click="toggleSaved(recipe.id)"
+        @action="toggleSaved(recipe.id)"
         v-if="!recipe.favourite"
         class="recipe__header--saved"
         icon="far fa-bookmark"
       >
       </fa-icon>
       <fa-icon
-        @click="toggleSaved(recipe.id)"
+        @action="toggleSaved(recipe.id)"
         v-else-if="recipe && recipe.favourite"
         class="recipe__header--saved"
         icon="fas fa-bookmark"

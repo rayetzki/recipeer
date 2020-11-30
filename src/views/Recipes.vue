@@ -7,7 +7,7 @@
           id="search"
           icon="fas fa-search"
           v-show="!openSearch"
-          @click="openSearch = !openSearch"
+          @action="openSearch = !openSearch"
         >
         </fa-icon>
         <router-link
@@ -30,7 +30,7 @@
         <fa-icon
           icon="far fa-times-circle"
           id="close"
-          @click="openSearch = !openSearch"
+          @action="openSearch = !openSearch"
         >
         </fa-icon>
       </div>
@@ -80,6 +80,7 @@ import FormInput from "../components/FormInput";
 import Spinner from "../components/Spinner";
 import Pagination from "../components/Pagination.vue";
 import { Tag } from "element-ui";
+import FaIcon from "../components/FaIcon";
 import { getRecipes, findRecipe } from "../store/recipes/recipes.actions";
 import {
   removeFavourite,
@@ -93,7 +94,8 @@ export default {
     "el-tag": Tag,
     recipe: Recipe,
     spinner: Spinner,
-    pagination: Pagination
+    pagination: Pagination,
+    FaIcon
   },
   watch: {
     page() {

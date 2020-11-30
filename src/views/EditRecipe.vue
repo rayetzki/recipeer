@@ -109,7 +109,7 @@
               v-show="
                 errors.ingredients[index] && !errors.ingredients[index].unit
               "
-              @click="appendIngredient"
+              @action="appendIngredient"
               class="ingredients__append"
               icon="far fa-plus-square"
             >
@@ -133,7 +133,7 @@
             "
           >
             <fa-icon
-              @click="removeIngredient(index)"
+              @action="removeIngredient(index)"
               v-if="
                 values.ingredients.length > 1 &&
                   index === values.ingredients.length - 1
@@ -167,13 +167,13 @@
             <fa-icon
               v-if="index === values.body.length - 1"
               v-show="!errors.body[index]"
-              @click="appendStep"
+              @action="appendStep"
               class="steps__append"
               icon="far fa-plus-square"
             >
             </fa-icon>
             <fa-icon
-              @click="removeStep(index)"
+              @action="removeStep(index)"
               v-if="values.body.length > 1 && index === values.body.length - 1"
               v-show="!errors.body[index]"
               class="steps__remove"
