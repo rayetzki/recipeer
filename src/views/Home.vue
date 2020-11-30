@@ -23,14 +23,17 @@
         </h5>
         <img
           class="recipe-recommendation__preview-image"
-          v-if="randomRecipe"
+          v-if="!randomRecipe.message"
           alt="Картинка рецепта"
           :src="randomRecipe.banner"
         />
         <p class="recipe-recommendation__description">
           {{ randomRecipe.description }}
         </p>
-        <div class="recipe-recommendation__secondary-info">
+        <div
+          class="recipe-recommendation__secondary-info"
+          v-if="!randomRecipe.message"
+        >
           <div class="secondary__info--time">
             <fa-icon icon="far fa-clock"></fa-icon>
             <p>{{ randomRecipe.cookingTime }}</p>
@@ -114,7 +117,8 @@ export default {
         return {
           evening: this.randomRecipe.dayTime === "ужин",
           day: ["обед", "перекус"].includes(this.randomRecipe.dayTime),
-          morning: this.randomRecipe.dayTime === "завтрак"
+          morning: this.randomRecipe.dayTime === "завтрак",
+          night: this.randomRecipe.message
         };
       }
     }

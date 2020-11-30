@@ -76,12 +76,11 @@ export default {
   },
   mounted() {
     getRecipesByUser(this.user.id, this.page, this.limit).then(response => {
-      this.recipes = response.recipes;
-      this.total = response.total;
-      this.recipes.map(recipe => ({
+      this.recipes = response.recipes.map(recipe => ({
         ...recipe,
         favourite: !!recipe.favourite.length
       }));
+      this.total = response.total;
     });
   },
   watch: {
@@ -93,12 +92,11 @@ export default {
           ? this.total - this.limit
           : this.limit
       ).then(data => {
-        this.recipes = data.recipes;
-        this.total = data.total;
-        this.recipes.map(recipe => ({
+        this.recipes = data.recipes.map(recipe => ({
           ...recipe,
           favourite: !!recipe.favourite.length
         }));
+        this.total = data.total;
       });
     }
   },

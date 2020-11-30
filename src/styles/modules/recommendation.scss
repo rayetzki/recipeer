@@ -90,7 +90,7 @@
   }
 
   &__night-header {
-    @extend .recipe-recommendation__header !optional;
+    @extend .recipe-recommendation__title !optional;
     font-weight: 100;
   }
 
