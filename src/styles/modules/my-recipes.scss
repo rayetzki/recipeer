@@ -49,11 +49,10 @@
   }
 
   #{$this}__grid {
-    top: 16px;
-    margin: 1.5em auto;
     display: grid;
     grid-template-columns: 1fr minmax(150px, 1fr);
     grid-gap: 16px;
+    margin: 64px auto;
   }
 
   @media screen and (min-width: $mobileS) and (max-width: $mobileL) {

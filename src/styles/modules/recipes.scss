@@ -54,7 +54,7 @@
     width: 100%;
     overflow: scroll;
     scroll-behavior: smooth;
-    margin: 24px 0 16px 0;
+    margin: 24px 0 8px 0;
 
     &::-webkit-scrollbar {
       display: none;
@@ -81,11 +81,10 @@
   }
 
   .recipes__grid {
-    top: 16px;
-    margin: 2.5em auto;
     display: grid;
     grid-template-columns: 1fr minmax(150px, 1fr);
     grid-gap: 16px;
+    margin: 64px auto;
   }
 
   @media screen and (min-width: $mobileS) and (max-width: $mobileL) {

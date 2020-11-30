@@ -1,12 +1,14 @@
 <template>
   <div class="add-edit-recipe">
+    <spinner :open="recipe === undefined"></spinner>
     <banner-upload
-      :banner="bannerPreview"
+      v-if="recipe"
+      :banner="this.values.banner || bannerPreview"
       title="Загрузи картинку рецепта"
       @fileload="addBanner"
     ></banner-upload>
-    <form class="add-edit-recipe__form">
-      <h3 class="add-edit-recipe__title">Добавь новый рецепт</h3>
+    <form class="add-edit-recipe__form" v-if="recipe">
+      <h3 class="add-edit-recipe__title">Обновить данные о рецепте</h3>
       <FormInput
         name="title"
         type="text"
@@ -181,8 +183,8 @@
           </FormInput>
         </li>
       </ul>
-      <Button @click.prevent="addRecipe" class="add-edit-recipe__submit">
-        Готово
+      <Button @click.prevent="updateRecipe" class="add-edit-recipe__submit">
+        Обновить
       </Button>
     </form>
     <Alert v-if="error" title="Произошла ошибка" show-icon type="error">
@@ -192,12 +194,13 @@
 </template>
 
 <script>
-import { Alert, Tag, Button, Select, Option } from "element-ui";
-import FormInput from "../components/FormInput.vue";
-import BannerUpload from "../components/BannerUpload.vue";
-import { AddRecipeValidationSchema } from "../validation-schemas/AddRecipe.schema";
+import { editRecipe, getRecipeById } from "../store/recipes/recipes.actions";
 import { nutritionTypes } from "../data/nutritionTypes";
-import { uploadRecipe } from "../store/recipes/recipes.actions";
+import { AddRecipeValidationSchema } from "../validation-schemas/AddRecipe.schema";
+import { Select, Option, Button, Alert, Tag } from "element-ui";
+import FormInput from "../components/FormInput";
+import Spinner from "../components/Spinner.vue";
+import BannerUpload from "../components/BannerUpload.vue";
 import {
   validateArray,
   validateField,
@@ -205,18 +208,19 @@ import {
 } from "../utils/runValidation";
 
 export default {
-  name: "AddRecipe",
+  name: "EditRecipe",
   components: {
-    Alert,
     FormInput,
-    "el-tag": Tag,
-    "banner-upload": BannerUpload,
     Button,
+    Alert,
     Select,
-    Option
+    Option,
+    spinner: Spinner,
+    "el-tag": Tag,
+    "banner-upload": BannerUpload
   },
   data: () => ({
-    loading: false,
+    recipe: undefined,
     error: "",
     tags: ["минут", "час(а)"],
     bannerPreview: "",
@@ -242,6 +246,22 @@ export default {
       banner: ""
     }
   }),
+  mounted() {
+    getRecipeById(this.$route.query.id).then(recipe => {
+      this.recipe = recipe;
+      this.values = {
+        title: recipe.title,
+        description: recipe.description,
+        body: recipe.body.split(". "),
+        ingredients: recipe.ingredients,
+        cost: recipe.cost,
+        cookingTime: recipe.cookingTime,
+        banner: recipe.banner,
+        dayTime: recipe.dayTime,
+        nutritionType: recipe.nutritionType
+      };
+    });
+  },
   methods: {
     validate(field) {
       return validateField(
@@ -272,6 +292,20 @@ export default {
         this
       );
     },
+    updateRecipe() {
+      editRecipe(this.$route.query.id, this.values).catch(
+        error => (this.error = error.message)
+      );
+    },
+    addBanner(event) {
+      const file = event.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", event => {
+        this.bannerPreview = event.target.result;
+        this.values.banner = file;
+      });
+      fileReader.readAsDataURL(file);
+    },
     appendTag(tag, name) {
       const value = this.values[name];
       if (/\D+/g.test(value)) {
@@ -291,18 +325,6 @@ export default {
     },
     removeStep(index) {
       this.values.body.splice(index, 1);
-    },
-    addRecipe() {
-      uploadRecipe(this.values).catch(error => (this.error = error.message));
-    },
-    addBanner(event) {
-      const file = event.target.files[0];
-      const fileReader = new FileReader();
-      fileReader.addEventListener("load", event => {
-        this.bannerPreview = event.target.result;
-        this.values.banner = file;
-      });
-      fileReader.readAsDataURL(file);
     },
     capitalize(text) {
       return text

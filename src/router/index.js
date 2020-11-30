@@ -74,6 +74,15 @@ const routes = [
       requiresAuth: true,
       forEditors: true
     }
+  },
+  {
+    path: "/edit-recipe",
+    name: "EditRecipe",
+    component: () => import("../views/EditRecipe.vue"),
+    meta: {
+      requiresAuth: true,
+      forEditors: true
+    }
   }
 ];
 

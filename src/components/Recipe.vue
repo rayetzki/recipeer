@@ -9,28 +9,31 @@
         />
       </router-link>
       <span
-        @click="$emit('remove', recipe.id)"
-        v-show="showDelete"
         class="recipe__preview--remove"
+        @click="$emit('remove', recipe.id)"
+        v-show="this.delete"
       >
         <i class="fas fa-trash"></i>
       </span>
-      <router-link v-if="edit" :to="{ path: 'edit', query: { id: recipe.id } }">
+      <router-link
+        v-if="edit"
+        :to="{ path: '/edit-recipe', query: { id: recipe.id } }"
+      >
         <span class="recipe__preview--edit">
           <i class="far fa-edit"></i>
         </span>
       </router-link>
       <span
-        @click="$emit('favourite', recipe.id)"
         class="recipe__preview--saved"
+        @click="$emit('favourite', recipe.id)"
         v-show="!this.favourite"
       >
         <i class="far fa-bookmark"></i>
       </span>
       <span
+        class="recipe__preview--saved"
         @click="$emit('favourite', recipe.id)"
         v-show="this.favourite"
-        class="recipe__preview--saved"
       >
         <i class="fas fa-bookmark"></i>
       </span>
@@ -55,11 +58,6 @@ import { parseBalance } from "../utils/parseBalance";
 export default {
   name: "Recipe",
   props: ["recipe", "delete", "favourite", "edit"],
-  data() {
-    return {
-      showDelete: this.delete
-    };
-  },
   methods: {
     parseBalance
   }

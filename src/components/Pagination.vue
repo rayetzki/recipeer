@@ -29,6 +29,7 @@ export default {
 .pagination {
   position: absolute;
   right: 24px;
+  padding-top: 16px;
 
   & > * {
     cursor: pointer;
