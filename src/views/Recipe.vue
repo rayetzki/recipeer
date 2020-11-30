@@ -14,14 +14,14 @@
       </fa-icon>
       <fa-icon
         @action="toggleSaved(recipe.id)"
-        v-if="!recipe.favourite"
+        v-show="!recipe.favourite"
         class="recipe__header--saved"
         icon="far fa-bookmark"
       >
       </fa-icon>
       <fa-icon
         @action="toggleSaved(recipe.id)"
-        v-else-if="recipe && recipe.favourite"
+        v-show="recipe.favourite"
         class="recipe__header--saved"
         icon="fas fa-bookmark"
       >
@@ -144,19 +144,17 @@ export default {
   },
   mounted() {
     getRecipeById(this.id).then(recipe => {
-      this.recipe = recipe;
+      this.recipe = { ...recipe, favourite: !!recipe.favourite.length };
     });
   },
   methods: {
-    toggleSaved(id) {
+    async toggleSaved(id) {
       if (!this.recipe.favourite) {
-        addFavourite(id).then(() => {
-          this.recipe.favourite = !this.recipe.favourite;
-        });
+        await addFavourite(id);
+        this.$set(this.recipe, "favourite", true);
       } else {
-        removeFavourite(id).then(() => {
-          this.recipe.favourite = !this.recipe.favourite;
-        });
+        await removeFavourite(id);
+        this.$set(this.recipe, "favourite", false);
       }
     },
     capitalize(text) {

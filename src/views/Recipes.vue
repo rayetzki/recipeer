@@ -108,6 +108,10 @@ export default {
       ).then(data => {
         this.recipes = data.recipes;
         this.total = data.total;
+        this.recipes.map(recipe => ({
+          ...recipe,
+          favourite: !!recipe.favourite.length
+        }));
       });
     },
     searchCondition() {
@@ -118,14 +122,20 @@ export default {
       findRecipe(this.searchCondition).then(response => {
         this.recipes = response.recipes;
         this.total = response.total;
+        this.recipes.map(recipe => ({
+          ...recipe,
+          favourite: !!recipe.favourite.length
+        }));
       });
     },
     filterCondition() {
       const dayTime = this.filterCondition.toLowerCase().trim();
+
       if (dayTime.length === 0) {
         this.filterCondition = "";
         return;
       }
+
       getRecipes(
         this.page,
         this.limit,
@@ -133,6 +143,10 @@ export default {
       ).then(response => {
         this.recipes = response.recipes;
         this.total = response.total;
+        this.recipes.map(recipe => ({
+          ...recipe,
+          favourite: !!recipe.favourite.length
+        }));
       });
     }
   },
@@ -162,6 +176,10 @@ export default {
     this.getRecipes(this.page).then(data => {
       this.recipes = data.recipes;
       this.total = data.total;
+      this.recipes.map(recipe => ({
+        ...recipe,
+        favourite: !!recipe.favourite.length
+      }));
     });
   },
   methods: {

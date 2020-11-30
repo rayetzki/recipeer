@@ -1,5 +1,6 @@
 <template>
   <div class="my-recipes">
+    <spinner :open="recipes === undefined"></spinner>
     <header>
       <h1 class="my-recipes__title">Мои Рецепты</h1>
       <div class="my-recipes__options"></div>
@@ -11,7 +12,6 @@
         <fa-icon icon="fas fa-plus-circle"></fa-icon>
       </router-link>
     </header>
-    <spinner :open="recipes === undefined"></spinner>
     <h5 v-if="recipes && recipes.length === 0" class="my-recipes__empty-list">
       Вы не добавили ни одного рецепта
       <router-link class="my-recipes__add-recipe-link" to="/add-recipe">
@@ -34,7 +34,7 @@
         <recipe
           @favourite="toggleSaved"
           :edit="true"
-          :favourite="recipe && recipe.favourite.length"
+          :favourite="recipe.favourite"
           :recipe="recipe"
           :delete="true"
         ></recipe>
@@ -78,6 +78,10 @@ export default {
     getRecipesByUser(this.user.id, this.page, this.limit).then(response => {
       this.recipes = response.recipes;
       this.total = response.total;
+      this.recipes.map(recipe => ({
+        ...recipe,
+        favourite: !!recipe.favourite.length
+      }));
     });
   },
   watch: {
@@ -91,6 +95,10 @@ export default {
       ).then(data => {
         this.recipes = data.recipes;
         this.total = data.total;
+        this.recipes.map(recipe => ({
+          ...recipe,
+          favourite: !!recipe.favourite.length
+        }));
       });
     }
   },
