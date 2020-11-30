@@ -102,16 +102,16 @@
               )
             "
           >
-            <span
+            <fa-icon
               v-if="index === values.ingredients.length - 1"
               v-show="
                 errors.ingredients[index] && !errors.ingredients[index].unit
               "
               @click="appendIngredient"
-              class="ingredients__append"
+              name="ingredients__append"
+              icon="far fa-plus-square"
             >
-              <i class="far fa-plus-square"></i>
-            </span>
+            </fa-icon>
           </FormInput>
           <FormInput
             :name="`ingredient--${index}`"
@@ -130,7 +130,7 @@
               )
             "
           >
-            <span
+            <fa-icon
               @click="removeIngredient(index)"
               v-if="
                 values.ingredients.length > 1 &&
@@ -140,10 +140,10 @@
                 errors.ingredients[index] &&
                   !errors.ingredients[index].ingredient
               "
-              class="ingredients__remove"
+              name="ingredients__remove"
+              icon="fas fa-trash"
             >
-              <i class="fas fa-trash"></i>
-            </span>
+            </fa-icon>
           </FormInput>
         </li>
       </ul>
@@ -162,22 +162,22 @@
             :error="errors.body[index]"
             @validate="validateCollection(`body.${index}`, index, errors.body)"
           >
-            <span
+            <fa-icon
               v-if="index === values.body.length - 1"
               v-show="!errors.body[index]"
               @click="appendStep"
-              class="steps__append"
+              name="steps__append"
+              icon="far fa-plus-square"
             >
-              <i class="far fa-plus-square"></i>
-            </span>
-            <span
+            </fa-icon>
+            <fa-icon
               @click="removeStep(index)"
               v-if="values.body.length > 1 && index === values.body.length - 1"
               v-show="!errors.body[index]"
-              class="steps__remove"
+              name="steps__remove"
+              icon="fas fa-trash"
             >
-              <i class="fas fa-trash"></i>
-            </span>
+            </fa-icon>
           </FormInput>
         </li>
       </ul>
@@ -203,6 +203,7 @@ import {
   validateField,
   validateObject
 } from "../utils/runValidation";
+import FaIcon from "../components/FaIcon.vue";
 
 export default {
   name: "AddRecipe",
@@ -213,7 +214,8 @@ export default {
     "banner-upload": BannerUpload,
     Button,
     Select,
-    Option
+    Option,
+    FaIcon
   },
   data: () => ({
     loading: false,

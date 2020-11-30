@@ -1,7 +1,7 @@
 <template>
   <header>
     <Button class="logout" @click="$emit('logout')">
-      <i class="fas fa-sign-out-alt"></i>
+      <fa-icon icon="fas fa-sign-out-alt"></fa-icon>
     </Button>
     <h1>Книга рецептов</h1>
     <router-link to="/update-user">
@@ -12,11 +12,13 @@
 
 <script>
 import { Button } from "element-ui";
+import FaIcon from "./FaIcon.vue";
 
 export default {
   name: "app-header",
   components: {
-    Button
+    Button,
+    FaIcon
   },
   props: {
     avatar: String || null

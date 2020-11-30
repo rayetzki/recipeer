@@ -32,7 +32,7 @@
         </p>
         <div class="recipe-recommendation__secondary-info">
           <div class="secondary__info--time">
-            <i class="far fa-clock"></i>
+            <fa-icon icon="far fa-clock"></fa-icon>
             <p>{{ randomRecipe.cookingTime }}</p>
           </div>
           <span class="secondary__info--cost">
@@ -87,12 +87,14 @@ import { getRandomRecipe } from "../store/recipes/recipes.actions";
 import { parseBalance } from "../utils/parseBalance";
 import Spinner from "../components/Spinner";
 import Header from "../components/Header.vue";
+import FaIcon from "../components/FaIcon.vue";
 
 export default {
   name: "Home",
   components: {
     "app-header": Header,
-    spinner: Spinner
+    spinner: Spinner,
+    FaIcon
   },
   data() {
     return {

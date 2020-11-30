@@ -6,26 +6,26 @@
         alt="Баннер рецепта"
         class="recipe__header--banner"
       />
-      <span class="recipe__header--back" @click="$router.go(-1)">
-        <i class="fas fa-arrow-left"></i>
-      </span>
-      <span class="recipe__header--options">
-        <i class="fas fa-ellipsis-h"></i>
-      </span>
-      <span
+      <fa-icon
+        icon="fas fa-arrow-left"
+        name="recipe__header--back"
+        @click="$router.go(-1)"
+      >
+      </fa-icon>
+      <fa-icon
         @click="toggleSaved(recipe.id)"
         v-if="!recipe.favourite"
         class="recipe__header--saved"
+        icon="far fa-bookmark"
       >
-        <i class="far fa-bookmark"></i>
-      </span>
-      <span
+      </fa-icon>
+      <fa-icon
         @click="toggleSaved(recipe.id)"
         v-else-if="recipe && recipe.favourite"
         class="recipe__header--saved"
+        icon="fas fa-bookmark"
       >
-        <i class="fas fa-bookmark"></i>
-      </span>
+      </fa-icon>
     </header>
     <spinner :open="recipe === undefined"></spinner>
     <main class="recipe__body">
@@ -34,9 +34,8 @@
         <ul class="recipe__basic--list">
           <li class="recipe__basic--time">
             <div class="recipe__basic--additional">
-              <span class="recipe__basic--icon">
-                <i class="far fa-clock"></i>
-              </span>
+              <fa-icon icon="far fa-clock" class="recipe__basic--icon">
+              </fa-icon>
               <h4>Время готовки</h4>
             </div>
             <div class="recipe__basic--main">
@@ -45,9 +44,7 @@
           </li>
           <li class="recipe__basic--dayTime">
             <div class="recipe__basic--additional">
-              <span class="recipe__basic--icon">
-                <i class="fas fa-sun"></i>
-              </span>
+              <fa-icon icon="fas fa-sun" class="recipe__basic--icon"></fa-icon>
               <h4>Время суток</h4>
             </div>
             <div class="recipe__basic--main">
@@ -56,9 +53,8 @@
           </li>
           <li class="recipe__basic--cost">
             <div class="recipe__basic--additional">
-              <span class="recipe__basic--icon">
-                <i class="fas fa-wallet"></i>
-              </span>
+              <fa-icon icon="fas fa-wallet" class="recipe__basic--icon">
+              </fa-icon>
               <h4>Cтоимость</h4>
             </div>
             <div class="recipe__basic--main">
@@ -67,9 +63,8 @@
           </li>
           <li class="recipe__basic--nutrition">
             <div class="recipe__basic--additional">
-              <span class="recipe__basic--icon">
-                <i class="fas fa-seedling"></i>
-              </span>
+              <fa-icon icon="fas fa-seedling" class="recipe__basic--icon">
+              </fa-icon>
               <h4>Тип питания</h4>
             </div>
             <div class="recipe__basic--main">
@@ -78,9 +73,10 @@
           </li>
           <li class="recipe__basic--author">
             <div class="recipe__basic--additional">
-              <span class="recipe__basic--icon">
-                <i class="fas fa-user-edit"></i>
-              </span>
+              <fa-icon
+                icon="fas fa-user-edit"
+                class="recipe__basic--icon"
+              ></fa-icon>
               <h4>Автор</h4>
             </div>
             <div class="recipe__basic--main">
@@ -132,11 +128,13 @@ import {
 import { getRecipeById } from "../store/recipes/recipes.actions";
 import { parseBalance } from "../utils/parseBalance";
 import { convertNutritionType } from "../utils/convertNutritionType";
+import FaIcon from "../components/FaIcon.vue";
 
 export default {
   name: "Recipe",
   components: {
-    spinner: Spinner
+    spinner: Spinner,
+    FaIcon
   },
   data() {
     return {

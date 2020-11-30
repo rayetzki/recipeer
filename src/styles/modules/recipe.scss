@@ -17,10 +17,6 @@
       @include action(16px, null, null, 16px);
     }
 
-    &--options {
-      @include action(16px, 16px, null, null);
-    }
-
     &--saved {
       @include action(null, 16px, 16px, null);
     }

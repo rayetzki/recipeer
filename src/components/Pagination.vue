@@ -1,26 +1,31 @@
 <template>
   <div class="pagination">
-    <span
+    <fa-icon
       @click="$emit('decrement')"
+      icon="fas fa-long-arrow-alt-left"
       :class="[page < 1 && 'pagination__disabled', 'pagination__backwards']"
     >
-      <i class="fas fa-long-arrow-alt-left"></i>
-    </span>
-    <span
+    </fa-icon>
+    <fa-icon
       @click="$emit('increment')"
+      icon="fas fa-long-arrow-alt-right"
       :class="[
         (page + 1) * limit >= total && 'pagination__disabled',
         'pagination__forwards'
       ]"
     >
-      <i class="fas fa-long-arrow-alt-right"></i>
-    </span>
+    </fa-icon>
   </div>
 </template>
 
 <script>
+import FaIcon from "./FaIcon";
+
 export default {
   name: "Pagination",
+  components: {
+    FaIcon
+  },
   props: ["page", "total", "limit"]
 };
 </script>

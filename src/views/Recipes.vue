@@ -3,20 +3,20 @@
     <header>
       <h1 class="recipes__title" v-show="!openSearch">Рецепты</h1>
       <div class="recipes__options">
-        <span
+        <fa-icon
           id="search"
+          icon="fas fa-search"
           v-show="!openSearch"
           @click="openSearch = !openSearch"
         >
-          <i class="fas fa-search"></i>
-        </span>
+        </fa-icon>
         <router-link
           id="add"
           v-if="user.role !== 'user'"
           to="/add-recipe"
           v-show="!openSearch"
         >
-          <i class="fas fa-plus-circle"></i>
+          <fa-icon icon="fas fa-plus-circle"></fa-icon>
         </router-link>
       </div>
       <div class="recipes__search" v-show="openSearch">
@@ -27,9 +27,12 @@
           placeholder="Найди рецепт"
           v-model.lazy="searchCondition"
         ></form-input>
-        <span id="close" @click="openSearch = !openSearch">
-          <i class="far fa-times-circle"></i>
-        </span>
+        <fa-icon
+          icon="far fa-times-circle"
+          id="close"
+          @click="openSearch = !openSearch"
+        >
+        </fa-icon>
       </div>
     </header>
     <spinner :open="recipes === undefined"></spinner>

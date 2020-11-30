@@ -8,14 +8,14 @@
         id="add"
         to="/add-recipe"
       >
-        <i class="fas fa-plus-circle"></i>
+        <fa-icon icon="fas fa-plus-circle"></fa-icon>
       </router-link>
     </header>
     <spinner :open="recipes === undefined"></spinner>
     <h5 v-if="recipes && recipes.length === 0" class="my-recipes__empty-list">
       Вы не добавили ни одного рецепта
       <router-link class="my-recipes__add-recipe-link" to="/add-recipe">
-        <i class="fas fa-plus-circle"></i> Добавить
+        <fa-icon icon="fas fa-plus-circle"></fa-icon> Добавить
       </router-link>
     </h5>
     <pagination
@@ -47,19 +47,21 @@
 import { mapGetters } from "vuex";
 import { getRecipesByUser } from "../store/recipes/recipes.actions";
 import Recipe from "../components/Recipe";
+import Pagination from "../components/Pagination.vue";
 import Spinner from "../components/Spinner";
+import FaIcon from "../components/FaIcon.vue";
 import {
   addFavourite,
   removeFavourite
 } from "../store/favourites/favourites.actions";
-import Pagination from "../components/Pagination.vue";
 
 export default {
   name: "MyRecipes",
   components: {
     recipe: Recipe,
     spinner: Spinner,
-    pagination: Pagination
+    pagination: Pagination,
+    FaIcon
   },
   data: () => ({
     page: 0,

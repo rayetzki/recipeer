@@ -8,41 +8,39 @@
           class="recipe__preview--banner"
         />
       </router-link>
-      <span
+      <fa-icon
         class="recipe__preview--remove"
         @click="$emit('remove', recipe.id)"
         v-show="this.delete"
+        icon="fas fa-trash"
       >
-        <i class="fas fa-trash"></i>
-      </span>
+      </fa-icon>
       <router-link
         v-if="edit"
         :to="{ path: '/edit-recipe', query: { id: recipe.id } }"
       >
-        <span class="recipe__preview--edit">
-          <i class="far fa-edit"></i>
-        </span>
+        <fa-icon icon="far fa-edit" class="recipe__preview--edit"></fa-icon>
       </router-link>
-      <span
+      <fa-icon
         class="recipe__preview--saved"
         @click="$emit('favourite', recipe.id)"
         v-show="!this.favourite"
+        icon="far fa-bookmark"
       >
-        <i class="far fa-bookmark"></i>
-      </span>
-      <span
+      </fa-icon>
+      <fa-icon
         class="recipe__preview--saved"
         @click="$emit('favourite', recipe.id)"
         v-show="this.favourite"
+        icon="fas fa-bookmark"
       >
-        <i class="fas fa-bookmark"></i>
-      </span>
+      </fa-icon>
     </div>
     <div class="recipe__info">
       <h5 class="recipe__info--header">{{ recipe.title }}</h5>
       <div class="recipe__info--secondary">
         <div class="recipe__info--time">
-          <i class="far fa-clock"></i>
+          <fa-icon icon="far fa-clock"></fa-icon>
           <p>{{ recipe.cookingTime }}</p>
         </div>
         <span class="recipe__info--cost">
@@ -55,8 +53,13 @@
 
 <script>
 import { parseBalance } from "../utils/parseBalance";
+import FaIcon from "./FaIcon.vue";
+
 export default {
   name: "Recipe",
+  components: {
+    FaIcon
+  },
   props: ["recipe", "delete", "favourite", "edit"],
   methods: {
     parseBalance
@@ -143,7 +146,7 @@ export default {
         font-size: 10px;
       }
 
-      svg {
+      span {
         margin-right: 4px;
       }
     }

@@ -54,6 +54,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     position: relative;
+    max-height: 56px;
   }
 
   &__secondary-info {
@@ -77,7 +78,7 @@
         font-family: $secondary-font;
       }
 
-      svg {
+      span {
         margin-right: 4px;
       }
     }

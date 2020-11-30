@@ -11,7 +11,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="fas fa-building"></i>
+        <fa-icon icon="fas fa-building"></fa-icon>
         Домой
       </a>
       <a
@@ -20,7 +20,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="far fa-building"></i>
+        <fa-icon icon="far fa-building"></fa-icon>
         Домой
       </a>
     </router-link>
@@ -31,7 +31,7 @@
         @click="navigate"
         v-show="isExactActive"
       >
-        <i class="fas fa-map"></i>
+        <fa-icon icon="fas fa-map"></fa-icon>
         Все рецепты
       </a>
       <a
@@ -40,7 +40,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="far fa-map"></i>
+        <fa-icon icon="far fa-map"></fa-icon>
         Все рецепты
       </a>
     </router-link>
@@ -55,7 +55,7 @@
         @click="navigate"
         v-show="isExactActive"
       >
-        <i class="fas fa-plus-square"></i>
+        <fa-icon icon="fas fa-plus-square"></fa-icon>
         Мои рецепты
       </a>
       <a
@@ -64,7 +64,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="far fa-plus-square"></i>
+        <fa-icon icon="far fa-plus-square"></fa-icon>
         Мои рецепты
       </a>
     </router-link>
@@ -75,7 +75,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="fas fa-bookmark"></i>
+        <fa-icon icon="fas fa-bookmark"></fa-icon>
         Избранное
       </a>
       <a
@@ -84,7 +84,7 @@
         class="navigation__link"
         @click="navigate"
       >
-        <i class="far fa-bookmark"></i>
+        <fa-icon icon="far fa-bookmark"></fa-icon>
         Избранное
       </a>
     </router-link>
@@ -92,8 +92,12 @@
 </template>
 
 <script>
+import FaIcon from "./FaIcon.vue";
 export default {
   name: "Navigation",
+  components: {
+    FaIcon
+  },
   props: ["role"]
 };
 </script>
@@ -118,7 +122,7 @@ export default {
     align-items: center;
     font-size: 12px;
 
-    svg {
+    span {
       margin-bottom: 4px;
       font-size: 1.5em;
     }
