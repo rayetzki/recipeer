@@ -12,17 +12,13 @@
       :to="{ path: 'recipe', query: { id: randomRecipe.id } }"
     >
       <main class="recipe-recommendation" :class="recommendationBg">
-        <h3 class="recipe-recommendation__header">
-          Рекомендуем если проголодался:
-        </h3>
         <h3
-          v-if="!randomRecipe.title"
+          v-if="randomRecipe.message"
           class="recipe-recommendation__night-header"
         >
-          Мы не рекомендуем кушать на ночь, потому что это очень вредно для
-          здоровья.
+          {{ randomRecipe.message }}
         </h3>
-        <h5 class="recipe-recommendation__title">
+        <h5 class="recipe-recommendation__title" v-if="!randomRecipe.message">
           {{ randomRecipe.title }}
         </h5>
         <img
@@ -46,7 +42,7 @@
         </div>
         <img
           class="recipe-recommendation__night-banner"
-          v-if="!randomRecipe"
+          v-if="randomRecipe.message"
           alt="Спящий мишка"
           src="../assets/Sleeping_Bear.png"
         />

@@ -1,6 +1,8 @@
 <template>
   <header>
-    <Button class="logout" @click="$emit('logout')">Выйти</Button>
+    <Button class="logout" @click="$emit('logout')">
+      <i class="fas fa-sign-out-alt"></i>
+    </Button>
     <h1>Книга рецептов</h1>
     <router-link to="/update-user">
       <img class="avatar" v-if="avatar" :src="avatar" />
@@ -23,6 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/breakpoints.scss";
 @import "../styles/theme.scss";
 
 header {
@@ -35,7 +38,11 @@ header {
   h1 {
     font-size: 24px;
     font-weight: bold;
-    margin-right: 16px;
+    margin-right: 12px;
+
+    @media screen and (max-width: $mobileS) {
+      font-size: 20px;
+    }
   }
 
   .fa-bars {
@@ -55,10 +62,8 @@ header {
   }
 
   .logout {
-    border-radius: 13px;
     padding: 16px;
     color: $textError;
-    background-color: $whiteBg;
 
     &:hover {
       background-color: $borderRed;

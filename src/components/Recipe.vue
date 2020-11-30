@@ -67,6 +67,7 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/theme.scss";
 @import "../styles/mixins.scss";
+@import "../styles/breakpoints.scss";
 
 .recipe__preview {
   cursor: pointer;
@@ -118,6 +119,10 @@ export default {
     font-size: 16px;
     font-weight: 400;
     color: $textPrimary;
+
+    @media screen and (max-width: $mobileS) {
+      font-size: 14px;
+    }
   }
 
   &--secondary {
@@ -125,7 +130,7 @@ export default {
     display: flex;
     flex-direction: row;
     opacity: 0.6;
-    align-items: flex-end;
+    margin-top: 12px;
     justify-content: space-between;
 
     #{$this}--time {
@@ -133,7 +138,10 @@ export default {
       display: flex;
       flex-direction: row;
       font-size: 12px;
-      margin-top: 8px;
+
+      @media screen and (max-width: $mobileS) {
+        font-size: 10px;
+      }
 
       svg {
         margin-right: 4px;
@@ -143,6 +151,10 @@ export default {
     #{$this}--cost {
       font-family: $primary-font;
       font-size: 12px;
+
+      @media screen and (max-width: $mobileS) {
+        font-size: 10px;
+      }
     }
   }
 }

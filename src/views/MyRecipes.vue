@@ -36,7 +36,7 @@
           :edit="true"
           :favourite="recipe && recipe.favourite.length"
           :recipe="recipe"
-          :delete="recipe && recipe.author && recipe.author.id === user.id"
+          :delete="true"
         ></recipe>
       </li>
     </ul>
