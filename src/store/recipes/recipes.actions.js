@@ -17,9 +17,9 @@ export const getRecipes = (page, limit = 5, dayTime) => {
 
 export const getRecipesByUser = (userId, page, limit = 5) => {
   return axios
-    .get(`${API_URL}/recipes`, {
+    .get(`${API_URL}/recipes/byUser`, {
       params: {
-        page,
+        page: page || null,
         limit,
         userId
       }
