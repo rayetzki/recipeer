@@ -34,12 +34,9 @@
         <recipe
           @favourite="toggleSaved"
           :edit="true"
-          :favourite="
-            recipe && recipe.favourite && recipe.favourite.userId === user.id
-          "
+          :favourite="recipe && recipe.favourite.length"
           :recipe="recipe"
           :delete="recipe && recipe.author && recipe.author.id === user.id"
-          :userId="user.id"
         ></recipe>
       </li>
     </ul>
@@ -48,7 +45,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getRecipes } from "../store/recipes/recipes.actions";
+import { getRecipesByUser } from "../store/recipes/recipes.actions";
 import Recipe from "../components/Recipe";
 import Spinner from "../components/Spinner";
 import {
@@ -76,17 +73,16 @@ export default {
     })
   },
   mounted() {
-    getRecipes(this.page, this.user.id, null, this.limit).then(response => {
+    getRecipesByUser(this.user.id, this.page, this.limit).then(response => {
       this.recipes = response.recipes;
       this.total = response.total;
     });
   },
   watch: {
     page() {
-      this.getRecipes(
-        this.page,
+      this.getRecipesByUser(
         this.user.id,
-        null,
+        this.page,
         this.total - this.limit * (this.page + 1) < 0
           ? this.total - this.limit
           : this.limit
@@ -97,19 +93,19 @@ export default {
     }
   },
   methods: {
-    getRecipes,
+    getRecipesByUser,
     toggleSaved(id) {
       const index = this.recipes.findIndex(recipe => recipe.id === id);
       const recipe = this.recipes[index];
       if (!recipe.favourite) {
-        addFavourite(this.user.id, id).then(() => {
+        addFavourite(id).then(() => {
           this.$set(this.recipes, index, {
             ...recipe,
             favourite: !recipe.favourite
           });
         });
       } else {
-        removeFavourite(this.user.id, id).then(() => {
+        removeFavourite(id).then(() => {
           this.$set(this.recipes, index, {
             ...recipe,
             favourite: !recipe.favourite

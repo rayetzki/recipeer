@@ -192,7 +192,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { Alert, Tag, Button, Select, Option } from "element-ui";
 import FormInput from "../components/FormInput.vue";
 import BannerUpload from "../components/BannerUpload.vue";
@@ -215,11 +214,6 @@ export default {
     Button,
     Select,
     Option
-  },
-  computed: {
-    ...mapGetters({
-      user: "user/user"
-    })
   },
   data: () => ({
     loading: false,
@@ -299,9 +293,7 @@ export default {
       this.values.body.splice(index, 1);
     },
     addRecipe() {
-      uploadRecipe(this.user.id, this.values).catch(
-        error => (this.error = error.message)
-      );
+      uploadRecipe(this.values).catch(error => (this.error = error.message));
     },
     addBanner(event) {
       const file = event.target.files[0];

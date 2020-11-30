@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import {
   getFavourites,
   removeFavourite
@@ -54,20 +53,15 @@ export default {
   data: () => ({
     favourites: undefined
   }),
-  computed: {
-    ...mapGetters({
-      user: "user/user"
-    })
-  },
   mounted() {
-    return getFavourites(this.user.id).then(favourites => {
+    return getFavourites().then(favourites => {
       this.favourites = favourites;
     });
   },
   methods: {
     removeSaved(id) {
       const index = this.favourites.findIndex(recipe => recipe.id === id);
-      removeFavourite(this.user.id, id).then(() => {
+      removeFavourite(id).then(() => {
         this.favourites.splice(index, 1);
       });
     }

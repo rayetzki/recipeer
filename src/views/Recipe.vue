@@ -21,9 +21,7 @@
       </span>
       <span
         @click="toggleSaved(recipe.id)"
-        v-else-if="
-          recipe && recipe.favourite && recipe.favourite.userId === user.id
-        "
+        v-else-if="recipe && recipe.favourite"
         class="recipe__header--saved"
       >
         <i class="fas fa-bookmark"></i>
@@ -134,7 +132,6 @@ import {
 import { getRecipeById } from "../store/recipes/recipes.actions";
 import { parseBalance } from "../utils/parseBalance";
 import { convertNutritionType } from "../utils/convertNutritionType";
-import { mapGetters } from "vuex";
 
 export default {
   name: "Recipe",
@@ -147,11 +144,6 @@ export default {
       recipe: undefined
     };
   },
-  computed: {
-    ...mapGetters({
-      user: "user/user"
-    })
-  },
   mounted() {
     getRecipeById(this.id).then(recipe => {
       this.recipe = recipe;
@@ -160,11 +152,11 @@ export default {
   methods: {
     toggleSaved(id) {
       if (!this.recipe.favourite) {
-        addFavourite(this.user.id, id).then(() => {
+        addFavourite(id).then(() => {
           this.recipe.favourite = !this.recipe.favourite;
         });
       } else {
-        removeFavourite(this.user.id, id).then(() => {
+        removeFavourite(id).then(() => {
           this.recipe.favourite = !this.recipe.favourite;
         });
       }

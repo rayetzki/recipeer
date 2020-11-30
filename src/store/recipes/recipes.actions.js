@@ -2,14 +2,26 @@ import axios from "axios";
 import router from "../../router";
 import { API_URL } from "../../config/API";
 
-export const getRecipes = (page, userId = null, dayTime, limit = 5) => {
+export const getRecipes = (page, limit = 5, dayTime) => {
   return axios
     .get(`${API_URL}/recipes`, {
       params: {
         page,
         limit,
-        userId: userId || null,
         dayTime: dayTime || null
+      }
+    })
+    .then(response => response.data)
+    .catch(error => Promise.reject(error));
+};
+
+export const getRecipesByUser = (userId, page, limit = 5) => {
+  return axios
+    .get(`${API_URL}/recipes`, {
+      params: {
+        page,
+        limit,
+        userId
       }
     })
     .then(response => response.data)
@@ -53,7 +65,7 @@ export const uploadRecipeBanner = (recipeId, file) => {
     .catch(error => console.error(error));
 };
 
-export const uploadRecipe = (userId, recipeData) => {
+export const uploadRecipe = recipeData => {
   const { banner, body, ...rest } = recipeData;
   const recipe = {
     ...rest,
@@ -62,15 +74,13 @@ export const uploadRecipe = (userId, recipeData) => {
       "https://img1.russianfood.com/dycontent/images_upl/132/big_131907.jpg"
   };
 
-  return axios
-    .post(`${API_URL}/recipes?userId=${userId}`, recipe)
-    .then(response => {
-      if (response.status === 201) {
-        uploadRecipeBanner(response.data.id, banner).then(() => {
-          router.push("/my-recipes");
-        });
-      }
-    });
+  return axios.post(`${API_URL}/recipes`, recipe).then(response => {
+    if (response.status === 201) {
+      uploadRecipeBanner(response.data.id, banner).then(() => {
+        router.push("/my-recipes");
+      });
+    }
+  });
 };
 
 export const editRecipe = (recipeId, recipe) => {

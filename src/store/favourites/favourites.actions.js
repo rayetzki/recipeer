@@ -1,9 +1,9 @@
 import { API_URL } from "../../config/API";
 import axios from "axios";
 
-export const getFavourites = userId => {
+export const getFavourites = () => {
   return axios
-    .get(`${API_URL}/favourites?userId=${userId}`)
+    .get(`${API_URL}/favourites`)
     .then(response => {
       if (response.status === 200) {
         return response.data;
@@ -12,9 +12,9 @@ export const getFavourites = userId => {
     .catch(error => console.error(error));
 };
 
-export const addFavourite = (userId, recipeId) => {
+export const addFavourite = recipeId => {
   return axios
-    .post(`${API_URL}/favourites?userId=${userId}&recipeId=${recipeId}`)
+    .post(`${API_URL}/favourites?recipeId=${recipeId}`)
     .then(response => {
       if (response.status === 201) {
         return response.data;
@@ -23,9 +23,9 @@ export const addFavourite = (userId, recipeId) => {
     .catch(error => console.error(error));
 };
 
-export const removeFavourite = (userId, recipeId) => {
+export const removeFavourite = recipeId => {
   return axios
-    .delete(`${API_URL}/favourites?userId=${userId}&recipeId=${recipeId}`)
+    .delete(`${API_URL}/favourites?recipeId=${recipeId}`)
     .then(response => {
       if (response.status === 200) {
         return response.data;

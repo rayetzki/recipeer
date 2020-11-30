@@ -61,12 +61,9 @@
       >
         <recipe
           @favourite="toggleSaved"
-          :favourite="
-            recipe && recipe.favourite && recipe.favourite.userId === user.id
-          "
+          :favourite="recipe && recipe.favourite.length"
           :recipe="recipe"
           :delete="false"
-          :userId="user.id"
         ></recipe>
       </li>
     </ul>
@@ -99,11 +96,10 @@ export default {
     page() {
       this.getRecipes(
         this.page,
-        null,
-        null,
         this.total - this.limit * (this.page + 1) < 0
           ? this.total - this.limit
-          : this.limit
+          : this.limit,
+        null
       ).then(data => {
         this.recipes = data.recipes;
         this.total = data.total;
@@ -127,9 +123,8 @@ export default {
       }
       getRecipes(
         this.page,
-        null,
-        dayTime === "все" ? null : dayTime,
-        this.limit
+        this.limit,
+        dayTime === "все" ? null : dayTime
       ).then(response => {
         this.recipes = response.recipes;
         this.total = response.total;
@@ -170,14 +165,14 @@ export default {
       const index = this.recipes.findIndex(recipe => recipe.id === id);
       const recipe = this.recipes[index];
       if (!recipe.favourite) {
-        addFavourite(this.user.id, id).then(() => {
+        addFavourite(id).then(() => {
           this.$set(this.recipes, index, {
             ...recipe,
             favourite: !recipe.favourite
           });
         });
       } else {
-        removeFavourite(this.user.id, id).then(() => {
+        removeFavourite(id).then(() => {
           this.$set(this.recipes, index, {
             ...recipe,
             favourite: !recipe.favourite
