@@ -4,6 +4,7 @@
       :banner="bannerPreview"
       title="Загрузи картинку рецепта"
       @fileload="addBanner"
+      @clearfile="clearBanner"
     ></banner-upload>
     <form class="add-edit-recipe__form">
       <h3 class="add-edit-recipe__title">Добавь новый рецепт</h3>
@@ -305,6 +306,9 @@ export default {
         this.values.banner = file;
       });
       fileReader.readAsDataURL(file);
+    },
+    clearBanner() {
+      this.bannerPreview = "";
     },
     capitalize(text) {
       return text

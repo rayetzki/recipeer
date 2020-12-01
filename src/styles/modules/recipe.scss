@@ -185,7 +185,8 @@
         font-family: $secondary-font;
         font-size: 14px;
         font-weight: bolder;
-        width: fit-content;
+        width: 100%;
+        text-align: left;
 
         &::before {
           content: "⬤";

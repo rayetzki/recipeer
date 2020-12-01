@@ -3,9 +3,10 @@
     <spinner :open="recipe === undefined"></spinner>
     <banner-upload
       v-if="recipe"
-      :banner="this.values.banner || bannerPreview"
+      :banner="values.banner === 'string' ? values.banner : bannerPreview"
       title="Загрузи картинку рецепта"
       @fileload="addBanner"
+      @clearfile="clearBanner"
     ></banner-upload>
     <form class="add-edit-recipe__form" v-if="recipe">
       <h3 class="add-edit-recipe__title">Обновить данные о рецепте</h3>
@@ -315,6 +316,10 @@ export default {
       } else {
         this.values[name] = value.concat(` ${tag}`);
       }
+    },
+    clearBanner() {
+      this.bannerPreview = "";
+      this.$set(this.values, "banner", "");
     },
     appendIngredient() {
       this.values.ingredients.push({ unit: "", ingredient: "" });

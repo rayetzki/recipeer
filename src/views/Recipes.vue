@@ -1,6 +1,6 @@
 <template>
-  <div id="recipes">
-    <header>
+  <div class="recipes">
+    <header class="recipes__header">
       <h1 class="recipes__title" v-show="!openSearch">Рецепты</h1>
       <div class="recipes__options">
         <fa-icon

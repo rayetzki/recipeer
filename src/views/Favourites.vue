@@ -1,11 +1,11 @@
 <template>
   <div class="favourites">
-    <header>
+    <header class="favourites__header">
       <h1 class="favourites__title">Избранное</h1>
     </header>
     <h5
-      v-if="favourites && favourites.length === 0"
       class="favourites__empty-list"
+      v-if="favourites && favourites.length === 0"
     >
       Нету избранных рецептов
     </h5>

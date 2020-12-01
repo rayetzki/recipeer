@@ -1,7 +1,7 @@
 <template>
   <div class="my-recipes">
     <spinner :open="recipes === undefined"></spinner>
-    <header>
+    <header class="my-recipes__header">
       <h1 class="my-recipes__title">Мои Рецепты</h1>
       <div class="my-recipes__options"></div>
       <router-link

@@ -70,10 +70,8 @@ export const uploadRecipe = recipeData => {
   const recipe = {
     ...rest,
     body: body.join(". "),
-    banner:
-      "https://img1.russianfood.com/dycontent/images_upl/132/big_131907.jpg"
+    banner: ""
   };
-
   return axios.post(`${API_URL}/recipes`, recipe).then(response => {
     if (response.status === 201) {
       uploadRecipeBanner(response.data.id, banner).then(() => {
@@ -83,9 +81,20 @@ export const uploadRecipe = recipeData => {
   });
 };
 
-export const editRecipe = (recipeId, recipe) => {
+export const editRecipe = (recipeId, recipeData) => {
+  const { banner, body, ...rest } = recipeData;
+  const recipe = {
+    ...rest,
+    body: body.join(". "),
+    banner: ""
+  };
   return axios
     .put(`${API_URL}/recipes/${recipeId}`, recipe)
-    .then(response => response.data)
+    .then(async response => {
+      if (typeof banner !== "string") {
+        await uploadRecipeBanner(recipeId, banner);
+      }
+      return response.data;
+    })
     .catch(error => console.error(error));
 };

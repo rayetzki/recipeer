@@ -10,6 +10,9 @@
       {{ title }}
       <input type="file" name="banner" @change="$emit('fileload', $event)" />
     </label>
+    <button @click="$emit('clearfile')" v-if="banner" class="banner__clear">
+      Выбрать другую
+    </button>
   </section>
 </template>
 
@@ -21,6 +24,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../styles/theme.scss";
+
 .banner {
   position: absolute;
   top: 0;
@@ -48,6 +53,20 @@ export default {
       visibility: hidden;
       z-index: 10000;
     }
+  }
+
+  &__clear {
+    font-family: $primary-font;
+    font-size: 12px;
+    position: absolute;
+    right: 16px;
+    bottom: -24px;
+    appearance: none;
+    border: none;
+    background: none;
+    text-align: center;
+    padding: 0;
+    color: red;
   }
 }
 
