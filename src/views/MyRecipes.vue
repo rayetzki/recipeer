@@ -75,13 +75,9 @@ export default {
     })
   },
   mounted() {
-    getRecipesByUser(this.user.id, this.page, this.limit).then(response => {
-      this.recipes = response.recipes.map(recipe => ({
-        ...recipe,
-        favourite: !!recipe.favourite.length
-      }));
-      this.total = response.total;
-    });
+    getRecipesByUser(this.user.id, this.page, this.limit).then(response =>
+      this.saveRecipes(response)
+    );
   },
   watch: {
     page() {
@@ -91,17 +87,18 @@ export default {
         this.total - this.limit * (this.page + 1) < 0
           ? this.total - this.limit
           : this.limit
-      ).then(data => {
-        this.recipes = data.recipes.map(recipe => ({
-          ...recipe,
-          favourite: !!recipe.favourite.length
-        }));
-        this.total = data.total;
-      });
+      ).then(response => this.saveRecipes(response));
     }
   },
   methods: {
     getRecipesByUser,
+    saveRecipes(response) {
+      this.total = response.total;
+      this.recipes = response.recipes.map(recipe => ({
+        ...recipe,
+        favourite: !!recipe.favourite.length
+      }));
+    },
     toggleSaved(id) {
       const index = this.recipes.findIndex(recipe => recipe.id === id);
       const recipe = this.recipes[index];

@@ -64,7 +64,7 @@
       >
         <recipe
           @favourite="toggleSaved"
-          :favourite="recipe && recipe.favourite.length"
+          :favourite="recipe.favourite"
           :recipe="recipe"
           :delete="false"
         ></recipe>
@@ -105,13 +105,8 @@ export default {
           ? this.total - this.limit
           : this.limit,
         null
-      ).then(data => {
-        this.recipes = data.recipes;
-        this.total = data.total;
-        this.recipes.map(recipe => ({
-          ...recipe,
-          favourite: !!recipe.favourite.length
-        }));
+      ).then(response => {
+        this.saveRecipes(response);
       });
     },
     searchCondition() {
@@ -119,13 +114,9 @@ export default {
         this.searchCondition = "";
         return;
       }
-      findRecipe(this.searchCondition).then(response => {
-        this.recipes = response.recipes;
-        this.total = response.total;
-        this.recipes.map(recipe => ({
-          ...recipe,
-          favourite: !!recipe.favourite.length
-        }));
+
+      findRecipe(this.searchCondition).then(recipes => {
+        this.saveRecipes(recipes);
       });
     },
     filterCondition() {
@@ -140,14 +131,7 @@ export default {
         this.page,
         this.limit,
         dayTime === "все" ? null : dayTime
-      ).then(response => {
-        this.recipes = response.recipes;
-        this.total = response.total;
-        this.recipes.map(recipe => ({
-          ...recipe,
-          favourite: !!recipe.favourite.length
-        }));
-      });
+      ).then(recipes => this.saveRecipes(recipes));
     }
   },
   data: () => ({
@@ -173,17 +157,22 @@ export default {
     })
   },
   mounted() {
-    this.getRecipes(this.page).then(data => {
-      this.recipes = data.recipes;
-      this.total = data.total;
-      this.recipes.map(recipe => ({
-        ...recipe,
-        favourite: !!recipe.favourite.length
-      }));
+    this.getRecipes(this.page).then(response => {
+      this.saveRecipes(response);
     });
   },
   methods: {
     getRecipes,
+    saveRecipes(response) {
+      if (response.total) {
+        this.total = response.total;
+      }
+      const recipes = response.recipes || response;
+      this.recipes = recipes.map(recipe => ({
+        ...recipe,
+        favourite: recipe.favourite && !!recipe.favourite.length
+      }));
+    },
     toggleSaved(id) {
       const index = this.recipes.findIndex(recipe => recipe.id === id);
       const recipe = this.recipes[index];
